@@ -176,13 +176,13 @@
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT val_unitario FROM item_venda";
+                    $sql= "SELECT subtotal FROM itens_venda";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
                     while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['val_unitario'];
+                        $subtotal = $subtotal + $row['subtotal'];
                     }
 
                     echo "R$ "  .  number_format($subtotal, 2, ',', '.');
