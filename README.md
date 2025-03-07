@@ -1,7 +1,4 @@
-Claro! Aqui está o texto com os `'` substituídos por `` ` ``:
-
 ---
-
 # REP0133CafeDvovo
 Projetos da turma 0133 de Técnico de Informática Senac CEP Conselheiro Lafaiete
 
