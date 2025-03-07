@@ -1,0 +1,90 @@
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+#bloco_cep{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    border: 1px;
+}
+
+
+
+
+#bloco_cep input{
+    display: block;
+    text-align: center;
+    width: 250px;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+
+#resultado{
+    padding: 20px;
+    width: 300px;
+    border-radius: 20px;
+    border: 1px solid #2e2370;
+    color: #53320c ;
+    
+}
+
+#sessao2{
+    display: none;
+}
+
+.button {
+    background-color: #704923 ;
+    padding: 5px, 10px;
+    color: white;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+}
+
+
+.buttons-div{
+    display: flex;
+    flex-direction: row;
+    width:250px;
+}
+
+
+#botao{
+    background-color: #704923;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 25px;
+}
+
+#sql{
+    margin-top: 20px;
+    background-color: rgb(67, 67, 153);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 25px;
+    width: 250px;
+}
+
+
+#consulta{
+    background-color: #704923;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 25px;
+}
+
