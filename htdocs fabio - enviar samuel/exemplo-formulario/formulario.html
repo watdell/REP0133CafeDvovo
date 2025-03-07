@@ -1,0 +1,32 @@
+<!-- formulario.php -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Usuário</title>
+</head>
+<body>
+    <h1>Cadastro de Usuário</h1>
+    <form action="processar.php" method="POST">
+        <label for="nome">Nome:</label><br>
+        <input type="text" id="nome" name="nome"><br><br>
+
+        <label for="email">E-mail:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="acao">Ação:</label><br>
+        <select name="acao" id="acao" required>
+            <option value="inserir">Inserir</option>
+            <option value="atualizar">Atualizar</option>
+            <option value="excluir">Excluir</option>
+            <option value="consultar">Consultar</option>
+        </select><br><br>
+
+        <label for="id">ID (para Atualizar ou Excluir):</label><br>
+        <input type="number" id="id" name="id"><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,76 @@
+.main-confirmar-produto {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container-confirmar-produto {
+    position: absolute;
+    width: 1000px;
+    margin: 0 auto;
+}
+h1 {
+    color: #444;
+    text-align: center;
+}
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.product-header, .product-info, .insumos-list, .cost-summary {
+    margin-bottom: 15px;
+}
+.product-header h2 {
+    margin: 0;
+    color: #222;
+}
+.insumos-list ul, .cost-summary ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.insumos-list li, .cost-summary li {
+    background: #f9f9f9;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+.cost-summary li.total {
+    font-weight: bold;
+    background: #ddd;
+}
+
+.btn-export {
+    display: block;
+    width: 100px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 20px auto;
+}
+.btn-export:hover {
+    background-color: #0056b3;
+}
+
+.insumos-ul1 > li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.div-qntd-unit-subtotal {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}

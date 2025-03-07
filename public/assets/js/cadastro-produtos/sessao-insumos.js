@@ -39,7 +39,7 @@ function adicionarInsumo1() {
     // Cria o HTML para o label e o input
     const labelSelect = `<label for="select-insumo-${insumoIndex}">Insumo: </label>`;
     const labelInput = `<label style='margin-left: 5px;' for="qntd-insumo-${insumoIndex}">g: </label>`;
-    const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${insumoIndex}" name="qntd-insumo[]" />`;
+    const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${insumoIndex}" value='1' name="qntd-insumo[]" />`;
     const deleteIcon = `<i id='${insumoIndex}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
     // Adiciona o select, labels e input ao div
     div.innerHTML = `${labelSelect}${novoSelect.outerHTML}${labelInput}${input}${deleteIcon}`;
@@ -54,6 +54,13 @@ function adicionarInsumo1() {
     //Aplicamos também a atualização do evento de escuta para input aos campos de quantidade insumo para nos mostrar o subtotal.
     // Ele tbm será utilizado no detectarMudancaInsumoSelects para atualizar o subtotal caso a pessoa mudar o insumo.
     aplicarInputListenerQntdInsumos();
+
+    document.querySelectorAll('.insumo-qntd').forEach(input => {
+        input.addEventListener('input', atualizarPesoTotal);
+    });
+
+    atualizarSpanSubtotal(); // Pra atualizar o subtotal
+    somarCustoInsumos(); // pra atualizar o total
 }
 // Como o primeiro select de insumos não é gerado dinamicamente, então temos que chamar a função de adicionar a escuta pra mudança de opção aqui também.
 detectarMudancaInsumoSelects();
@@ -69,10 +76,7 @@ function detectarMudancaInsumoSelects() {
     document.querySelectorAll('.insumo-select').forEach(select => {
         
         select.addEventListener('change', function() {
-            const optionSelected = this.options[this.selectedIndex].textContent;
-            if (optionSelected == 'Adicionar Novo Insumo') {
-                document.getElementById('modal-novo-insumo').style.display = 'flex';
-            }
+           
             atualizarSpanSubtotal(); // Importante caso a pessoa mude o insumo no select.
 
             // Pegando dados do atributo e levando pro input em financeiro. (novo preço)
@@ -97,29 +101,24 @@ function deleteInsumoDiv(elemento) {
     }
 }
 
-
+// Somar todos os preços dos insumos multiplicado pela sua quantidade
 function somarCustoInsumos() {
-    const insumoSelects = document.querySelectorAll('.insumo-select');
-    const qntdInsumosInput = document.querySelectorAll('.insumo-qntd');
+    let totalCusto = 0;
 
-    let somaTotal = 0;
+    document.querySelectorAll('.insumo-select').forEach(select => {
+        const optionSelected = select.options[select.selectedIndex];
+        const custoUnitario = parseFloat(optionSelected.getAttribute('data-custo_unitario')) || 0;
 
-    if (insumoSelects.length === qntdInsumosInput.length) {
-        for (let i = 0; i < qntdInsumosInput.length; i++) {
-            let opcaoSelecionada = insumoSelects[i].options[insumoSelects[i].selectedIndex];
-            opcaoSelecionada = opcaoSelecionada.getAttribute('data-custo_unitario');
-            opcaoSelecionada = parseFloat(opcaoSelecionada);
+        // Obtém a quantidade do insumo
+        const inputQuantidade = select.closest('.insumo').querySelector('.insumo-qntd');
+        const quantidade = parseFloat(inputQuantidade.value) || 0;
 
-            let qntd = qntdInsumosInput[i].value;
-            qntd = parseFloat(qntd);
+        // Soma o custo considerando a quantidade selecionada
+        totalCusto += custoUnitario * quantidade;
+    });
 
-            const multiplic = opcaoSelecionada * qntd;
-
-            somaTotal += multiplic;
-        }
-    } 
-    return somaTotal;
-} // ela é usada tbm nos validadores do formulário antes de ir para o form de financeiro.
+    return totalCusto;
+}
 
 
 function atualizarSpanSubtotal() {
@@ -137,6 +136,30 @@ function aplicarInputListenerQntdInsumos() {
     })
 }
 
+//atualiza o peso total
+function atualizarPesoTotal() {
+    let totalPeso = 0;
+    
+    // Seleciona todos os inputs de quantidade de insumo
+    document.querySelectorAll('.insumo-qntd').forEach(input => {
+        let quantidade = parseFloat(input.value) || 0; // Converte para número, trata NaN como 0
+        totalPeso += quantidade;
+    });
+    
+    // Atualiza o campo de peso total
+    document.getElementById('peso-total').value = totalPeso.toFixed(2);
+}
+
+// Adiciona o evento de input para recalcular sempre que houver mudança
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.insumo-qntd').forEach(input => {
+        input.addEventListener('input', atualizarPesoTotal);
+    });
+
+    // Executa a função uma vez ao carregar a página
+    
+    atualizarPesoTotal();
+});
 
 
 

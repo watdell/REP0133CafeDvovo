@@ -1,0 +1,69 @@
+.price {
+    display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha itens à esquerda */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra mais sutil */
+    width: 100%;
+    max-width: 600px; /* Aumenta a largura para combinar com a imagem */
+    background-color: #f9f4e7; /* Cor de fundo similar ao da imagem */
+    font-family: Arial, sans-serif; /* Tipografia mais básica */
+    border: 1px solid #dcd2b0; /* Adiciona um contorno suave */
+}
+
+label {
+    font-size: 14px; /* Tamanho da fonte menor */
+    font-weight: bold;
+    color: #5c3e20; /* Cor marrom escura */
+    margin-bottom: 8px; /* Espaçamento inferior entre label e input */
+    margin-top: 8px;
+}
+
+input, select, textarea {
+    width: 100%; /* Ocupa toda a largura do contêiner */
+    padding: 10px;
+    border: 1px solid #ccc; /* Contorno básico */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px;
+    margin-bottom: 15px; /* Espaçamento inferior */
+    box-sizing: border-box; /* Garante que padding não afete largura total */
+}
+
+textarea {
+    height: 80px; /* Altura fixa para descrições maiores */
+    resize: none; /* Remove redimensionamento */
+}
+
+select {
+    background-color: #fff; /* Fundo branco */
+}
+
+button {
+    background-color: #5c3e20; /* Botão marrom */
+    color: #fff; /* Texto branco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra do botão */
+    transition: background-color 0.3s ease; /* Efeito de hover */
+    margin-bottom: 8px;
+}
+
+button:hover {
+    background-color: #4a3217; /* Cor mais escura ao passar o mouse */
+}
+
+#confirmacao {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+}
