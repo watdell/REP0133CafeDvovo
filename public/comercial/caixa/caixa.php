@@ -204,7 +204,11 @@
             document.getElementById('col_cal').style.color = '#0d8e03';
         } else {
             document.getElementById('col_cal').style.color = '#8e0321';
-        }}
+        }
+        if (document.getElementById('col_cal').innerHTML.length > 13) {
+            document.getElementById('col_cal').innerHTML = 'Verifique valores';
+        }
+    }
     calcularTotal();
         </script>
 
