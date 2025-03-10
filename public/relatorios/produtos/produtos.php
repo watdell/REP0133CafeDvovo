@@ -11,16 +11,19 @@
     <link rel="stylesheet" href="../../assets/css/relatorios/relatorio-produtos/relatorio-produtos.css">
 </head>
 <body>
-    <?php include('../../../includes/main-sidebar.php'); ?>
+    <?php include('../../../includes/produtos-sidebar.php'); ?>
     <?php include('../../../includes/topbar.php'); ?>
     <main class="content">
         <div class="navbar" id="navbar"></div>
         <div class="catalogo-container">
             <section class="catalogo-top">
                 <h1>Catálogo de Produtos</h1>
-                <button id="add-produto" onclick="fabricarProduto()" class="btn-adicionar">+ Adicionar Produto</button>
+                <div>
+                    <button id="btn-list" class="btn-adicionar">Lista</button>
+                    <button id="add-produto" onclick="fabricarProduto()" class="btn-adicionar">+ Adicionar Produto</button>
+                </div>
             </section>
-            <div class="catalogo-grid">
+            <div class="catalogo-grid" id="catalogo-grid">
                 
                  <?php
                  $conn = dbConnection();
@@ -30,6 +33,7 @@
                     if($stmt) {
                         $stmt->execute();
                         $result = $stmt->get_result();
+                        
 
                         /* pode ser necessário depois.. 
                         $sql_img = "SELECT imagem, tipo_imagem FROM produto LIMIT 1";
@@ -50,21 +54,21 @@
                             } else {
                                 $src_imagem = '../../assets/images/img_padrao_cafe.png';
                             }
-
+                            
                             ?>
                                 <!-- Card de um produto -->
 
                                 <div class="produto-card">
-                                    <img src="<?php echo $src_imagem; ?>" alt="Imagem do Produto" class="produto-imagem">
+                                    <img class="img-produto" src="<?php echo $src_imagem; ?>" alt="Imagem do Produto" class="produto-imagem">
                                     <div class="produto-info">
                                         <h2 class="produto-nome"><?php echo $row['nome'] ?></h2>
                                         <p class="produto-descricao"><?php echo $row['descricao'] ?></p>
-                                        <p><strong>Preço:</strong> R$ <?php echo $row['preco_venda'] ?></p>
+                                        <p><strong>Preço:</strong> R$ <?php echo number_format($row['preco_venda'], 2, ',','.') ?></p>
                                     </div>
                                     <div class="produto-acoes">
                                         <button onclick="abrirModalDetalhes(<?php echo $row['produto_id']; ?>);" class="btn-acao visualizar">👁️ Detalhes</button>
-                                        <button class="btn-acao editar">✏️ Editar</button>
-                                        <button class="btn-acao excluir" onclick="confirmarExclusao(<?php echo $row['produto_id']; ?>);">🗑️ Excluir</button>
+                                        <button id="btn-acao-editar" class="btn-acao editar" value=<?php echo $row['produto_id']; ?> onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
+                                        <button id="btn-acao-excluir" class="btn-acao excluir" onclick="confirmarExclusao(<?php echo $row['produto_id']; ?>);">🗑️ Excluir</button>
                                     </div>
                                 </div>
 
