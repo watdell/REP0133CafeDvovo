@@ -1,5 +1,3 @@
-Claro! Aqui está o texto com os `'` substituídos por `` ` ``:
-
 ---
 
 # REP0133CafeDvovo
