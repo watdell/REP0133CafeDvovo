@@ -144,5 +144,3 @@ git push origin develop
 ```
 
 ---
-
-Agora todos os `'` foram substituídos por `` ` ``. Se precisar de mais ajustes ou ajuda, é só falar!
