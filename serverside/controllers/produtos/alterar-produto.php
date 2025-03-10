@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome_produto = $_POST['nome-produto'] ?? '';
     $descricao_produto = $_POST['descricao-produto'] ?? '';
     $tipo_venda = $_POST['tipo-venda'] ?? '';
-    $peso_total = $_POST['peso-total'] ?? '';
+    $peso_total = $_POST['peso-por-pacote'] ?? '';
     // Captura os insumos e suas quantidades
     /*$insumos = json_encode($_POST['insumo']) ?? [];
     $quantidades = json_encode($_POST['qntd-insumo']) ?? [];
@@ -110,70 +110,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     
-    $stmt = $conn->prepare("delete from produto_insumo where produto_id = ?");
-    if ($stmt) {
-        // Vincula os parâmetros: imagem, tipo_imagem e os demais campos
-        $stmt->bind_param("i", $produto_id);
-    
-        // Executa a declaração
-        if (!$stmt->execute()) {
-            echo "Erro ao executar a declaração SQL: " . $stmt->error;
-        }
-
-    } else {
-        echo "Erro ao preparar a declaração SQL: " . $conn->error;
+    // Deleta os registros da tabela produto_insumo vinculados ao produto_id
+    $stmt = $conn->prepare("DELETE FROM produto_insumo WHERE produto_id = ?");
+    if (!$stmt) {
+        die("Erro ao preparar a declaração SQL: " . $conn->error);
     }
-    /*
-    // Pega o último ID inserido na tabela 'produto'
-    $ultimo_id = $conn->insert_id;
+
+    $stmt->bind_param("i", $produto_id);
+    if (!$stmt->execute()) {
+        die("Erro ao executar a declaração SQL: " . $stmt->error);
+    }
+    $stmt->close(); // Fecha o statement de DELETE
 
     // Prepara a instrução SQL para atualizar o estoque dos insumos
     $stmt_update = $conn->prepare("UPDATE insumo SET estoque_atual = ? WHERE insumo_id = ?");
     if (!$stmt_update) {
         die("Erro ao preparar a declaração de atualização: " . $conn->error);
     }
-    */
 
     // Verifica se os arrays de insumos e quantidades têm o mesmo tamanho
     if (count($insumos) === count($quantidades)) {
         for ($i = 0; $i < count($insumos); $i++) {
-            $stmt_select = $conn->prepare("SELECT * FROM insumo WHERE insumo_id = ?");
+            // Obtém os dados do insumo
+            $stmt_select = $conn->prepare("SELECT estoque_atual FROM insumo WHERE insumo_id = ?");
+            if (!$stmt_select) {
+                die("Erro ao preparar a consulta de insumo: " . $conn->error);
+            }
+
             $stmt_select->bind_param("i", $insumos[$i]);
             $stmt_select->execute();
             $result = $stmt_select->get_result();
             $row = $result->fetch_assoc();
+            $stmt_select->close();
 
-            // Insere os insumos
+            if (!$row) {
+                die("Erro: Insumo com ID " . $insumos[$i] . " não encontrado no banco de dados.");
+            }
+
+            // Insere os insumos novamente
             $stmt_insumo = $conn->prepare("INSERT INTO produto_insumo (produto_id, insumo_id, qntd_insumo) VALUES (?,?,?)");
             if (!$stmt_insumo) {
                 die("Erro ao preparar a declaração de inserção de insumo: " . $conn->error);
             }
-            
+
             $quantidade = floatval($quantidades[$i]); // Convertendo a quantidade para float
             $stmt_insumo->bind_param("iid", $produto_id, $insumos[$i], $quantidade);
             if (!$stmt_insumo->execute()) {
                 die("Erro ao executar a inserção de insumo: " . $stmt_insumo->error);
             }
+            $stmt_insumo->close();
 
             // Atualiza o estoque do insumo
-            $novo_estoque_insumo = floatval($row['estoque_atual']) - ( $quantidade * floatval($quantidade_para_estoque) );
+            $novo_estoque_insumo = floatval($row['estoque_atual']) - ($quantidade);
             $stmt_update->bind_param("di", $novo_estoque_insumo, $insumos[$i]);
+
             if (!$stmt_update->execute()) {
                 die("Erro ao atualizar o estoque do insumo: " . $stmt_update->error);
             }
         }
 
         // Mensagem de sucesso e redirecionamento
-        echo "<h2>Produto cadastrado com sucesso!</h2>";
+        echo "<h2>Produto atualizado com sucesso!</h2>";
         echo "<p>Você será redirecionado em 2 segundos...</p>";
         echo '<meta http-equiv="refresh" content="2;url=\'../../../public/relatorios/produtos/produtos.php\'">';
 
-        $stmt->close();
+        // Fecha statements e conexão
         $stmt_update->close();
         $conn->close();
     } else {
         echo "O número de insumos e quantidades não coincide.";
     }
+
 
     // Exibe valores recebidos para debug
     //foreach ($_POST as $key => $value) {

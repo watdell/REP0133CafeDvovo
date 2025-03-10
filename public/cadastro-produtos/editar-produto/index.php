@@ -64,6 +64,9 @@
                     </div>
                 </div>
                 <div id="div-insumos">
+                    <script>
+                        let indexJsLastIdFixedInsumos = 0; 
+                    </script>
                     <?php 
                         // Conectar ao banco
                         $conn = dbConnection();
@@ -91,9 +94,10 @@
                             $result = $stmt->get_result();
                         }
 
+                        $index = 0;
                         // Exibir os insumos cadastrados no produto
                         while ($row = $result->fetch_assoc()) { ?>
-                            <div class="insumo">
+                            <div class="insumo" id="insumo-<?php echo $index; ?>">
                                 <label for="insumo-<?php echo $row['insumo_id']; ?>">Insumo:</label>
                                 <select style="width: 70%;" class="insumo-select" id="insumo" name="insumo[]">
                                     <?php foreach ($insumosDisponiveis as $insumo) { ?>
@@ -103,12 +107,18 @@
                                         </option>
                                     <?php } ?>
                                 </select>
-                                <label for="quantidade-insumo-<?php echo $row['insumo_id']; ?>"><?php echo $row['unidade_medida']; ?></label>
+                                <label for="quantidade-insumo-<?php echo $row['insumo_id']; ?>"><?php echo $row['unidade_medida']; ?>:</label>
                                 <input class="insumo-qntd" type="number" name="qntd-insumo[]" value="<?php echo $row['qntd_insumo']; ?>" style="width: 50px;" step="1">
-                                <i onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</i>
+                                <i onclick="deleteInsumoDiv(this)" id="<?php echo $index; ?>" data-insumo-id = "<?php echo $row['insumo_id']; ?>" class="icon-delete">🗑️</i>
                             </div>
-                    <?php } ?>
+                    <?php
+                        $index++;
+                    } ?>
+                    <script>
+                        indexJsLastIdFixedInsumos = <?php echo $index; ?>
+                    </script>
                 </div>
+                <input type="hidden" id="insumos-removidos" name="insumos-removidos">
                 <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
             </fieldset>
 
@@ -116,7 +126,7 @@
             <fieldset class="fieldset">
                 <legend>Informações Financeiras</legend>
                 <label for="margem-lucro">Margem de Lucro (%):</label>
-                <input type="number" name="margem-lucro" id="margem-lucro" step="1" value="<?php echo $row_product['margem_lucro']; ?>">
+                <input type="text" name="margem-lucro" id="margem-lucro" value="<?php echo $row_product['margem_lucro']; ?>">
                 
                 <label for="preco-venda">Preço de Venda (R$):</label>
                 <input type="text" name="preco-venda" id="preco-venda" value="<?php echo $row_product['preco_venda']; ?>">
@@ -138,7 +148,7 @@
 
     <!-- Scripts -->
     <script src="../../assets/js/main.js"></script>
-    <script src="../../assets/js/cadastro-produtos/sessao-insumos.js"></script>
+    <script src="./js/script.js"></script>
     <script src="../../assets/js/cadastro-produtos/conversores-valor.js"></script>
     <script src="../../assets/js/cadastro-produtos/validadores.js"></script>
 </body>

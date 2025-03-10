@@ -1,3 +1,66 @@
+function adicionarInsumo() {
+    fetch('./buscar-produto.php')
+    .then(response => response.json())
+    .then(data => {
+        
+        
+        // Cria um novo div para conter o select e o input
+        const div = document.createElement("div");
+        div.classList.add("insumo");
+        div.id = `insumo-${indexJsLastIdFixedInsumos}`; // ID único para cada div
+
+    
+        // Cria o HTML para o label e o input
+        const labelSelect = `<label for="select-insumo-${indexJsLastIdFixedInsumos}">Insumo: </label>`;
+        const novoSelect = `<select name='insumo[]' class='insumo-select' style='width: 70%;' id='select-insumo-${indexJsLastIdFixedInsumos}'></select>`;
+        const labelInput = `<label style='margin-left: 5px;' for='qntd-insumo-${indexJsLastIdFixedInsumos}'>g: </label>`;
+        const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
+        const deleteIcon = `<i id='${indexJsLastIdFixedInsumos}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
+        // Adiciona o select, labels e input ao div
+        div.innerHTML = `${labelSelect}${novoSelect}${labelInput}${input}${deleteIcon}`;
+
+        // Adiciona o div ao contêiner principal
+        document.getElementById("div-insumos").appendChild(div);
+        
+        let dropdown = document.getElementById(`select-insumo-${indexJsLastIdFixedInsumos}`);
+        
+        // pra criar um option vazio
+        const emptyOption = document.createElement('option');
+        emptyOption.textContent = "Selecione o insumo";
+        dropdown.appendChild(emptyOption);
+
+        data.forEach(insumo => {
+            const option = document.createElement('option');
+            option.value = insumo.insumo_id;
+            option.setAttribute('data-nome', insumo.nome);
+            option.setAttribute('data-data_validade', insumo.data_validade);
+            option.setAttribute('data-custo_unitario', insumo.custo_unitario);
+            option.setAttribute('data-estoque_atual', insumo.estoque_atual);
+            option.setAttribute('data-unidade_medida', insumo.unidade_medida);
+            
+            // Define o texto da opção no formato 'Nome - Preço/Unidade - disponível Estoque'
+            option.textContent = `${insumo.nome} - R$ ${insumo.custo_unitario}/${insumo.unidade_medida} - disponível ${insumo.estoque_atual}/${insumo.unidade_medida}`;            
+            dropdown.appendChild(option);    
+        });
+
+        dropdown.addEventListener('change', function() {
+            somarCustoInsumos();
+        });
+
+        indexJsLastIdFixedInsumos++
+
+    })
+    .catch(error => {
+        console.error('Erro ao obter insumos: ', error);
+    })
+  
+}
+
+//window.addEventListener('load', atualizarDropdown);
+document.getElementById('add-insumo').addEventListener('click', adicionarInsumo);
+
+
+
 // Obter o último input de nome insumo[] para depois atualizar com os novos valores via AJAX em uma outra função
 // Ela tbm é usada na função adicionarInsumo para a obtenção do id do ultimo select pra fazer o clone.
 function obterUltimoSelect() {
@@ -13,17 +76,18 @@ function obterUltimoSelect() {
 
 // Essa variável global é importante para armazenar o indice atual do contador dentro da função adicionarInsumo
 // Ele vai ser utilizado para diferenciar os campos gerados dinamicamente pelo javascript no atributo id. ex: id="1", id="2", etc. 
-let insumoIndex = 0;
+//let insumoIndex = 0;
 
 // Função para adicionar novos campos de select <select> e input <input> para seleção de mais insumo e quantidade deste.
 // Essa função utiliza o método cloneNode, que vai clonar o primeiro select já preenchido.
 function adicionarInsumo1() {
-    insumoIndex++; //incremento o contador da variavel global pra servir como parte do nome dos ids dos campos gerados dinamicamente.
+    //insumoIndex++; //incremento o contador da variavel global pra servir como parte do nome dos ids dos campos gerados dinamicamente.
+    indexJsLastIdFixedInsumos++;
 
     // Cria um novo div para conter o select e o input
     const div = document.createElement("div");
     div.classList.add("insumo");
-    div.id = `insumo-${insumoIndex}`; // ID único para cada div
+    div.id = `insumo-${indexJsLastIdFixedInsumos}`; // ID único para cada div
 
     // Seleciona o select original
     const idUltimoSelect = obterUltimoSelect();
@@ -33,14 +97,14 @@ function adicionarInsumo1() {
     const novoSelect = ultimoSelect.cloneNode(true);
 
     // Atualiza o ID, name do novo select
-    novoSelect.id = `select-insumo-${insumoIndex}`;
+    novoSelect.id = `select-insumo-${indexJsLastIdFixedInsumos}`;
     novoSelect.name = "insumo[]"; // Quando a gente declara o nome de um campo dessa forma 'nome[]' o form pega todos os campos com esse nome e forma uma array com os valores desses campos e envia para a outra página via post
 
     // Cria o HTML para o label e o input
-    const labelSelect = `<label for="select-insumo-${insumoIndex}">Insumo: </label>`;
-    const labelInput = `<label style='margin-left: 5px;' for="qntd-insumo-${insumoIndex}">g: </label>`;
-    const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${insumoIndex}" value='1' name="qntd-insumo[]" />`;
-    const deleteIcon = `<i id='${insumoIndex}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
+    const labelSelect = `<label for="select-insumo-${indexJsLastIdFixedInsumos}">Insumo: </label>`;
+    const labelInput = `<label style='margin-left: 5px;' for="qntd-insumo-${indexJsLastIdFixedInsumos}">g: </label>`;
+    const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
+    const deleteIcon = `<i id='${indexJsLastIdFixedInsumos}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
     // Adiciona o select, labels e input ao div
     div.innerHTML = `${labelSelect}${novoSelect.outerHTML}${labelInput}${input}${deleteIcon}`;
 
@@ -68,7 +132,7 @@ detectarMudancaInsumoSelects();
 aplicarInputListenerQntdInsumos();
 
 // Aqui é adicionado o evento de escuta para o click no botão de adicionar insumo. Se clicado a função de adicionarInsumo1 é acionada.
-document.getElementById('add-insumo').addEventListener('click', adicionarInsumo1);
+//document.getElementById('add-insumo').addEventListener('click', adicionarInsumo1);
 
 
 // Função responsável por pegar o evento change no select dos insumos e verificar se a opção selecionada foi "Adicionar Novo Insumo"
@@ -89,29 +153,22 @@ function detectarMudancaInsumoSelects() {
     });
 }
 
-
+let insumosRemovidos = []; 
 function deleteInsumoDiv(elemento) {
     const id = elemento.id;
     const div = document.getElementById(`insumo-${id}`);
-    console.log(id);
-    if(elemento) {
-        div.remove();
-    } else {
-        console.log(`Erro`);
+    const insumoId = elemento.getAttribute('data-insumo-id');
+  
+    if(insumoId) {
+        insumosRemovidos.push(insumoId);
     }
+
+    document.getElementById("insumos-removidos").value = JSON.stringify(insumosRemovidos);
+    div.remove(); // Remove completamente do DOM
 }
 
-function hideInsumoDiv(elemento) {
-    const id = elemento.id;
-    const div = document.getElementById(`insumo-fixo-${id}`);
-    console.log(id);
-    
-    if (div) {
-        div.style.display = "none"; // Apenas esconde a div
-    } else {
-        console.log(`Erro: elemento não encontrado`);
-    }
-}
+
+
 
 // Somar todos os preços dos insumos multiplicado pela sua quantidade
 function somarCustoInsumos() {
