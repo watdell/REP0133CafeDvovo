@@ -99,7 +99,7 @@
                         while ($row = $result->fetch_assoc()) { ?>
                             <div class="insumo" id="insumo-<?php echo $index; ?>">
                                 <label for="insumo-<?php echo $row['insumo_id']; ?>">Insumo:</label>
-                                <select style="width: 70%;" class="insumo-select" id="insumo" name="insumo[]">
+                                <select style="width: 70%;" class="insumo-select" id="select-insumo-<?php echo $row['insumo_id']; ?>" name="insumo[]">
                                     <?php foreach ($insumosDisponiveis as $insumo) { ?>
                                         <option value="<?php echo $insumo['insumo_id']; ?>" data-custo_unitario="<?php echo $row['custo_unitario']; ?>"
                                             <?php echo ($insumo['insumo_id'] == $row['insumo_id']) ? 'selected' : ''; ?>>
@@ -108,12 +108,13 @@
                                     <?php } ?>
                                 </select>
                                 <label for="quantidade-insumo-<?php echo $row['insumo_id']; ?>"><?php echo $row['unidade_medida']; ?>:</label>
-                                <input class="insumo-qntd" type="number" name="qntd-insumo[]" value="<?php echo $row['qntd_insumo']; ?>" style="width: 50px;" step="1">
+                                <input class="insumo-qntd" id="qntd-insumo-<?php echo $row['insumo_id']; ?>" type="number" name="qntd-insumo[]" value="<?php echo $row['qntd_insumo']; ?>" style="width: 50px;" step="1">
                                 <i onclick="deleteInsumoDiv(this)" id="<?php echo $index; ?>" data-insumo-id = "<?php echo $row['insumo_id']; ?>" class="icon-delete">🗑️</i>
                             </div>
                     <?php
                         $index++;
-                    } ?>
+                        } 
+                    ?>
                     <script>
                         indexJsLastIdFixedInsumos = <?php echo $index; ?>
                     </script>

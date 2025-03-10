@@ -1,3 +1,55 @@
+function verificaEstoque() {
+
+}
+
+function temInsumosIguais() {
+    let selects = document.querySelectorAll('.insumo-select');
+    let valores = new Set();
+
+    for (let select of selects) {
+        let valor = select.value;
+
+        if (valores.has(valor) && valor !=="") {
+            return true;
+        }
+
+        valores.add(valor);
+    }
+    return false;
+}
+
+
+function temValorNegativo() {
+    let inputs = document.querySelectorAll("input[type='text']");
+
+    for (let input of inputs) {
+        if (parseFloat(input.value) < 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+document.getElementById("formulario-geral").addEventListener("submit", function(event) {
+    event.preventDefault(); // Impede o envio inicial
+
+    if (temInsumosIguais()) {
+        window.alert("Há insumos iguais!");
+    } 
+    
+    if (temValorNegativo()) {
+        window.alert("Há valores negativos");
+    }
+    
+    if (!temInsumosIguais() && !temValorNegativo()) {
+        this.submit(); // Continua o envio do formulário
+    }
+});
+
+
 function adicionarInsumo() {
     fetch('./buscar-produto.php')
     .then(response => response.json())

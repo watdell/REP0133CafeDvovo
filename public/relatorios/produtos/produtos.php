@@ -94,7 +94,7 @@
                     <p><strong>Data de Cadastro:</strong> <span id="data-cadastro"></span></p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn-acao editar">✏️ Editar</button>
+                    <button class="btn-acao editar" id="btn-acao-editar-modal"  onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
                     <button id="excluir-produto-modal" class="btn-acao excluir">🗑️ Excluir</button>
                     <button onclick="fecharModalDetalhes()" class="btn-acao voltar">🔙 Voltar ao Catálogo</button>
                 </div>

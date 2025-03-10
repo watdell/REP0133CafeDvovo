@@ -154,6 +154,7 @@ function obterDetalhesProduto(id) {
     .then(response => response.json())
     .then(data => {
         // Populando as informações do produto
+        document.getElementById('btn-acao-editar-modal').value = data.produto_id;
         document.getElementById('nome-produto').textContent = data.nome;
         document.getElementById('data-cadastro').textContent = data.data_cadastro;
         document.getElementById('tipo-venda').textContent = data.tipo;
@@ -165,6 +166,7 @@ function obterDetalhesProduto(id) {
         document.getElementById('quantidade-estoque').textContent = data.estoque_atual + ' unidades';
         document.getElementById('estoque-minimo').textContent = data.estoque_minimo + ' unidades';
         document.getElementById('produto-id-hidden').value = data.produto_id;
+        
 
         // Verificando a disponibilidade do estoque
         const disponibilidade = data.estoque_atual < data.estoque_minimo ? 'Faltando' : 'Disponível';
