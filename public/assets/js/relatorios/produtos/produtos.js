@@ -1,4 +1,113 @@
 
+let i = 0;
+function alternarLista() {
+    if (i==0) {
+        document.getElementById('catalogo-grid').style.display = 'block';
+
+            document.querySelectorAll('.img-produto').forEach(link => {
+            link.style.display = 'none'; 
+        });
+            document.querySelectorAll('.produto-card').forEach(link => {
+            link.style.display = 'flex';
+            link.style.flexDirection = 'row';    
+        });
+            document.querySelectorAll('.produto-info').forEach(link => {
+            link.style.display = 'flex';
+            link.style.justifyContent = 'space-between'; 
+            link.style.width = "100%";
+        });
+            document.querySelectorAll('.btn-acao.visualizar').forEach(link => {
+            link.innerHTML = "👁️";
+        });
+            document.querySelectorAll('.btn-acao.editar').forEach(link => {
+            link.innerHTML = "✏️";
+        });
+            document.querySelectorAll('.btn-acao.excluir').forEach(link => {
+            link.innerHTML = "🗑️";
+        });
+            document.querySelectorAll('.produto-nome').forEach(link => {
+            link.style.fontFamily = 'Arial, sans-serif';
+            link.style.fontSize = '16px';
+            link.style.color = '#333';
+
+        });
+            document.querySelectorAll('.produto-descrica').forEach(link => {
+            link.style.fontFamily = 'Arial, sans-serif';
+            link.style.fontSize = '16px';
+            link.style.color = '#333';
+
+        });
+        
+        i = 1;
+        console.log(i);
+    } 
+    else
+    if (i==1) {
+        document.getElementById('catalogo-grid').style.display = 'grid';
+
+        document.querySelectorAll('.img-produto').forEach(link => {
+        link.style.display = 'flex'; 
+       
+    });
+        document.querySelectorAll('.produto-card').forEach(link => {
+        link.style.display = 'flex';
+        link.style.flexDirection = 'column';    
+    });
+        document.querySelectorAll('.produto-info').forEach(link => {
+        link.style.display = 'block';
+        link.style.gap = "0"; 
+    });
+        document.querySelectorAll('.btn-acao.visualizar').forEach(link => {
+        link.innerHTML = "👁️ Detalhes";
+    });
+        document.querySelectorAll('.btn-acao.editar').forEach(link => {
+        link.innerHTML = "✏️ Editar";
+    });
+        document.querySelectorAll('.btn-acao.excluir').forEach(link => {
+        link.innerHTML = "🗑️ Excluir";
+    });
+        document.querySelectorAll('.produto-nome').forEach(link => {
+        link.style.fontFamily = 'Arial, sans-serif';
+        link.style.fontSize = '20px';
+        link.style.color = '#704923';
+
+    });
+
+        i = 0;
+        console.log(i);
+    }
+    
+}
+
+document.getElementById("btn-list").addEventListener('click', alternarLista);
+
+
+
+function alterarDados_enviarID(id) {
+    let url = "../../cadastro-produtos/editar-produto/index.php?id=" + encodeURIComponent(id);
+    
+    window.location.href = url;
+}
+
+
+
+function converterParaMoeda(valor) {
+    
+    const valorFormatado = parseFloat(valor);
+
+    // Verifica se o valor é um número válido
+    if (isNaN(valorFormatado)) {
+        return 'R$ 0,00'; // Ou outra string padrão que você preferir
+    }
+    
+    const valorComDigitos = valorFormatado.toFixed(2);
+    const valorMoedaDigitos = `R$ ${valorComDigitos.replace('.', ',')}`; // Troca o ponto por vírgula
+
+    return valorMoedaDigitos;
+}
+
+
+
 function confirmarExclusao(produtoId){
     if (confirm('Você tem certeza que deseja excluir este produto?')) {
         window.location.href = '../../../serverside/controllers/produtos/remover-produto.php?id=' + produtoId;
@@ -15,7 +124,6 @@ function confirmarExclusaoModal(){
        window.location.href = '../../../serverside/controllers/produtos/remover-produto.php?id=' + inputHiddenId;
    }
 }
-
 
 
 function fabricarProduto(){
