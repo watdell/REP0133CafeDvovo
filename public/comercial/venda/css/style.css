@@ -1,0 +1,149 @@
+/* Estilo geral */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f1e3;
+    margin: 0;
+    padding: 0;
+    color: #3e2723;
+}
+
+.content {
+    padding: 30px;
+    background-color: #fdf8f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #d4a373;
+}
+
+th {
+    background-color: #a56e3d;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #fff;
+    font-size: 14px;
+}
+
+td input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d4a373;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #3e2723;
+    font-size: 14px;
+}
+
+td input:focus {
+    border-color: #8d6e63;
+    outline: none;
+}
+
+tr:hover {
+    background-color: #f9f4e7;
+}
+
+/* Botões */
+button {
+    background-color: #a56e3d;
+    color: white;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #8d6e63;
+}
+
+button.icon-delete {
+    background-color: #e64a19;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+button.icon-delete:hover {
+    background-color: #bf360c;
+}
+
+/* Estilo para as seções */
+fieldset {
+    border: 2px solid #d4a373;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+legend {
+    font-size: 18px;
+    font-weight: bold;
+    color: #a56e3d;
+}
+
+/* Formulário e inputs */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #3e2723;
+}
+
+input, select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #d4a373;
+}
+
+select {
+    background-color: #fff;
+}
+
+/* Total Section */
+.total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3e2723;
+}
+
+#desconto {
+    width: 100px;
+    text-align: right;
+}
+
+/* Adicionando efeitos suaves */
+input[type="number"], input[type="text"] {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+input[type="number"]:focus, input[type="text"]:focus {
+    background-color: #f7f4f1;
+    border-color: #8d6e63;
+}

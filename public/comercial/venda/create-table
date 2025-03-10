@@ -1,0 +1,20 @@
+CREATE TABLE vendas (
+    venda_id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    total DECIMAL(10,2),
+    data_venda DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE itens_venda (
+    item_venda_id INT AUTO_INCREMENT PRIMARY KEY,
+    venda_id INT,
+    produto VARCHAR(100),
+    quantidade INT,
+    preco_unitario DECIMAL(10,2),
+    subtotal DECIMAL(10,2),
+    FOREIGN KEY (venda_id) REFERENCES vendas(venda_id) ON DELETE CASCADE
+);
+
+SELECT vendas.vendas_id, clientes.nome, vendas.total
+FROM vendas
+JOIN clientes ON vendas.cliente_id = clientes.id;
