@@ -9,56 +9,30 @@
         die("Erro de conexão: " . $conn->connect_error);
     }
 
-    $vencDate = new DateTime();
-    $vencDate->modify('-30 day');
-    $end_date = $vencDate->format('Y-m-d H:i:s');
+    function DateMod($mod) {
+        $vencDate = new DateTime();
+        $vencDate->modify($mod);
+        return $vencDate->format('Y-m-d H:i:s');
+    };
 
-    $sql= "SELECT data, SUM(valor) AS valor_diario FROM despesas  WHERE data > '" . $end_date . "' GROUP BY DAY(data)";
-    $stmt= $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    function SelectData($table,$mod) {
+        $conn = dbConnection();
 
-while($row = $result->fetch_assoc()) {
-    $x = substr($row['data'],0,10);
+        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' GROUP BY DAY(data)";
+        $stmt= $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result(); 
 
-    $dataPointsDay[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
-}
+        while($row = $result->fetch_assoc()) {
+            $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
+        }
+        return $x;
+    };
 
-$sql= "SELECT data, SUM(valor) AS valor_diario FROM entradas  WHERE data > '" . $end_date . "' GROUP BY DAY(data)";
-$stmt= $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while($row = $result->fetch_assoc()) {
-$x = substr($row['data'],0,10);
-
-$dataPointsDayE[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
-}
-
-$vencDate->modify('-12 month');
-$end_date = $vencDate->format('Y-m-d H:i:s');
-
-$sql= "SELECT data, SUM(valor) AS valor_diario FROM despesas  WHERE data > '" . $end_date . "' GROUP BY MONTH(data)";
-$stmt= $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while($row = $result->fetch_assoc()) {
-    $x = substr($row['data'],0,10);
-
-    $dataPointsMonth[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
-}
-
-$sql= "SELECT data, SUM(valor) AS valor_diario FROM entradas  WHERE data > '" . $end_date . "' GROUP BY MONTH(data)";
-$stmt= $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while($row = $result->fetch_assoc()) {
-    $x = substr($row['data'],0,10);
-
-    $dataPointsMonthE[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
-}
+    $dataPointsDay = SelectData('despesas','-30 day');
+    $dataPointsDayE = SelectData('entradas','-30 day');
+    $dataPointsMonth = SelectData('despesas','-12 month');
+    $dataPointsMonthE = SelectData('entradas','-12 month');
 
 $sql= "SELECT data, SUM(valor) AS valor_total FROM despesas";
 $stmt= $conn->prepare($sql);
@@ -103,66 +77,28 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
 
     <script>
         window.onload = function () {
-        
-        var chart = new CanvasJS.Chart("chartContainerDay", {
-            title: {
-                text: "Despesas (DIARIO)"
-            },
-            axisY: {
-                title: "Valor (R$)"
-            },
-            data: [{
-                type: "line",
-                dataPoints: <?php echo json_encode($dataPointsDay, JSON_NUMERIC_CHECK); ?>
-            }]
-        });
-        chart.render();
 
-        var chart = new CanvasJS.Chart("chartContainerMonth", {
-            title: {
-                text: "Despesas (MENSAL)"
-            },
-            axisY: {
-                title: "Valor (R$)"
-            },
-            data: [{
-                type: "line",
-                dataPoints: <?php echo json_encode($dataPointsMonth, JSON_NUMERIC_CHECK); ?>
-            }]
-        });
-        chart.render();
+        function BuildCanvas(id,name,returnal,color) {
+            var chart = new CanvasJS.Chart(id, {
+                title: {
+                    text: name
+                },
+                axisY: {
+                    title: "Valor (R$)"
+                },
+                data: [{
+                    lineColor: color,
+                    type: "line",
+                    dataPoints: returnal
+                }]
+            });
+            chart.render();
+        }
 
-
-
-
-        var chart = new CanvasJS.Chart("chartContainerDayE", {
-            title: {
-                text: "Entradas (DIARIO)"
-            },
-            axisY: {
-                title: "Valor (R$)"
-            },
-            data: [{
-                type: "line",
-                dataPoints: <?php echo json_encode($dataPointsDayE, JSON_NUMERIC_CHECK); ?>
-            }]
-        });
-        chart.render();
-
-        var chart = new CanvasJS.Chart("chartContainerMonthE", {
-            title: {
-                text: "Entradas (MENSAL)"
-            },
-            axisY: {
-                title: "Valor (R$)"
-            },
-            data: [{
-                type: "line",
-                dataPoints: <?php echo json_encode($dataPointsMonthE, JSON_NUMERIC_CHECK); ?>
-            }]
-        });
-        chart.render();
-
+        BuildCanvas("chartContainerDay","Despesas (DIARIO)",<?php echo json_encode($dataPointsDay, JSON_NUMERIC_CHECK); ?>,'red');
+        BuildCanvas("chartContainerMonth","Despesas (MENSAL)",<?php echo json_encode($dataPointsMonth, JSON_NUMERIC_CHECK); ?>,'red');
+        BuildCanvas("chartContainerDayE","Entradas (DIARIO)",<?php echo json_encode($dataPointsDayE, JSON_NUMERIC_CHECK); ?>,'green');
+        BuildCanvas("chartContainerMonthE","Entradas (MENSAL)",<?php echo json_encode($dataPointsMonthE, JSON_NUMERIC_CHECK); ?>,'green');
 
         var chart = new CanvasJS.Chart("pieContainer", {
             theme: "light2",
@@ -183,8 +119,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                 dataPoints: <?php echo json_encode($pieDataPoints, JSON_NUMERIC_CHECK); ?>
             }]
         });
-        chart.render();
-        
+        chart.render(); 
     }
         
     </script>
