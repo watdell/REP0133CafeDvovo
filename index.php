@@ -71,8 +71,8 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./public/assets/css/main.css">
-    <link rel="stylesheet" href="./public/assets/css/orcamento/orcamento2.css">
+    <link rel="stylesheet" href="./public/assets/css/main.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./public/assets/css/orcamento/orcamento2.css?v=<?php echo time(); ?>">
     <title>Sistema - Café de Vovô</title>
 
     <script>
@@ -86,9 +86,13 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                 axisY: {
                     title: "Valor (R$)"
                 },
+                backgroundColor: "transparent",
                 data: [{
                     lineThickness: 3,
                     lineColor: color,
+                    markerColor: color,
+                    markerSize: 15,
+                    markerBorderColor:"#000000",
                     type: "line",
                     dataPoints: returnal
                 }]
@@ -130,19 +134,19 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
     <?php include('includes/main-sidebar.php'); ?>
     <?php include('includes/topbar.php'); ?>
     
-    <main class="content">
+    <main class="content" style="width:90%">
 
     <button onclick="mes()">Dia / Mês</button>
     <div class="navbar" id="navbar"></div>
 
         <section class="charts">
-        <div id="chartContainerDay" style="height: 400px; width: 500px;"></div>
-        <div id="chartContainerMonth" style="height: 370px; width: 100%;display:none;"></div>
+        <div id="chartContainerDay" style="height: 400px; width: 100%;"></div>
+        <div id="chartContainerMonth" style="height: 400px; width: 100%;display:none;"></div>
 
-        <div id="chartContainerDayE" style="height: 400px; width: 500px;"></div>
-        <div id="chartContainerMonthE" style="height: 370px; width: 100%;display:none;"></div>
+        <div id="chartContainerDayE" style="height: 400px; width: 100%;"></div>
+        <div id="chartContainerMonthE" style="height: 400px; width: 100%;display:none;"></div>
 
-        <div id="pieContainer" style="height: 400px; width: 500px;"></div>
+        <div id="pieContainer" style="height: 400px; width: 100%;"></div>
            
         </section>   
     </main>
