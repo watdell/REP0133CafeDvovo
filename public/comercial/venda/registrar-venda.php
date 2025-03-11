@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         echo "Venda cadastrada com sucesso!";
+        echo "<p>Você será redirecionado em 1 segundos...</p>";
+        echo '<meta http-equiv="refresh" content="1;url=\'venda.php\'">';
     } else {
         echo "Erro ao cadastrar a venda: " . $stmt->error;
     }
