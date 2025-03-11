@@ -183,13 +183,13 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT subtotal FROM itens_venda";
+                    $sql= "SELECT total FROM vendas";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
                     while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['subtotal'];
+                        $subtotal = $subtotal + $row['total'];
                     }
 
                     echo "R$ "  .  number_format($subtotal, 2, ',', '.');
@@ -227,13 +227,13 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                     <a style="width:40%;font-size:30px;color:#0d8e03"><?php
                     $subtotal = 0;
 
-                        $sql= "SELECT subtotal FROM itens_venda";
+                        $sql= "SELECT total FROM vendas";
                         $stmt= $conn->prepare($sql);
                         $stmt->execute();
                         $result = $stmt->get_result();
 
                         while($row = $result->fetch_assoc()) {
-                            $subtotal = $subtotal + $row['subtotal'];
+                            $subtotal = $subtotal + $row['total'];
                         }
                     echo "R$ "  .  number_format($subtotal, 2, ',', '.');
                     ?></a>
