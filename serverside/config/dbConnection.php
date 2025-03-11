@@ -11,7 +11,7 @@
     $port = 3306;        // Porta do MySQL do XAMPP (verifique no painel de controle do XAMPP)
     $user = 'root';     // Nome de usuário do MySQL
     $password = ''; // Senha do MySQL
-    $database = 'cafedvovo'; // Nome do banco de dados
+    $database = 'cafedvovo_adrian'; // Nome do banco de dados
 
     // Criando a conexão com o banco de dados
     $conn = new mysqli($host, $user, $password, $database, $port);

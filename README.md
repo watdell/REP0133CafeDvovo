@@ -1,5 +1,4 @@
 ---
-
 # REP0133CafeDvovo
 Projetos da turma 0133 de Técnico de Informática Senac CEP Conselheiro Lafaiete
 
@@ -142,5 +141,8 @@ git pull origin develop
 ```
 git push origin develop
 ```
+<<<<<<< HEAD
 
 ---
+=======
+>>>>>>> main
