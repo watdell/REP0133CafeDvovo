@@ -40,6 +40,7 @@
                     <a style="width:20%">descricao</a>
                     <a style="width:20%">valor</a>
                     <a style="width:20%">data</a>
+                    <a style="width:3%">DEL</a>
                 </div>
                 <hr style='height:4px;background-color:black'><br>
                     <?php
@@ -60,7 +61,11 @@
                         echo $row['valor'];?> </a>
                         <a style="width:25%"><?php
                         echo $row['data'];
-                        ?> </a></div>
+                        ?> </a>
+                        <form id='field' action='entradas_del.php' method='post'>
+                            <input type='hidden' name='id' value='<?php echo $row["identrada"]?>'>
+                            <button type="submit">X</button></form>
+                    </div>
                         <hr>
                         <?php
                     }
