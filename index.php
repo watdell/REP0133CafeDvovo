@@ -221,15 +221,20 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT subtotal FROM itens_venda";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
+                    ?></a><br><br>
+                    <a style="width:40%;font-size:30px">Vendas:</a>
+                    <a style="width:40%;font-size:30px;color:#0d8e03"><?php
+                    $subtotal = 0;
 
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['subtotal'];
-                    }
+                        $sql= "SELECT subtotal FROM itens_venda";
+                        $stmt= $conn->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
+                        while($row = $result->fetch_assoc()) {
+                            $subtotal = $subtotal + $row['subtotal'];
+                        }
                     echo "R$ "  .  number_format($subtotal, 2, ',', '.');
                     ?></a>
                 </div>
@@ -284,7 +289,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
         } else {
             document.getElementById('col_cal').style.color = '#8e0321';
         }
-        if (document.getElementById('col_cal').innerHTML.length > 16) {
+        if (document.getElementById('col_cal').innerHTML.length > 20) {
             document.getElementById('col_cal').innerHTML = 'Verifique valores';
         }
     }

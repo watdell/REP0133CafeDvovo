@@ -205,7 +205,7 @@
         } else {
             document.getElementById('col_cal').style.color = '#8e0321';
         }
-        if (document.getElementById('col_cal').innerHTML.length > 16) {
+        if (document.getElementById('col_cal').innerHTML.length > 20) {
             document.getElementById('col_cal').innerHTML = 'Verifique valores';
         }
     }
