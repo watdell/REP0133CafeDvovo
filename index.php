@@ -87,6 +87,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                     title: "Valor (R$)"
                 },
                 data: [{
+                    lineThickness: 3,
                     lineColor: color,
                     type: "line",
                     dataPoints: returnal
