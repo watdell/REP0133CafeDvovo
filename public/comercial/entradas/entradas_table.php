@@ -1,7 +1,7 @@
 <?php
 include '../../../serverside/config/dbConnection.php';
 
-if (is_float($_POST['val']) == false) {
+if ($_POST['val'].is_float() == false) {
     $valor = 0;
     } else if ($_POST['val'] < 0) {
         $valor = $_POST['val'] * -1;
