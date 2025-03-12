@@ -97,7 +97,7 @@
                     while($row = $result->fetch_assoc()) {
                         $subtotal = $subtotal + $row['valor'];
                     }
-                    echo $subtotal;
+                    echo "R$" . number_format($subtotal, 2, ',', '.');
 
                     ?></a>
             </div>

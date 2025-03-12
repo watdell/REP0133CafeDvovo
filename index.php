@@ -30,10 +30,18 @@
         $result = $stmt->get_result(); 
 
         while($row = $result->fetch_assoc()) {
-            if ($mod == '-30 day') {
-            $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
-            } else { 
-            $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,7));
+            if ($table == 'entradas') {
+                if ($mod == '-30 day') {
+                    $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
+                    } else { 
+                    $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,7));
+                    }
+            } else {
+                if ($mod == '-30 day') {
+                    $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,10));
+                    } else { 
+                    $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,7));
+                    }
             }
         }
         return $x;
