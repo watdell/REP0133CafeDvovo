@@ -61,6 +61,11 @@
                         echo $row['valor'];?> </a>
                         <a style="width:25%"><?php
                         echo $row['data'];
+                        if ($row['valor'] == 0){
+                            ?>
+                            <script>window.alert('Verifique o ID : <?php echo $row['identrada'];?>')</script>
+                            <?php
+                        }
                         ?> </a>
                         <form id='field' action='entradas_del.php' method='post'>
                             <input type='hidden' name='id' value='<?php echo $row["identrada"]?>'>

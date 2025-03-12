@@ -100,6 +100,11 @@
                         echo $row['valor'];?> </a>
                         <a style="width:19%"><?php
                         echo $row['data'];
+                        if ($row['valor'] == 0){
+                            ?>
+                            <script>window.alert('Verifique o ID : <?php echo $row['iddespesa'];?>')</script>
+                            <?php
+                        }
                         ?> </a>
                         <form id='field' action='despesas_del.php' method='post'>
                             <input type='hidden' name='id' value='<?php echo $row["iddespesa"]?>'>

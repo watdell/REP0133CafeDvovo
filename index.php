@@ -270,19 +270,6 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
 <script src="./public/assets/js/main.js"></script>
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 <script>
-    function mes() {
-        if (document.getElementById("chartContainerMonth").style.display != 'flex') {
-            document.getElementById("chartContainerMonth").style.display = 'flex';
-            document.getElementById("chartContainerDay").style.display = 'none';
-            document.getElementById("chartContainerMonthE").style.display = 'flex';
-            document.getElementById("chartContainerDayE").style.display = 'none';
-        } else {
-            document.getElementById("chartContainerMonth").style.display = 'none';
-            document.getElementById("chartContainerDay").style.display= 'flex';
-            document.getElementById("chartContainerMonthE").style.display = 'none';
-            document.getElementById("chartContainerDayE").style.display= 'flex';
-        }
-    }
     function calcularTotal() {
         if (document.getElementById('col_cal').innerHTML[3] != '-') {
             document.getElementById('col_cal').style.color = '#0d8e03';

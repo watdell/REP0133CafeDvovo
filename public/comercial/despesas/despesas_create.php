@@ -47,7 +47,7 @@
                         <label for="cat">Categoria:</label>
 
 
-                        <select id='catf' name="catf">
+                        <select id='catf' name="catf" onchange='Stuff("catf")'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'fixo'";
 
@@ -61,7 +61,7 @@
                             ?>
                         </select>
 
-                        <select id='catv' style="display:none" name="catv">
+                        <select id='catv' style="display:none" name="catv" onchange='Stuff("catv")'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'variavel'";
 
@@ -89,18 +89,30 @@
 
                         <br><br>
 
-                        <div class="innerdiv" style="justify-content:space-evenly">
+                        <div class="innerdiv" style="justify-content:center; margin: 0px 10px; gap: 10px;">
 
-                        <button onclick="location.href='despesas_cat.php'" style="width:45%">CRIAR CATEGORIA</button>
-                        <button class="register-btn" type="submit"  style="width:45%">Registrar Despesa</button>
+                        <button class="register-btn" type="submit"  style="width:100%;padding: 5px">Registrar Despesa</button>
 
                         </div>
 
                 </form>
 
+                <div class="innerdiv" style="justify-content:center; margin: 0px 10px; gap: 10px;">
+
+                <div class="itens_shown" style="justify-content:space-evenly;align-content:center; gap: 10px;">
+                    <button onclick="location.href='despesas_cat.php'" style="width:100%;padding: 5px;align-self:center">CRIAR CATEGORIA</button>
+                    <form action="despesas_cat_del.php" method="post" style="width:100%;padding: 5px">
+                        <input type="text" id="catd" name="catd" maxlength="255" hidden>
+                        <button type="submit" style="width:100%;padding: 5px">DELETAR CATEGORIA</button>
+                    </form>
+                </div>
+                </div>
+
         </div>
     </main>
-<script src="../public/assets/js/main.js">
-</script>
+<script src="../public/assets/js/main.js"></script>
+<script>
+    Stuff('catf');
+    </script>
 </body>
 </html>

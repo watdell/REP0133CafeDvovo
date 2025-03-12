@@ -1,9 +1,13 @@
 <?php
 include '../../../serverside/config/dbConnection.php';
 
+if ($_POST['val'] < 0 || $_POST['val'].is_float() == false) {
+    $valor = 0;
+    } else {
+        $valor = $_POST['val'] * -1;
+    }
 // Get client ID from POST
 $tipo = $_POST['tipo'];
-$valor = $_POST['val'] * -1;
 $desc = $_POST['desc'];
 
 if ($tipo == "fixo") {

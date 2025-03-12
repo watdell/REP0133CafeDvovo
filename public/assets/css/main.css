@@ -112,6 +112,10 @@ aside {
     height: 100%;
 }
 
+.logo {
+    min-height: 220px;
+}
+
 .logo > img {
     margin-top: 16px;
     top:10px;

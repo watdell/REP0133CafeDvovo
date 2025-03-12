@@ -1,8 +1,15 @@
 <?php
 include '../../../serverside/config/dbConnection.php';
 
+if ($_POST['val'].is_float() == false) {
+    $valor = 0;
+    } else if ($_POST['val'] < 0) {
+        $valor = $_POST['val'] * -1;
+    } else {
+        $valor = $_POST['val'];
+    }
+
 // Get client ID from POST
-$valor = $_POST['val'];
 $desc = $_POST['desc'];
 
 // Establish DB connection
