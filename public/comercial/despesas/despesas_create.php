@@ -99,9 +99,9 @@
 
                 <div class="innerdiv" style="justify-content:center; margin: 0px 10px; gap: 10px;">
 
-                <div class="itens_shown" style="justify-content:space-evenly;align-content:center; gap: 10px;">
+                <div class="itens_shown" style="justify-content:space-evenly;align-content:center; gap: 10px;padding-top: 10px">
                     <button onclick="location.href='despesas_cat.php'" style="width:100%;padding: 5px;align-self:center">CRIAR CATEGORIA</button>
-                    <form action="despesas_cat_del.php" method="post" style="width:100%;padding: 5px">
+                    <form action="despesas_cat_del.php" method="post" style="width:100%;">
                         <input type="text" id="catd" name="catd" maxlength="255" hidden>
                         <button type="submit" style="width:100%;padding: 5px">DELETAR CATEGORIA</button>
                     </form>
@@ -113,6 +113,10 @@
 <script src="../public/assets/js/main.js"></script>
 <script>
     Stuff('catf');
+    function cookSave(info) {
+        document.cookie = "tipo=" + info;
+    }
+    console.log(document.cookie);
     </script>
 </body>
 </html>
