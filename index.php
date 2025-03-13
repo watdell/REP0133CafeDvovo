@@ -1,83 +1,87 @@
 <?php
-    include 'serverside/queries/db_queries.php';
-    include 'serverside/config/dbConnection.php';
-    include 'includes/main-sidebar.php';
+include 'serverside/queries/db_queries.php';
+include 'serverside/config/dbConnection.php';
+include 'includes/main-sidebar.php';
 
+$conn = dbConnection();
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
+
+// Calcular os totais
+$mod = '-30 day';
+$totalDespesas = getDespesas($conn, $mod);
+$totalEntradas = getEntradas($conn, $mod);
+$totalVendas = getVendas($conn, $mod);
+$lucroLiquido = $totalDespesas + $totalEntradas + $totalVendas;
+
+echo $totalEntradas;
+echo $totalDespesas;
+echo $totalVendas;
+
+function SelectData($table,$mod) {
     $conn = dbConnection();
+    $y = [];
+    $x = [];
+    $x1 = [];
+    $y1 = [];
 
-    if ($conn->connect_error) {
-        die("Erro de conexão: " . $conn->connect_error);
+    if ($mod == '-30 day') {
+        $TypeDate = 'GROUP BY DAY(data)';
+    } else {
+        $TypeDate = 'GROUP BY MONTH(data)';
     }
 
-    function DateMod($mod) {
-        $vencDate = new DateTime();
-        $vencDate->modify($mod);
-        return $vencDate->format('Y-m-d H:i:s');
-    };
+    $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' $TypeDate ORDER BY data ASC";
+    $stmt= $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result(); 
 
-    function SelectData($table,$mod) {
-        $conn = dbConnection();
-        $y = [];
-        $x = [];
-        $x1 = [];
-        $y1 = [];
-
-        if ($mod == '-30 day') {
-            $TypeDate = 'GROUP BY DAY(data)';
-        } else {
-            $TypeDate = 'GROUP BY MONTH(data)';
-        }
-
-        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' $TypeDate ORDER BY data ASC";
-        $stmt= $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result(); 
-
-        while($row = $result->fetch_assoc()) {
-            if ($table == 'entradas') {
-                if ($mod == '-30 day') {
-                    $x[] = array($row['valor_diario']);
-                    $y[] = array(substr($row['data'],0,10));
-                    } else { 
-                    $x[] = array($row['valor_diario']);
-                    $y[] = array(substr($row['data'],0,7));
-                    }
-            } else {
-                if ($mod == '-30 day') {
-                    $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,10));
-                    } else { 
-                    $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,7));
-                    }
-            }
-        }
-
-        $sql2= "SELECT data_venda, SUM(total) AS valor_diario FROM vendas WHERE data_venda > '" . DateMod($mod) . "' GROUP BY DAY(data_venda) ORDER BY data_venda ASC";
-        $stmt2= $conn->prepare($sql2);
-        $stmt2->execute();
-        $result2 = $stmt2->get_result(); 
-
-        while($row2 = $result2->fetch_assoc()) {
-            if ($table == 'entradas') {
-                if ($mod == '-30 day') {
-                    $x1[] = array($row2['valor_diario']);
-                    $y1[] = array(substr($row2['data_venda'],0,10));
+    while($row = $result->fetch_assoc()) {
+        if ($table == 'entradas') {
+            if ($mod == '-30 day') {
+                $x[] = array($row['valor_diario']);
+                $y[] = array(substr($row['data'],0,10));
                 } else { 
-                    $x1[] = array($row2['valor_diario']);
-                    $y1[] = array(substr($row2['data_venda'],0,7));
+                $x[] = array($row['valor_diario']);
+                $y[] = array(substr($row['data'],0,7));
                 }
-            
-                echo json_encode($x1);
-
-                echo json_encode($y1);
-            }
+        } else {
+            if ($mod == '-30 day') {
+                $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,10));
+                } else { 
+                $x[] = array("y" => $row['valor_diario'] * -1, "label" => substr($row['data'],0,7));
+                }
         }
-        return [$x, $y, $x1, $y1];
-    };
+    }
 
-    $dataPointsDay = SelectData('despesas','-30 day');
-    $dataPointsDayE = SelectData('entradas','-30 day');
-    $dataPointsMonth = SelectData('despesas','-12 month');
-    $dataPointsMonthE = SelectData('entradas','-12 month');
+    $sql2= "SELECT data_venda, SUM(total) AS valor_diario FROM vendas WHERE data_venda > '" . DateMod($mod) . "' GROUP BY DAY(data_venda) ORDER BY data_venda ASC";
+    $stmt2= $conn->prepare($sql2);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result(); 
+
+    while($row2 = $result2->fetch_assoc()) {
+        if ($table == 'entradas') {
+            if ($mod == '-30 day') {
+                $x1[] = array($row2['valor_diario']);
+                $y1[] = array(substr($row2['data_venda'],0,10));
+            } else { 
+                $x1[] = array($row2['valor_diario']);
+                $y1[] = array(substr($row2['data_venda'],0,7));
+            }
+        
+            echo json_encode($x1);
+
+            echo json_encode($y1);
+        }
+    }
+    return [$x, $y, $x1, $y1];
+};
+
+$dataPointsDay = SelectData('despesas','-30 day');
+$dataPointsDayE = SelectData('entradas','-30 day');
+$dataPointsMonth = SelectData('despesas','-12 month');
+$dataPointsMonthE = SelectData('entradas','-12 month');
 
 $sql= "SELECT data, SUM(valor) AS valor_total FROM despesas where data > '" . DateMod('-30 day') . "'";
 $stmt= $conn->prepare($sql);
@@ -189,117 +193,43 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
     
     <main class="content" style="width:90%">
 
-    <!-- <button onclick="mes()">Dia / Mês</button> -->
-    <div class="navbar" id="navbar"></div>
+        <!-- <button onclick="mes()">Dia / Mês</button> -->
+        <div class="navbar" id="navbar"></div>
 
-        <section class="charts">
-        <div id="inicial" style="width:100%;">
-            <div class="table" style="display:flex;justify-content:space-evenly">
-        <div class="subtotal" style="display:flex;flex-direction:column;width:40%">
-            <a style="width:40%;font-size:30px">Lucro Líquido:  </a>
-                <a id='col_cal' style="width:40%;font-size:30px"><?php
+            <section class="charts">
+                <div id="inicial" style="width:100%;">
+                    <div class="table" style="display:flex;justify-content:space-evenly">
+                        <div class="subtotal" style="display:flex;flex-direction:column;width:40%">
+                            <a style="width:40%;font-size:30px">Entradas:</a>
+                            <a style="width:40%;font-size:30px;color:#0d8e03">R$ <?php echo number_format($lucroLiquido, 2, ',', '.');?></a><br><br>
 
-                    $sql= "SELECT valor FROM despesas where data > '" . DateMod('-30 day') . "'";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $subtotal = 0;
+                            <a style="width:40%;font-size:30px">Despesas:</a>
+                            <a style="width:40%;font-size:30px;color:#8e0321">R$ <?php echo number_format($totalDespesas, 2, ',', '.');?></a><br><br>
 
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['valor'];
-                    }
+                            <a style="width:40%;font-size:30px">Entradas:</a>
+                            <a style="width:40%;font-size:30px;color:#0d8e03">R$ <?php echo number_format($totalEntradas, 2, ',', '.');?></a><br><br>
 
-                    $sql= "SELECT valor FROM entradas where data > '" . DateMod('-30 day') . "'";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['valor'];
-                    }
-
-                    $sql= "SELECT total FROM vendas where data_venda > '" . DateMod('-30 day') . "'";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['total'];
-                    }
-
-                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
-                    ?></a><br><br>
-                    <a style="width:40%;font-size:30px">Despesas:</a>
-                    <a style="width:40%;font-size:30px;color:#8e0321"><?php
-
-                    $sql= "SELECT valor FROM despesas where data > '" . DateMod('-30 day') . "'";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $subtotal = 0;
-
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['valor'];
-                    }
-                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
-                    ?></a><br><br>
-                    <a style="width:40%;font-size:30px">Entradas:</a>
-                    <a style="width:40%;font-size:30px;color:#0d8e03"><?php
-                    $subtotal = 0;
-
-                    $sql= "SELECT valor FROM entradas where data > '" . DateMod('-30 day') . "'";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['valor'];
-                    }
-
-                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
-                    ?></a><br><br>
-                    <a style="width:40%;font-size:30px">Vendas:</a>
-                    <a style="width:40%;font-size:30px;color:#0d8e03"><?php
-                    $subtotal = 0;
-
-                        $sql= "SELECT total FROM vendas where data_venda > '" . DateMod('-30 day') . "'";
-                        $stmt= $conn->prepare($sql);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        while($row = $result->fetch_assoc()) {
-                            $subtotal = $subtotal + $row['total'];
-                        }
-                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
-                    ?></a>
+                            <a style="width:40%;font-size:30px">Vendas:</a>
+                            <a style="width:40%;font-size:30px;color:#0d8e03">R$ <?php echo number_format($totalVendas, 2, ',', '.');?></a>
+                        </div>
+                        <div id="pieContainer" style="height: 400px; width: 50%;"></div>
+                    </div>
                 </div>
-            <div id="pieContainer" style="height: 400px; width: 50%;"></div>
-            </div>
-        </div>
 
-        <div class="itens_shown" style="margin: 0;">
+                <div class="itens_shown" style="margin: 0;">
+                    <div id="chartContainerDay" style="height: 400px; width: 48%;"></div>
+                    <div id="chartContainerDayE" style="height: 400px; width: 48%;"></div> 
+                </div>
 
-        <div id="chartContainerDay" style="height: 400px; width: 48%;"></div>
-
-        <div id="chartContainerDayE" style="height: 400px; width: 48%;"></div> 
-
-        </div>
-
-        <hr style="width:100%;border: 1px dashed #483327">
+                <hr style="width:100%;border: 1px dashed #483327">
 
 
-        <div class="itens_shown" style="margin: 0;">
-
-        <div id="chartContainerMonth" style="height: 400px; width: 48%;"></div>
-
-        <div id="chartContainerMonthE" style="height: 400px; width: 48%;"></div>
-
-        </div>
-
-        
-           
-        </section>   
-        <br>
+                <div class="itens_shown" style="margin: 0;">
+                    <div id="chartContainerMonth" style="height: 400px; width: 48%;"></div>
+                    <div id="chartContainerMonthE" style="height: 400px; width: 48%;"></div>
+                </div>
+            </section>   
+            <br>
     </main>
 
 <script src="./public/assets/js/main.js"></script>

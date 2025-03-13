@@ -303,5 +303,59 @@
             return null;  // Caso o tipo da consulta não seja encontrado
         }
     }
+    /* ---------------- PARA O INDEX.PHP ----------------*/
+    // Função para definir o intervalo de tempo
+    function DateMod($mod) {
+        $vencDate = new DateTime();
+        $vencDate->modify($mod);
+        return $vencDate->format('Y-m-d H:i:s');
+    };
+
+    // Função para buscar o total das despesas
+    function getTotalFromTable($conn, $table, $dateColumn, $mod) {
+        $dateFilter = DateMod($mod);
+        $sum = ($table == 'vendas') ? 'total' : 'valor';
+        $sql = "SELECT $dateColumn, SUM($sum) AS total FROM $table WHERE $dateColumn > ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $dateFilter);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc()['total'];
+    }
+
+    // Função para buscar as entradas
+    function getEntradas($conn, $mod) {
+        return getTotalFromTable($conn, 'entradas', 'data', $mod);
+    }
+
+    // Função para buscar as despesas
+    function getDespesas($conn, $mod) {
+        return getTotalFromTable($conn, 'despesas', 'data', $mod);
+    }
+
+    // Função para buscar as vendas
+    function getVendas($conn, $mod) {
+        return getTotalFromTable($conn, 'vendas', 'data_venda', $mod);
+    }
+
+    // Função para buscar dados para os gráficos (diário ou mensal)
+    function getGraphData($conn, $table, $mod) {
+        $dateFilter = DateMod($mod);
+        $groupBy = ($mod == '-30 day') ? 'DAY(data)' : 'MONTH(data)';
+        $sql = "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > ? GROUP BY $groupBy ORDER BY data ASC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $dateFilter);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $dataPoints = [];
+        while($row = $result->fetch_assoc()) {
+            $dataPoints[] = [
+                'y' => $row['valor_diario'] * ($table == 'entradas' ? 1 : -1),
+                'label' => substr($row['data'], 0, ($mod == '-30 day') ? 10 : 7)
+            ];
+        }
+        return $dataPoints;
+}
 
 ?>
