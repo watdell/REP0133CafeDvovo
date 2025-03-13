@@ -25,7 +25,7 @@
 <body>
     <header class="topbar">DESPESAS</header>
 
-    <main class="content" style="justify-self: center;width:80%;">
+    <main class="content">
 
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">

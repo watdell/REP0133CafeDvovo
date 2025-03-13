@@ -1,6 +1,6 @@
 .table {
-    width: 100%;
-    height: auto;
+    width: fit-content;
+    height: fit-content;
     min-height: 600px;
     background-color: #fdf7e3;
     border: 1px solid #d9b38c;
@@ -60,9 +60,19 @@
     flex-direction: column;
 }
 
+.innertable-content {
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    min-height:600px;
+    gap:15px;
+    flex-wrap: nowrap
+}
+
 .innertable {
     margin-top: 10px;
-    width: 50%;
+    width: 100%;
+    min-width: 600px;
     min-height: 400px;
     background-color: #ffffff;
     border: 1px solid #e0c3a5;
@@ -115,7 +125,7 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 5px;
-    height: 40px;
+    height: fit-content;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.5s ease; 
 }
@@ -131,7 +141,10 @@ button:hover {
 }
 
 .content {
-    width: 60%;
+    display: flex;
+    justify-self: center;
+    min-width: fit-content;
+    max-height: fit-content;
 }
 
 .restable {
@@ -208,3 +221,11 @@ input[type=submit]:hover {
         transform: scale(1);
     }
 }
+
+@media (max-width: 1600px) {
+
+    .innertable-content {
+        flex-wrap: wrap
+    };
+     
+ }

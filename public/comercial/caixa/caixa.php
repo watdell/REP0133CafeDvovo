@@ -25,7 +25,7 @@
 <body>
     <header class="topbar">CAIXA</header>
 
-    <main class="content" style="justify-self: center;width:80%;">
+    <main class="content">
 
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
@@ -33,7 +33,7 @@
                 <h2>Despesas</h2>
             </div>
 
-            <div style="display:flex;flex-direction:row;min-height:600px">
+            <div class="innertable-content">
             
                 <div class="innertable" style="background-color:#caffd8">
                 <div class="table_header">
