@@ -65,7 +65,7 @@
     flex-direction:row;
     justify-content: center;
     min-height:600px;
-    gap:15px;
+    gap:10px;
     flex-wrap: nowrap
 }
 
@@ -222,10 +222,34 @@ input[type=submit]:hover {
     }
 }
 
+#despesas-title1 {
+    display: block;
+}
+
+#despesas-title2 {
+    display: none;
+}
+
+
 @media (max-width: 1600px) {
 
     .innertable-content {
         flex-wrap: wrap
-    };
-     
- }
+    }
+
+    #despesas-title1 {
+        display: none;
+        color:rgba(233, 119, 79, 0.5)
+    }
+    
+    #despesas-title2 {
+        display: block;
+    }
+    
+    .table-header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between
+    }
+}

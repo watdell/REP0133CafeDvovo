@@ -30,7 +30,7 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
                 <h2>Entradas</h2>
-                <h2>Despesas</h2>
+                <h2 id="despesas-title1">Despesas</h2>
             </div>
 
             <div class="innertable-content">
@@ -121,6 +121,10 @@
                     
                 </div>
 
+                <div class="table-header">
+                    <h2 id="despesas-title2">Despesas</h2>
+                </div>
+                    
                 <div class="innertable"  style="background-color:#ffdbca">
                 <div class="table_header">
                     <a style="width:19%">ID</a>
