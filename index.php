@@ -69,7 +69,8 @@
                 foreach ($y1 as $value) {
                     echo $value;
                 }
-            }}
+            }
+        }
         return [$x, $y];
     };
 
