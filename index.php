@@ -17,6 +17,7 @@
 
     function SelectData($table,$mod) {
         $conn = dbConnection();
+        $y = 0;
 
         if ($mod == '-30 day') {
             $TypeDate = 'GROUP BY DAY(data)';
@@ -32,9 +33,11 @@
         while($row = $result->fetch_assoc()) {
             if ($table == 'entradas') {
                 if ($mod == '-30 day') {
-                    $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
+                    $x[] = array($row['valor_diario']);
+                    $y[] = array(substr($row['data'],0,10));
                     } else { 
-                    $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,7));
+                    $x[] = array($row['valor_diario']);
+                    $y[] = array(substr($row['data'],0,7));
                     }
             } else {
                 if ($mod == '-30 day') {
@@ -44,7 +47,30 @@
                     }
             }
         }
-        return $x;
+
+        $sql2= "SELECT data_venda, SUM(total) AS valor_diario FROM vendas WHERE data_venda > '" . DateMod($mod) . "' GROUP BY DAY(data_venda) ORDER BY data_venda ASC";
+        $stmt2= $conn->prepare($sql2);
+        $stmt2->execute();
+        $result2 = $stmt2->get_result(); 
+
+        while($row2 = $result2->fetch_assoc()) {
+            if ($table == 'entradas') {
+                if ($mod == '-30 day') {
+                    $x1[] = array($row2['valor_diario']);
+                    $y2[] = array(substr($row2['data_venda'],0,10));
+                } else { 
+                    $x1[] = array($row2['valor_diario']);
+                    $y2[] = array(substr($row2['data_venda'],0,7));
+                }
+            
+                foreach ($y as $value) {
+                    echo json_encode($value);
+                }
+                foreach ($y1 as $value) {
+                    echo $value;
+                }
+            }}
+        return [$x, $y];
     };
 
     $dataPointsDay = SelectData('despesas','-30 day');
@@ -125,10 +151,10 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
             chart.render();
         }
 
-        BuildCanvas("chartContainerDay","Despesas (DIARIO)",<?php echo json_encode($dataPointsDay, JSON_NUMERIC_CHECK); ?>,'red');
-        BuildCanvas("chartContainerMonth","Despesas (MENSAL)",<?php echo json_encode($dataPointsMonth, JSON_NUMERIC_CHECK); ?>,'red');
-        BuildCanvas("chartContainerDayE","Entradas (DIARIO)",<?php echo json_encode($dataPointsDayE, JSON_NUMERIC_CHECK); ?>,'green');
-        BuildCanvas("chartContainerMonthE","Entradas (MENSAL)",<?php echo json_encode($dataPointsMonthE, JSON_NUMERIC_CHECK); ?>,'green');
+        BuildCanvas("chartContainerDay","Despesas (DIARIO)",<?php echo json_encode($dataPointsDay[0], JSON_NUMERIC_CHECK); ?>,'red');
+        BuildCanvas("chartContainerMonth","Despesas (MENSAL)",<?php echo json_encode($dataPointsMonth[0], JSON_NUMERIC_CHECK); ?>,'red');
+        BuildCanvas("chartContainerDayE","Entradas (DIARIO)",<?php echo json_encode($dataPointsDayE[0], JSON_NUMERIC_CHECK); ?>,'green');
+        BuildCanvas("chartContainerMonthE","Entradas (MENSAL)",<?php echo json_encode($dataPointsMonthE[0], JSON_NUMERIC_CHECK); ?>,'green');
 
         var chart = new CanvasJS.Chart("pieContainer", {
             theme: "light2",
