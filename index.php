@@ -17,7 +17,10 @@
 
     function SelectData($table,$mod) {
         $conn = dbConnection();
-        $y = 0;
+        $y = [];
+        $x = [];
+        $x1 = [];
+        $y1 = [];
 
         if ($mod == '-30 day') {
             $TypeDate = 'GROUP BY DAY(data)';
@@ -57,21 +60,18 @@
             if ($table == 'entradas') {
                 if ($mod == '-30 day') {
                     $x1[] = array($row2['valor_diario']);
-                    $y2[] = array(substr($row2['data_venda'],0,10));
+                    $y1[] = array(substr($row2['data_venda'],0,10));
                 } else { 
                     $x1[] = array($row2['valor_diario']);
-                    $y2[] = array(substr($row2['data_venda'],0,7));
+                    $y1[] = array(substr($row2['data_venda'],0,7));
                 }
             
-                foreach ($y as $value) {
-                    echo json_encode($value);
-                }
-                foreach ($y1 as $value) {
-                    echo $value;
-                }
+                echo json_encode($x1);
+
+                echo json_encode($y1);
             }
         }
-        return [$x, $y];
+        return [$x, $y, $x1, $y1];
     };
 
     $dataPointsDay = SelectData('despesas','-30 day');
