@@ -12,7 +12,7 @@
     function DateMod($mod) {
         $vencDate = new DateTime();
         $vencDate->modify($mod);
-        echo $vencDate->format('Y-m-d H:i:s');
+        return $vencDate->format('Y-m-d H:i:s');
     };
 
     function SelectData($table,$mod) {
@@ -24,7 +24,7 @@
             $TypeDate = 'GROUP BY MONTH(data)';
         }
 
-        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' $TypeDate";
+        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' $TypeDate ORDER BY data ASC";
         $stmt= $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result(); 
@@ -52,7 +52,7 @@
     $dataPointsMonth = SelectData('despesas','-12 month');
     $dataPointsMonthE = SelectData('entradas','-12 month');
 
-$sql= "SELECT data, SUM(valor) AS valor_total FROM despesas";
+$sql= "SELECT data, SUM(valor) AS valor_total FROM despesas where data > '" . DateMod('-30 day') . "'";
 $stmt= $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -61,7 +61,7 @@ while($row = $result->fetch_assoc()) {
     $pieDataPoints[] = array("y" => $row['valor_total'], "label" => "DESPESAS");
 }
 
-$sql= "SELECT data, SUM(valor) AS valor_total FROM entradas";
+$sql= "SELECT data, SUM(valor) AS valor_total FROM entradas where data > '" . DateMod('-30 day') . "'";
 $stmt= $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -71,7 +71,7 @@ while($row = $result->fetch_assoc()) {
     $total += $row['valor_total'];
 }
 
-$sql= "SELECT total FROM vendas";
+$sql= "SELECT total FROM vendas where data_venda > '" . DateMod('-30 day') . "'";
 $stmt= $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -172,7 +172,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
             <a style="width:40%;font-size:30px">Lucro Líquido:  </a>
                 <a id='col_cal' style="width:40%;font-size:30px"><?php
 
-                    $sql= "SELECT valor FROM despesas";
+                    $sql= "SELECT valor FROM despesas where data > '" . DateMod('-30 day') . "'";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -182,7 +182,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT valor FROM entradas";
+                    $sql= "SELECT valor FROM entradas where data > '" . DateMod('-30 day') . "'";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -191,7 +191,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT total FROM vendas";
+                    $sql= "SELECT total FROM vendas where data_venda > '" . DateMod('-30 day') . "'";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -205,7 +205,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                     <a style="width:40%;font-size:30px">Despesas:</a>
                     <a style="width:40%;font-size:30px;color:#8e0321"><?php
 
-                    $sql= "SELECT valor FROM despesas";
+                    $sql= "SELECT valor FROM despesas where data > '" . DateMod('-30 day') . "'";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -220,7 +220,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                     <a style="width:40%;font-size:30px;color:#0d8e03"><?php
                     $subtotal = 0;
 
-                    $sql= "SELECT valor FROM entradas";
+                    $sql= "SELECT valor FROM entradas where data > '" . DateMod('-30 day') . "'";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -235,7 +235,7 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
                     <a style="width:40%;font-size:30px;color:#0d8e03"><?php
                     $subtotal = 0;
 
-                        $sql= "SELECT total FROM vendas";
+                        $sql= "SELECT total FROM vendas where data_venda > '" . DateMod('-30 day') . "'";
                         $stmt= $conn->prepare($sql);
                         $stmt->execute();
                         $result = $stmt->get_result();
