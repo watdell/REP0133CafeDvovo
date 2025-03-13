@@ -18,7 +18,7 @@
             <h1>O que você gostaria de registrar?</h1>
             <br>
             <ul class="ul-selecione">
-                <li><a href="/public/comercial/orcamento/orcamento.php">Orçamento</a></li>
+                <!-- <li><a href="/public/comercial/orcamento/orcamento.php">Orçamento</a></li> -->
                 <li><a href="/public/comercial/venda/venda.php">Venda</a></li>
                 <!-- <li><a href="/public/servicos/cadastro-servicos/servicos_home.php">Serviços</a></li>
                 <li><a href="/public/comercial/pagamento/pagamento.php">Pagamento</a></li>

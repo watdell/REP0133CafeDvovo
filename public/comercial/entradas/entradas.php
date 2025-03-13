@@ -25,7 +25,7 @@
 <body>
     <header class="topbar">ENTRADAS</header>
 
-    <main class="content" style="justify-self: center;width:50%;">
+    <main class="content">
 
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">
@@ -82,7 +82,7 @@
 
             <div class="itens_shown" style="justify-content:space-between">
 
-            <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:50%'>REGISTRAR NOVA ENTRADA</button>
+            <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:40%'>REGISTRAR NOVA ENTRADA</button>
 
             <div class="subtotal">
                 <a style="width:40%;font-size:30px">Subtotal:</a>
