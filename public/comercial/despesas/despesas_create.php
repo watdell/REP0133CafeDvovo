@@ -47,7 +47,7 @@
                         <label for="cat">Categoria:</label>
 
 
-                        <select id='catf' name="catf" onchange='Stuff("catf")'>
+                        <select id='catf' name="catf" onchange='Stuff("catf")' style='display:none'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'fixo'";
 
@@ -61,7 +61,7 @@
                             ?>
                         </select>
 
-                        <select id='catv' name="catv" onchange='Stuff("catv")'>
+                        <select id='catv' name="catv" onchange='Stuff("catv")' style='display:none'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'variavel'";
 
