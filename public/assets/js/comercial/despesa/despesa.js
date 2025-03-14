@@ -50,3 +50,11 @@ function datetime() {
 function Stuff(catid) {
     document.getElementById('catd').value = document.getElementById(catid).value;
 }
+
+function thewarn() {
+    if (document.getElementById('val').value < 0) {
+        document.getElementById('valwarn').style.display = 'block';
+    } else {
+        document.getElementById('valwarn').style.display = 'none';
+    }
+}

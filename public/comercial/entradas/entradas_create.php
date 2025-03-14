@@ -44,9 +44,11 @@
                         <br>
 
                         <label for="nome">Valor:</label>
-                        <input type="number" step='0.01' id="val" name="val" maxlength="255" required style='width:100%;'>
+                        <input type="number" step='0.01' id="val" name="val" maxlength="255" required style='width:100%;' onchange='thewarn()'>
 
-                        <br><br>
+                        <br>
+                        <a id='valwarn' class='valwarn'>VALOR SERÁ REGISTRADO COMO POSITIVO</a>     
+                        <br>
 
                         <div class="innerdiv" style="justify-content:space-evenly">
 
