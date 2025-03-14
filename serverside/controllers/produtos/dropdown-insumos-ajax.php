@@ -9,7 +9,7 @@ include ('../../config/dbConnection.php');
 
 $conn = dbConnection();
 
-$sql = "SELECT insumo_id, nome, custo_unitario, unidade_medida, estoque_atual, data_validade FROM insumo";
+$sql = "SELECT insumo_id, nome, custo_unitario, unidade_medida, estoque_atual, data_validade FROM insumo ORDER BY nome ASC";
 
 $result = $conn->query($sql);
 

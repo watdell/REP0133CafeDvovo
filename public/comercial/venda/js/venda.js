@@ -40,7 +40,7 @@ function adicionarProduto() {
     td1.innerHTML = `${novoSelect.outerHTML}`;
 
     var td2 = document.createElement("td");
-    td2.innerHTML = `<input class='produto-qntd' type='number' name='qntd-produto[]' id='produto-qntd-${produtoIndex}' min='1' oninput='calcularSubtotal(this)' style='width: 50px;' value='1'>`;
+    td2.innerHTML = `<input class='produto-qntd' type='number' name='qntd-produto[]' id='produto-qntd-${produtoIndex}' min='1' oninput='calcularSubtotal(this)' style='width: 60px;' value='1'>`;
 
     var td3 = document.createElement("td");
     td3.innerHTML = `<input class='valor-unit' type='text' name='valor-unit[]' id='valor-unit-${produtoIndex}' style='width: 70px;'>`;
@@ -151,12 +151,15 @@ function atualizarTotal() {
 
     // Soma os subtotais dos produtos
     document.querySelectorAll(".sub-total").forEach(input => {
-        let valor = parseFloat(input.value.replace(",", ".")) || 0; // Converte vírgula para ponto
-        subtotal += valor;
+        let valor = input.value.replace(/\./g, "").replace(",", "."); // Remove pontos e troca vírgula por ponto
+        let numero = parseFloat(valor) || 0;
+        subtotal += numero;
     });
 
-    let desconto = parseFloat(document.getElementById("desconto").value.replace(",", ".")) || 0;
-    let total = subtotal - desconto;
+    let desconto = document.getElementById("desconto").value.replace(/\./g, "").replace(",", "."); 
+    let descontoNumero = parseFloat(desconto) || 0;
+
+    let total = subtotal - descontoNumero;
 
     // Evita valores negativos
     if (total < 0) {
@@ -164,8 +167,9 @@ function atualizarTotal() {
     }
 
     // Exibe o total formatado com vírgula
-    document.getElementById("total").innerText = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("total").innerText = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 4 });
 }
+
 
 // Distribui o evento para ser atualizado o subtotal e o total quando o usuario digitar algo nos inputs de quantidade e desconto, criados de forma fixa 
 document.querySelectorAll(".produto-qntd, .desconto").forEach(input => {
