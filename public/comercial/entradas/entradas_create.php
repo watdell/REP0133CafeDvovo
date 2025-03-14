@@ -44,7 +44,7 @@
                         <br>
 
                         <label for="nome">Valor:</label>
-                        <input type="float" id="val" name="val" maxlength="255" required style='width:100%;'>
+                        <input type="number" step='0.01' id="val" name="val" maxlength="255" required style='width:100%;'>
 
                         <br><br>
 

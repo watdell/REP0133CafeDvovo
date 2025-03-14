@@ -84,7 +84,7 @@
                         <input type="text" id="desc" name="desc" maxlength="255" required>
 
                         <label for="nome">Valor:</label>
-                        <input type="float" id="val" name="val" maxlength="255" required>
+                        <input type="number" step='0.01' id="val" name="val" maxlength="255" required>
                         </div>
 
                         <br><br>

@@ -30,6 +30,7 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">
                 <h2>Entradas</h2>
+                <button onclick="location.href='../index.php'">VOLTAR</button>
             </div>
 
             <div style="display:flex;flex-direction:row;min-height:600px">
