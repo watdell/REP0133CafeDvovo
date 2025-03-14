@@ -61,7 +61,7 @@
                             ?>
                         </select>
 
-                        <select id='catv' style="display:none" name="catv" onchange='Stuff("catv")'>
+                        <select id='catv' name="catv" onchange='Stuff("catv")'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'variavel'";
 
@@ -112,11 +112,19 @@
     </main>
 <script src="../public/assets/js/main.js"></script>
 <script>
-    Stuff('catf');
-    function cookSave(info) {
-        document.cookie = "tipo=" + info;
+    document.getElementById('tipo').value = getCookie('tipo');
+
+    if (document.getElementById('tipo').value == 'fixo') {
+        document.getElementById('catf').style.display = 'flex';
+        document.getElementById('catv').style.display = 'none';
+
+        Stuff('catf');
+    } else {
+        document.getElementById('catf').style.display = 'none';
+        document.getElementById('catv').style.display = 'flex';
+
+        Stuff('catv')
     }
-    console.log(document.cookie);
     </script>
 </body>
 </html>
