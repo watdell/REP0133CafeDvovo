@@ -7,7 +7,7 @@ function setCookie(cname, cvalue, exdays) {
     console.log(document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/")
     }
 
-function getCookie(cname) {
+function getCookie(cname,page) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
@@ -18,10 +18,17 @@ function getCookie(cname) {
         }
         if (c.indexOf(name) == 0) {
             console.log(c.substring(name.length, c.length))
-        return c.substring(name.length, c.length);
+            return c.substring(name.length, c.length);
         }
     }
-    return "fixo";
+
+    if (page == "desp"){
+        return "fixo";
+    } else if (page == "entr"){
+        return "descricao";
+    } else {
+        return "";
+    }
     }
 
 function setCat() {
@@ -57,4 +64,17 @@ function thewarn() {
     } else {
         document.getElementById('valwarn').style.display = 'none';
     }
+}
+
+function search(table,cook) {
+    str = document.getElementById("search").value.toLowerCase();
+    document.getElementById("innertable").innerHTML = '';
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("innertable").insertAdjacentHTML("beforeend",this.responseText);
+        }
+    };
+    xmlhttp.open("GET","../caixa/search.php?q="+str+"&c="+getCookie(cook,'entr')+"&t="+table,true);
+    xmlhttp.send();
 }
