@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../public/assets/css/main.css">
     <link rel="stylesheet" href="../../../public/assets/css/despesas/style.css?v=<?php echo time(); ?>">
+    <script src="../../../public/assets/js/comercial/despesa/despesa.js?v=<?php echo time(); ?>"></script>
     <title>Document</title>
 
     <?php
@@ -30,136 +31,22 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
                 <h2>Entradas</h2>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por descrição' oninput='doobsearch()'></input>
                 <h2 id="despesas-title1">Despesas</h2>
             </div>
 
             <div class="innertable-content">
             
-                <div class="innertable" style="background-color:#caffd8">
-                <div class="table_header">
-                    <a  style="width:20%">ID</a>
-                    <a  style="width:20%">descrição</a>
-                    <a  style="width:20%">valor</a>
-                    <a  style="width:20%">data</a>
-                </div>
-                <hr style='height:4px;background-color:black'><br>
-
-                        <?php
-
-                        $sql= "SELECT * FROM entradas";
-                        $stmt= $conn->prepare($sql);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        while($row = $result->fetch_assoc()) {
-                            ?>
-                            <div class='itens_shown'>
-                            <a style="width:20%"><?php  
-                            echo $row['identrada'];?> </a>
-                            <a style="width:20%"><?php
-                            echo $row['descricao'];?> </a>
-                            <a style="width:20%"><?php
-                            echo $row['valor'];?> </a>
-                            <a style="width:20%"><?php
-                            echo $row['data'];
-                            ?> </a></div>
-                            <hr>
-                            <?php
-                        }
-
-                        echo "<hr style='height:3px;background-color:black'><br>";
-
-                        $sql= "SELECT venda_id, produto FROM itens_venda GROUP BY venda_id;";
-                        $stmt= $conn->prepare($sql);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-
-                        while($row = $result->fetch_assoc()) {
-                            ?>
-                            <div class='itens_shown'>
-                            <a style="width:20%"><?php  
-                            echo $row['venda_id'];?> </a>
-                            <a style="width:20%"><?php
-
-                            $sql2= "SELECT nome FROM produto WHERE produto_id = '" . $row["produto"] . "' LIMIT 1";
-                            $stmt2= $conn->prepare($sql2);
-                            $stmt2->execute();
-                            $result2 = $stmt2->get_result();
-
-                            while($row2 = $result2->fetch_assoc()) {
-                                echo $row2['nome'];      
-                            }      
-                            ?></a>
-                            <a style="width:20%"><?php
-
-                             $sql4= "SELECT total FROM vendas WHERE venda_id = '" . $row["venda_id"] . "'";
-                             $stmt4= $conn->prepare($sql4);
-                             $stmt4->execute();
-                             $result4 = $stmt4->get_result();
-
-                            while($row4 = $result4->fetch_assoc()) {
-                                echo $row4['total'];  
-                            } 
-                            ?> </a>
-                            <a style="width:20%"><?php
-
-                                $sql1= "SELECT data_venda FROM vendas WHERE venda_id = '" . $row['venda_id'] . "' LIMIT 1;";
-                                $stmt1= $conn->prepare($sql1);
-                                $stmt1->execute();
-                                $result1 = $stmt1->get_result();
-
-                                while($row1 = $result1->fetch_assoc()) {
-                                    echo $row1['data_venda'];
-                                }
-
-                            ?> </a></div>
-                            <hr>
-                            <?php
-                        }
-
-                        ?>
-                    
+                <div id="innertable2" class="innertable" style="background-color:#caffd8">
+                    <!-- THIS IS WHERE THE MAGIC HAPPENS --> 
                 </div>
 
                 <div class="table-header">
                     <h2 id="despesas-title2">Despesas</h2>
                 </div>
                     
-                <div class="innertable"  style="background-color:#ffdbca">
-                <div class="table_header">
-                    <a style="width:19%">ID</a>
-                    <a style="width:19%">categoria</a>
-                    <a style="width:19%">descricao</a>
-                    <a style="width:19%">valor</a>
-                    <a style="width:19%">data</a>
-                </div>
-                <hr style='height:4px;background-color:black'><br>
-                    <?php
-
-                    $sql= "SELECT * FROM despesas";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        ?>
-                        <div class='itens_shown'>
-                        <a style="width:19%"><?php  
-                        echo $row['iddespesa'];?> </a>
-                        <a style="width:19%"><?php
-                        echo $row['categoria'];?> </a>
-                        <a style="width:19%"><?php
-                        echo $row['descricao'];?> </a>
-                        <a style="width:19%"><?php
-                        echo $row['valor'];?> </a>
-                        <a style="width:19%"><?php
-                        echo $row['data'];
-                        ?> </a></div>
-                        <hr>
-                        <?php
-                    }
-
-                    ?>
+                <div id=innertable class="innertable"  style="background-color:#ffdbca">
+                    <!-- THIS IS WHERE THE MAGIC HAPPENS -->
                 </div>
 
             </div>
@@ -207,8 +94,6 @@
         
         </div>
 
-        
-        
     </main>
 <script src="../public/assets/js/main.js"></script>
 <script>
@@ -223,7 +108,15 @@
         }
     }
     calcularTotal();
-        </script>
+
+    function doobsearch() {
+        search("despesas",'select-search-d',true);
+        search("entradas",'select-search-d',true,'innertable2');
+    }
+
+    doobsearch()
+
+    </script>
 
 </body>
 </html>

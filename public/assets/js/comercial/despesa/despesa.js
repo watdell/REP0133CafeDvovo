@@ -66,15 +66,19 @@ function thewarn() {
     }
 }
 
-function search(table,cook) {
+function search(table,cook,caix = false,inta = "innertable") {
     str = document.getElementById("search").value.toLowerCase();
-    document.getElementById("innertable").innerHTML = '';
+    document.getElementById(inta).innerHTML = '';
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("innertable").insertAdjacentHTML("beforeend",this.responseText);
+            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
         }
     };
-    xmlhttp.open("GET","../caixa/search.php?q="+str+"&c="+getCookie(cook,'entr')+"&t="+table,true);
+    if (caix == true) {
+        xmlhttp.open("GET","search.php?q="+str+"&c=descricao&p=caixa&d="+inta+"&t="+table,true);
+        } else {
+        xmlhttp.open("GET","../caixa/search.php?q="+str+"&d=false&p=not&c="+getCookie(cook,'entr')+"&t="+table,true);
+        }
     xmlhttp.send();
 }

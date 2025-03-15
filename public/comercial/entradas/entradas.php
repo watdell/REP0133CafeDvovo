@@ -36,7 +36,7 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">
                 <h2>Entradas</h2>
-                <input id='search' type='search' style='width:50%' placeholder='pesquisar por...' onchange='search("entradas","select-search")'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' oninput='search("entradas","select-search")'></input>
                 <select id="select-search" style="margin-left:10px;width:17%" onchange="setcook()">
                     <option id="select-search-descricao" value="descricao">DESC</option>
                     <option id="select-search-id" value="id">ID</option>
