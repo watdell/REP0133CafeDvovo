@@ -111,7 +111,7 @@ function adicionarInsumo() {
         const labelSelect = `<label for="select-insumo-${indexJsLastIdFixedInsumos}">Insumo: </label>`;
         const novoSelect = `<select name='insumo[]' class='insumo-select' style='width: 70%;' id='select-insumo-${indexJsLastIdFixedInsumos}'></select>`;
         const labelInput = `<label style='margin-left: 5px;' for='qntd-insumo-${indexJsLastIdFixedInsumos}'>g: </label>`;
-        const input = `<input onblur='verificaEstoque(this)' style='width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
+        const input = `<input onblur='verificaEstoque(this)' style='width: 50px;' class='insumo-qntd' type="number" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
         const deleteIcon = `<i id='${indexJsLastIdFixedInsumos}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
         // Adiciona o select, labels e input ao div
         div.innerHTML = `${labelSelect}${novoSelect}${labelInput}${input}${deleteIcon}`;
