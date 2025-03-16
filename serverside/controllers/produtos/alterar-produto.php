@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //echo "Tipo da imagem: " . htmlspecialchars($imageType);
 
     // Exibe valores recebidos para debug
-    foreach ($_POST as $key => $value) {
+    /*foreach ($_POST as $key => $value) {
        echo "Key: " . htmlspecialchars($key) . ", Value: " . (is_array($value) ? json_encode($value) : htmlspecialchars($value)) . "<br>";
-    }
+    }*/
 
     //$estoque_atual_insumo = json_decode($_POST['qntd-insumo-lista'], true) ?? [];
     

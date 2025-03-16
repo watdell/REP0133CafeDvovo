@@ -98,22 +98,23 @@
                         // Exibir os insumos cadastrados no produto
                         while ($row = $result->fetch_assoc()) { ?>
                             <div class="insumo" id="insumo-<?php echo $index; ?>">
-                                <label for="insumo-<?php echo $row['insumo_id']; ?>">Insumo:</label>
-                                <select style="width: 70%;" class="insumo-select" id="insumo" name="insumo[]">
+                                <label for="select-insumo-<?php echo $index; ?>">Insumo:</label>
+                                <select style="width: 70%;" class="insumo-select" id="select-insumo-<?php echo $index; ?>" name="insumo[]">
                                     <?php foreach ($insumosDisponiveis as $insumo) { ?>
-                                        <option value="<?php echo $insumo['insumo_id']; ?>" data-custo_unitario="<?php echo $row['custo_unitario']; ?>"
+                                        <option value="<?php echo $insumo['insumo_id']; ?>" data-estoque-atual="<?php echo $insumo['estoque_atual']; ?>" data-custo_unitario="<?php echo $row['custo_unitario']; ?>"
                                             <?php echo ($insumo['insumo_id'] == $row['insumo_id']) ? 'selected' : ''; ?>>
                                             <?php echo $insumo['nome'] ." ----- R$ ".number_format($insumo['custo_unitario'], 2, ',', '.')." ".$insumo['unidade_medida']." ----- Estoque ".$insumo['estoque_atual']." ".$insumo['unidade_medida']; ?>
                                         </option>
                                     <?php } ?>
                                 </select>
                                 <label for="quantidade-insumo-<?php echo $row['insumo_id']; ?>"><?php echo $row['unidade_medida']; ?>:</label>
-                                <input class="insumo-qntd" type="number" name="qntd-insumo[]" value="<?php echo $row['qntd_insumo']; ?>" style="width: 50px;" step="1">
+                                <input onblur="verificaEstoque(this)" class="insumo-qntd" data-insumo-id="<?php echo $row['insumo_id']; ?>" id="qntd-insumo-<?php echo $index; ?>" type="number" name="qntd-insumo[]" value="<?php echo $row['qntd_insumo']; ?>" style="width: 50px;" step="1">
                                 <i onclick="deleteInsumoDiv(this)" id="<?php echo $index; ?>" data-insumo-id = "<?php echo $row['insumo_id']; ?>" class="icon-delete">🗑️</i>
                             </div>
                     <?php
                         $index++;
-                    } ?>
+                        } 
+                    ?>
                     <script>
                         indexJsLastIdFixedInsumos = <?php echo $index; ?>
                     </script>
@@ -126,10 +127,10 @@
             <fieldset class="fieldset">
                 <legend>Informações Financeiras</legend>
                 <label for="margem-lucro">Margem de Lucro (%):</label>
-                <input type="text" name="margem-lucro" id="margem-lucro" value="<?php echo $row_product['margem_lucro']; ?>">
+                <input type="number" name="margem-lucro" id="margem-lucro" value="<?php echo $row_product['margem_lucro']; ?>">
                 
                 <label for="preco-venda">Preço de Venda (R$):</label>
-                <input type="text" name="preco-venda" id="preco-venda" value="<?php echo $row_product['preco_venda']; ?>">
+                <input type="number" name="preco-venda" id="preco-venda" value="<?php echo $row_product['preco_venda']; ?>">
             </fieldset>
             
             <fieldset class="fieldset">

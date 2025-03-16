@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><input class="produto-qntd" type="number" name="qntd-produto[]" id="produto-qntd" style="width: 50px;" step="1" min="1" value="1" oninput="calcularSubtotal(this)"></td>
+                            <td><input class="produto-qntd" type="number" name="qntd-produto[]" id="produto-qntd" style="width: 60px;" step="1" min="1" value="1" oninput="calcularSubtotal(this)"></td>
                             <td><input class="valor-unit" type="text" name="valor-unit[]" id="valor-unit" style="width: 70px;" readonly></td>
                             <td><input class="sub-total" type="text" name="sub-total[]"  id="sub-total" style="width: 70px;" readonly></td>
                             <td><button type="button" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</button></td>

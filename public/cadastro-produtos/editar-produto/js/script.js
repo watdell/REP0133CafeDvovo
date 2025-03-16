@@ -1,3 +1,100 @@
+function verificaEstoque(elemento) {
+    
+    let qntd = parseFloat(document.getElementById(elemento.id).value);
+    let id = elemento.id.replace("qntd-insumo-", "select-insumo-");
+
+    let select = document.getElementById(id);
+
+    let opcaoSelecionada = select.options[select.selectedIndex];
+    let estoqueInsumo = parseFloat(opcaoSelecionada.getAttribute('data-estoque-atual'));
+
+    if (qntd > estoqueInsumo) {
+        window.alert("Estoque de insumo insuficiente");
+        document.getElementById(elemento.id).value = ""
+        document.getElementById(elemento.id).focus();
+    }
+}
+
+
+function temInsumosIguais() {
+    let selects = document.querySelectorAll('.insumo-select');
+    let valores = new Set();
+
+    for (let select of selects) {
+        let valor = select.value;
+
+        if (valores.has(valor) && valor !=="") {
+            return true;
+        }
+
+        valores.add(valor);
+    }
+    return false;
+}
+
+
+function temInsumoVazio() {
+    let selects = document.querySelectorAll('.insumo-select');
+
+    for (let select of selects) {
+        let valor = select.value;
+        if (valor=='Selecione o insumo') {
+            return true;
+        }
+    }
+    return false;
+}
+
+function temCampoNumericoVazio() {
+    let campos = document.querySelectorAll("input[type='number']");
+
+    for (let campo of campos) {
+        if (campo.value=="") {
+            return true;
+        }
+    }
+    return false;
+}
+
+function temValorNegativo() {
+    let inputs = document.querySelectorAll("input[type='number']");
+
+    for (let input of inputs) {
+        if (parseFloat(input.value) < 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+document.getElementById("formulario-geral").addEventListener("submit", function(event) {
+    event.preventDefault(); // Impede o envio inicial
+
+    if (temInsumosIguais()) {
+        window.alert("Há insumos iguais!");
+    } 
+    
+    if (temInsumoVazio()) {
+        window.alert("Selecione o insumo");
+    }
+
+    if (temValorNegativo()) {
+        window.alert("Há valores negativos");
+    }
+
+    if (temCampoNumericoVazio()) {
+        window.alert("Não pode ter campo numérico vazio");
+    }
+    
+    if (!temInsumosIguais() && !temValorNegativo() && !temInsumoVazio() && !temCampoNumericoVazio()) {
+        this.submit(); // Continua o envio do formulário
+    }
+});
+
+
 function adicionarInsumo() {
     fetch('./buscar-produto.php')
     .then(response => response.json())
@@ -14,7 +111,7 @@ function adicionarInsumo() {
         const labelSelect = `<label for="select-insumo-${indexJsLastIdFixedInsumos}">Insumo: </label>`;
         const novoSelect = `<select name='insumo[]' class='insumo-select' style='width: 70%;' id='select-insumo-${indexJsLastIdFixedInsumos}'></select>`;
         const labelInput = `<label style='margin-left: 5px;' for='qntd-insumo-${indexJsLastIdFixedInsumos}'>g: </label>`;
-        const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
+        const input = `<input onblur='verificaEstoque(this)' style='width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${indexJsLastIdFixedInsumos}" value='1' name="qntd-insumo[]" />`;
         const deleteIcon = `<i id='${indexJsLastIdFixedInsumos}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
         // Adiciona o select, labels e input ao div
         div.innerHTML = `${labelSelect}${novoSelect}${labelInput}${input}${deleteIcon}`;
@@ -35,7 +132,7 @@ function adicionarInsumo() {
             option.setAttribute('data-nome', insumo.nome);
             option.setAttribute('data-data_validade', insumo.data_validade);
             option.setAttribute('data-custo_unitario', insumo.custo_unitario);
-            option.setAttribute('data-estoque_atual', insumo.estoque_atual);
+            option.setAttribute('data-estoque-atual', insumo.estoque_atual);
             option.setAttribute('data-unidade_medida', insumo.unidade_medida);
             
             // Define o texto da opção no formato 'Nome - Preço/Unidade - disponível Estoque'
