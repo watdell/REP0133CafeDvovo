@@ -86,6 +86,17 @@ function detectarMudancaInsumoSelects() {
 }
 
 
+function botaoAddNovoInsumo() {
+    document.getElementById('modal-novo-insumo').style.display = 'flex';
+    atualizarSpanSubtotal(); // Importante caso a pessoa mude o insumo no select.
+    // Pegando dados do atributo e levando pro input em financeiro. (novo preço)
+    const resultadoSomaTotalQntd = somarCustoInsumos();
+    let custoTotalUnidade = document.getElementById('custo-total-unidade');
+    custoTotalUnidade.setAttribute('data-custo_total', resultadoSomaTotalQntd);
+    calcMargemLucro(); // Importante para recalcular a margem de lucro lá em financeiro baseado no novo preço
+}
+
+
 function deleteInsumoDiv(elemento) {
     const id = elemento.id;
     const div = document.getElementById(`insumo-${id}`);
