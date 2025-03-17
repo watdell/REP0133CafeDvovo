@@ -6,6 +6,7 @@
     <title>Cadastro - Produto</title>
     
     <!-- Estilos -->
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/cadastrar-produtos/forms-style.css">
     <link rel="stylesheet" href="../../assets/css/cadastrar-produtos/tabs-style.css">
@@ -26,30 +27,56 @@
         $stmt_product->execute();
         $result_product = $stmt_product->get_result();
         $row_product = $result_product->fetch_assoc();
+
+        $produtoId = "";
+
+        $imagem = $row_product['imagem'];
+        $tipo_imagem = $row_product['tipo_imagem'];
+        $produtoId = $row_product['produto_id'];
+
+        if(!empty($imagem)) {
+            $imagem_base64 = base64_encode($imagem);
+            $src_imagem = 'data:' . $tipo_imagem . ';base64,' . $imagem_base64;
+        } else {
+            $src_imagem = '../../assets/images/img_padrao_cafe.png';
+        }  
     ?>
 
     <main class="content">
         <form id="formulario-geral" method="post" action="../../../serverside/controllers/produtos/alterar-produto.php" enctype="multipart/form-data">
-            <fieldset class="fieldset">
-                <legend>Cadastro de Produto</legend>
-                
-                <label for="nome-produto">Nome do Produto:</label>
-                <input type="text" name="nome-produto" id="nome-produto" value="<?php echo htmlspecialchars($row_product['nome']); ?>">
-                
-                <label for="descricao-produto">Descrição do Produto:</label>
-                <textarea name="descricao-produto" id="descricao-produto"><?php echo htmlspecialchars($row_product['descricao']); ?></textarea>
-                
-                <label for="tipo-venda">Tipo de Venda:</label>
-                <select name="tipo-venda" id="tipo-venda">
-                    <option value="pacote" <?php echo ($row_product['tipo'] == 'pacote') ? 'selected' : ''; ?>>Pacote</option>
-                    <option value="capsula" <?php echo ($row_product['tipo'] == 'capsula') ? 'selected' : ''; ?>>Cápsula</option>
-                </select>
-                
-                <div id="opcoes-pacote" class="tipo-venda-opcoes">
-                    <label for="peso-por-pacote">Peso por Pacote (g):</label>
-                    <input type="number" name="peso-por-pacote" id="peso-por-pacote" step="1" value="<?php echo $row_product['peso']; ?>">
-                </div>
-            </fieldset>
+            <div class="info-e-imagem">
+                <fieldset class="fieldset">
+                    <legend>Cadastro de Produto</legend>
+                    
+                    <label for="nome-produto">Nome do Produto:</label>
+                    <input type="text" name="nome-produto" id="nome-produto" value="<?php echo htmlspecialchars($row_product['nome']); ?>">
+                    
+                    <label for="descricao-produto">Descrição do Produto:</label>
+                    <textarea name="descricao-produto" id="descricao-produto"><?php echo htmlspecialchars($row_product['descricao']); ?></textarea>
+                    
+                    <label for="tipo-venda">Tipo de Venda:</label>
+                    <select name="tipo-venda" id="tipo-venda">
+                        <option value="pacote" <?php echo ($row_product['tipo'] == 'pacote') ? 'selected' : ''; ?>>Pacote</option>
+                        <option value="capsula" <?php echo ($row_product['tipo'] == 'capsula') ? 'selected' : ''; ?>>Cápsula</option>
+                    </select>
+                    
+                    <div id="opcoes-pacote" class="tipo-venda-opcoes">
+                        <label for="peso-por-pacote">Peso por Pacote (g):</label>
+                        <input type="number" name="peso-por-pacote" id="peso-por-pacote" step="1" value="<?php echo $row_product['peso']; ?>">
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset imagem-editar">
+                    <legend>Editar Foto</legend>
+                    <div>
+                        <img id="preview-imagem" class="img-produto" height="250px" width="250px" style="border-radius: 10px;" src="<?php echo $src_imagem; ?>" alt="Imagem do Produto" class="produto-imagem">
+                        <input type="file" name="imagem-produto" id="imagem-produto" accept="image/*" style="display: none;" onchange="previewImage(event)"><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn-upload" onclick="document.getElementById('imagem-produto').click()">📷 Alterar Imagem</button>
+                    </div>
+                </fieldset>
+            </div>
+            
+            
             <fieldset class="fieldset">
                 <legend>Insumos do Produto</legend>
                 

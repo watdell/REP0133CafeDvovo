@@ -144,6 +144,7 @@ function adicionarInsumo() {
             somarCustoInsumos();
         });
 
+        aplicarInputListenerQntdInsumos();
         indexJsLastIdFixedInsumos++
 
     })
@@ -168,6 +169,24 @@ function obterUltimoSelect() {
 
     // Retorna o valor do último input
     return ultimoInsumo.id;
+}
+
+
+// Essa função é pra visualizar a imagem.
+function previewImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('preview-imagem');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result; // Carrega a nova imagem
+        };
+        reader.readAsDataURL(file);
+    } else {
+        // Se não houver arquivo, mantém a imagem padrão
+        preview.src = "../assets/images/img_padrao_cafe.png";
+    }
 }
 
 

@@ -87,27 +87,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Edite para 32M ou 64M
     // depois para fins de consulta vc usa essa consulta sql no phpmyadmin msm pra ver o novo tamanho: SHOW VARIABLES LIKE 'max_allowed_packet';
     
-    $update = "
-    UPDATE produto
-    SET nome = '$nome_produto',
-        descricao = '$descricao_produto',
-        tipo = '$tipo_venda',
-        peso = '$peso_total',
-        custo = '$custo_total_unidade',
-        margem_lucro = '$margem_lucro',
-        preco_venda = '$preco_venda',
-        estoque_atual = '$quantidade_para_estoque',
-        estoque_minimo = '$estoque_minimo',
-        data_validade = '$menor_data'
+        $update = "UPDATE produto SET 
+            imagem = ?, 
+            tipo_imagem = ?, 
+            nome = ?, 
+            descricao = ?, 
+            tipo = ?, 
+            peso = ?, 
+            custo = ?, 
+            margem_lucro = ?, 
+            preco_venda = ?, 
+            estoque_atual = ?, 
+            estoque_minimo = ?, 
+            data_validade = ? 
+        WHERE produto_id = ?";
 
-    WHERE produto_id = $produto_id;
-    ";
-    try {
-        $conn->query($update); 
-    } catch (Exception $e) {
-        $success = false;
-        echo "Ocorreu um erro ao atualizar produtos: {$e->getMessage()}";
+    $stmt = $conn->prepare($update);
+    if ($stmt) {
+        $stmt->bind_param(
+            "ssssssdddisii", // Definindo os tipos de dados
+            $imageData, 
+            $imageType, 
+            $nome_produto, 
+            $descricao_produto, 
+            $tipo_venda, 
+            $peso_total, 
+            $custo_total_unidade, 
+            $margem_lucro, 
+            $preco_venda, 
+            $quantidade_para_estoque, 
+            $estoque_minimo, 
+            $menor_data, 
+            $produto_id
+        );
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            $success = false;
+            echo "Ocorreu um erro ao atualizar produtos: {$e->getMessage()}";
+        }
+        
+        $stmt->close();
+    } else {
+        echo "Erro ao preparar a query: " . $conn->error;
     }
+
 
     
     // Deleta os registros da tabela produto_insumo vinculados ao produto_id

@@ -26,7 +26,7 @@
             <div class="catalogo-grid" id="catalogo-grid">
                 
                  <?php
-                 $conn = dbConnection();
+                    $conn = dbConnection();
                     $sql = "SELECT * FROM produto";
                     $stmt = $conn->prepare($sql);
 
@@ -43,10 +43,13 @@
                         $stmt_img->bind_result($imagem, $tipo_imagem);
                         $stmt_img->fetch();*/
 
+                        $produtoId = "";
+
                         while($row = $result->fetch_assoc()) {
 
                             $imagem = $row['imagem'];
                             $tipo_imagem = $row['tipo_imagem'];
+                            $produtoId = $row['produto_id'];
 
                             if(!empty($imagem)) {
                                 $imagem_base64 = base64_encode($imagem);
@@ -95,7 +98,7 @@
                     <p><strong>Data de Cadastro:</strong> <span id="data-cadastro"></span></p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn-acao editar" id="btn-acao-editar-modal"  onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
+                    <button class="btn-acao editar" id="btn-acao-editar-modal" onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
                     <button id="excluir-produto-modal" class="btn-acao excluir">🗑️ Excluir</button>
                     <button onclick="fecharModalDetalhes()" class="btn-acao voltar">🔙 Voltar ao Catálogo</button>
                 </div>    

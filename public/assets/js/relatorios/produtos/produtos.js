@@ -154,6 +154,8 @@ function obterDetalhesProduto(id) {
     .then(response => response.json())
     .then(data => {
         // Populando as informações do produto
+        
+        document.getElementById('btn-acao-editar-modal').value = data.produto_id;
         document.getElementById('nome-produto').textContent = data.nome;
         document.getElementById('data-cadastro').textContent = data.data_cadastro;
         document.getElementById('tipo-venda').textContent = data.tipo;
