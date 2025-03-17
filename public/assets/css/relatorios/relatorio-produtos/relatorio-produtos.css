@@ -208,6 +208,25 @@ section h2 {
     margin: 8px 0;
 }
 
+
+.resumo-e-imagem {
+    display: flex;
+    flex-direction: row;
+}
+
+.resumo-produto {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+
+
+.imagem-editar {
+    margin-left: 50%;
+}
+
+
 .insumos-utilizados table {
     width: 100%;
     border-collapse: collapse;

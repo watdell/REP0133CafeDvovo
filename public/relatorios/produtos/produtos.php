@@ -89,6 +89,7 @@
         <div id="relatorio-container" class="relatorio-container">
             <!-- Cabeçalho do Relatório -->
             <header class="relatorio-header">
+                    
                 <div class="header-title">
                     <h1>Produto: <span id="nome-produto"></span></h1>
                     <p><strong>Data de Cadastro:</strong> <span id="data-cadastro"></span></p>
@@ -97,19 +98,27 @@
                     <button class="btn-acao editar" id="btn-acao-editar-modal"  onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
                     <button id="excluir-produto-modal" class="btn-acao excluir">🗑️ Excluir</button>
                     <button onclick="fecharModalDetalhes()" class="btn-acao voltar">🔙 Voltar ao Catálogo</button>
-                </div>
+                </div>    
+                
             </header>
-        
-            <!-- Resumo do Produto -->
-            <section class="resumo-produto">
-                <h2>Resumo</h2>
-                <div class="resumo-detalhes">
-                    <p><strong>Tipo de Venda:</strong> <span id="tipo-venda"></span></p>
-                    <p><strong>Descrição:</strong> <span id="descricao-produto"></span></p>
-                    <p><strong>Peso por Unidade:</strong> <span id="peso-unidade"></span></p>
-                </div>
-            </section>
-        
+            
+                <!-- Resumo do Produto -->
+                <section class="resumo-e-imagem">
+                    <div class="resumo-produto">
+                        <h2>Resumo</h2>
+                        <div class="resumo-detalhes">
+                            <p><strong>Tipo de Venda:</strong> <span id="tipo-venda"></span></p>
+                            <p><strong>Descrição:</strong> <span id="descricao-produto"></span></p>
+                            <p><strong>Peso por Unidade:</strong> <span id="peso-unidade"></span></p>
+                        </div>
+                    </div>
+                    <div id="imagem-editar" class="imagem-editar">
+                    </div>
+                </section>
+                
+          
+            
+                    
             <!-- Tabela de Insumos -->
             <section class="insumos-utilizados">
                 <h2>Insumos Utilizados</h2>

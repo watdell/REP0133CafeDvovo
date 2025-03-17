@@ -166,6 +166,18 @@ function obterDetalhesProduto(id) {
         document.getElementById('estoque-minimo').textContent = data.estoque_minimo + ' unidades';
         document.getElementById('produto-id-hidden').value = data.produto_id;
 
+        const imagem = data.imagem;
+        const imagemType = data.tipo_imagem;
+        let srcImagem = "";
+
+        if (imagem && imagem.length > 0) {
+            srcImagem = `data:${imagemType};base64,${imagem}`;
+        } else {
+            srcImagem = '../../assets/images/img_padrao_cafe.png';
+        }
+
+        document.getElementById('imagem-editar').innerHTML = `<img height=150px width=150px style='border-radius: 10px' src='${srcImagem}' alt='Imagem do Produto class='produto-img-modal'>`;
+
         // Verificando a disponibilidade do estoque
         const disponibilidade = data.estoque_atual < data.estoque_minimo ? 'Faltando' : 'Disponível';
         document.getElementById('disponibilidade-estoque').textContent = disponibilidade;
