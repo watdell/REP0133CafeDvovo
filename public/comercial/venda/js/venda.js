@@ -184,6 +184,8 @@ atualizarPreco(select);
 document.getElementById('formulario-geral').addEventListener('submit', function(event) {
     event.preventDefault(); // Impede o envio do formulário
 
+    let desconto = document.getElementById('desconto').value;
+
     if (emptyValueQntd()) {
         window.alert("Preencha a quantidade!");
         return; // Interrompe a execução para evitar a confirmação

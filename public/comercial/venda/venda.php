@@ -71,7 +71,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2">
-                                Desconto: <input class="desconto" type="text" name="desconto" id="desconto" style="width: 50px;" step="0.01" value="0" oninput="atualizarTotal()"> %
+                                Desconto: <input style="width:60px;" class="desconto" min="0" type="number" name="desconto" id="desconto" style="width: 50px;" step="1" value="0" oninput="atualizarTotal()"> %
                             </td>
                         </tr>   
                         <tr>
