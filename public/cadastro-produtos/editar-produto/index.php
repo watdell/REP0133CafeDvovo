@@ -99,7 +99,7 @@
                         $conn = dbConnection();
 
                         // Buscar todos os insumos disponíveis
-                        $sqlInsumos = "SELECT * FROM insumo";
+                        $sqlInsumos = "SELECT * FROM insumo ORDER BY nome ASC";
                         $resultInsumos = $conn->query($sqlInsumos);
 
                         // Criar um array para armazenar todos os insumos disponíveis

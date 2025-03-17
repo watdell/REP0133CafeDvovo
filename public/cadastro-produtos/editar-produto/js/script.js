@@ -144,7 +144,7 @@ function adicionarInsumo() {
             somarCustoInsumos();
         });
 
-        aplicarInputListenerQntdInsumos();
+        aplicarInputListenerQntdInsumos(); //Agora ele insere o escutador de input nos insumos inseridos dinamicamente
         indexJsLastIdFixedInsumos++
 
     })
