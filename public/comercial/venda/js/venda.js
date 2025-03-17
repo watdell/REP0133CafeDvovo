@@ -159,7 +159,7 @@ function atualizarTotal() {
     let desconto = document.getElementById("desconto").value.replace(/\./g, "").replace(",", "."); 
     let descontoNumero = parseFloat(desconto) || 0;
 
-    let total = subtotal - descontoNumero;
+    let total = subtotal - (subtotal*descontoNumero/100);
 
     // Evita valores negativos
     if (total < 0) {
