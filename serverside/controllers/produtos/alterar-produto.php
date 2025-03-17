@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     // Usado para debug..
-    //echo "Imagem recebida: ";
-    //var_dump($imageData); // Exibe o conteúdo da imagem ou indica se está vazio
-    //echo "Tipo da imagem: " . htmlspecialchars($imageType);
+    echo "Imagem recebida: ";
+    var_dump($imageData); // Exibe o conteúdo da imagem ou indica se está vazio
+    echo "Tipo da imagem: " . htmlspecialchars($imageType);
 
     // Exibe valores recebidos para debug
     /*foreach ($_POST as $key => $value) {
