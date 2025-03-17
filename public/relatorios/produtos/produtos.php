@@ -18,6 +18,10 @@
         <div class="catalogo-container">
             <section class="catalogo-top">
                 <h1>Catálogo de Produtos</h1>
+
+                <!-- BARRA DE PROCURA -->
+                <input id='search' class='procura' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por nome' onchange='search(this.value,"catalogo-grid")'></input>
+                
                 <div>
                     <button id="btn-list" class="btn-adicionar">Lista</button>
                     <button id="add-produto" onclick="fabricarProduto()" class="btn-adicionar">+ Adicionar Produto</button>
