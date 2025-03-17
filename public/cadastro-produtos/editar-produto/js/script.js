@@ -115,7 +115,7 @@ function adicionarInsumo() {
         const deleteIcon = `<i id='${indexJsLastIdFixedInsumos}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
         // Adiciona o select, labels e input ao div
         div.innerHTML = `${labelSelect}${novoSelect}${labelInput}${input}${deleteIcon}`;
-
+        div.style.marginTop='5px';
         // Adiciona o div ao contêiner principal
         document.getElementById("div-insumos").appendChild(div);
         

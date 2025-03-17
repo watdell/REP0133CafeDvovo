@@ -43,7 +43,7 @@
     ?>
 
     <main class="content">
-        <form id="formulario-geral" method="post" action="../../../serverside/controllers/produtos/alterar-produto.php" enctype="multipart/form-data">
+        <form class="form-group323" id="formulario-geral" method="post" action="../../../serverside/controllers/produtos/alterar-produto.php" enctype="multipart/form-data">
             <div class="info-e-imagem">
                 <fieldset class="fieldset">
                     <legend>Cadastro de Produto</legend>
@@ -124,7 +124,7 @@
                         $index = 0;
                         // Exibir os insumos cadastrados no produto
                         while ($row = $result->fetch_assoc()) { ?>
-                            <div class="insumo" id="insumo-<?php echo $index; ?>">
+                            <div style="margin-top: 5px;" class="insumo" id="insumo-<?php echo $index; ?>">
                                 <label for="select-insumo-<?php echo $index; ?>">Insumo:</label>
                                 <select style="width: 70%;" class="insumo-select" id="select-insumo-<?php echo $index; ?>" name="insumo[]">
                                     <?php foreach ($insumosDisponiveis as $insumo) { ?>
@@ -150,24 +150,26 @@
                 <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
             </fieldset>
 
-
-            <fieldset class="fieldset">
-                <legend>Informações Financeiras</legend>
-                <label for="margem-lucro">Margem de Lucro (%):</label>
-                <input type="number" name="margem-lucro" id="margem-lucro" value="<?php echo $row_product['margem_lucro']; ?>">
+            <div class="financ-estoque-info">
+                <fieldset class="fieldset">
+                    <legend>Informações Financeiras</legend>
+                    <label for="margem-lucro">Margem de Lucro (%):</label>
+                    <input type="number" name="margem-lucro" id="margem-lucro" value="<?php echo $row_product['margem_lucro']; ?>">
+                    
+                    <label for="preco-venda">Preço de Venda (R$):</label>
+                    <input type="number" name="preco-venda" id="preco-venda" value="<?php echo $row_product['preco_venda']; ?>">
+                </fieldset>
                 
-                <label for="preco-venda">Preço de Venda (R$):</label>
-                <input type="number" name="preco-venda" id="preco-venda" value="<?php echo $row_product['preco_venda']; ?>">
-            </fieldset>
+                <fieldset class="fieldset">
+                    <legend>Controle de Estoque</legend>
+                    <label for="quantidade-estoque">Quantidade para estoque:</label>
+                    <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="<?php echo $row_product['estoque_atual']; ?>">
+                    
+                    <label for="estoque-minimo">Estoque Mínimo:</label>
+                    <input type="number" name="estoque-minimo" id="estoque-minimo" value="<?php echo $row_product['estoque_minimo']; ?>">
+                </fieldset>            
+            </div>            
             
-            <fieldset class="fieldset">
-                <legend>Controle de Estoque</legend>
-                <label for="quantidade-estoque">Quantidade para estoque:</label>
-                <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="<?php echo $row_product['estoque_atual']; ?>">
-                
-                <label for="estoque-minimo">Estoque Mínimo:</label>
-                <input type="number" name="estoque-minimo" id="estoque-minimo" value="<?php echo $row_product['estoque_minimo']; ?>">
-            </fieldset>
             
             <button type="submit" class="register-btn">Salvar</button>
             <input type="hidden" name="produto_id" value="<?php echo $produto_id; ?>">
