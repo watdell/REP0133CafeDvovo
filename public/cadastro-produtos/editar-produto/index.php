@@ -147,6 +147,7 @@
                     </script>
                 </div>
                 <input type="hidden" id="insumos-removidos" name="insumos-removidos">
+                <br>
                 <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
             </fieldset>
 
