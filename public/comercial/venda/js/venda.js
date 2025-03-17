@@ -84,7 +84,7 @@ function adicionarProduto() {
 
     //Aqui ele coloca o onchange no select que foi criado dinamicamente
     detectarMudancaProdutoSelects();
-    atualizarTotal();
+    atualizarTotal();    
 
 }
 
@@ -180,18 +180,27 @@ document.querySelectorAll(".produto-qntd, .desconto").forEach(input => {
 let select = document.getElementById('select-produto-0');
 atualizarPreco(select);
 
+
 document.getElementById('formulario-geral').addEventListener('submit', function(event) {
-    
-    let confirmar = window.confirm("Deseja registrar essa venda?")
-    if (!confirmar){
-        event.preventDefault();
+    event.preventDefault(); // Impede o envio do formulário
+
+    if (emptyValueQntd()) {
+        window.alert("Preencha a quantidade!");
+        return; // Interrompe a execução para evitar a confirmação
+    }
+
+    let confirmar = window.confirm("Deseja registrar essa venda?");
+    if (confirmar) {
+        this.submit(); // Envia o formulário apenas se o usuário confirmar
     }
 });
 
-function confirmEnvio() {
-    if (window.confirm("Deseja registrar essa venda?")){
-
-    }
+function emptyValueQntd() {
+    return Array.from(document.querySelectorAll('.produto-qntd')).some(element => !element.value);
 }
+
+
+
+
 
 

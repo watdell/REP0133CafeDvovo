@@ -90,7 +90,14 @@ document.getElementById("formulario-geral").addEventListener("submit", function(
     }
     
     if (!temInsumosIguais() && !temValorNegativo() && !temInsumoVazio() && !temCampoNumericoVazio()) {
-        this.submit(); // Continua o envio do formulário
+
+        let confirmar = window.confirm("Confirmar atualização?")
+        if (!confirmar){
+            event.preventDefault();
+        } else {
+            this.submit(); // Continua o envio do formulário
+        }
+           
     }
 });
 
@@ -345,7 +352,5 @@ document.addEventListener('DOMContentLoaded', function () {
     
     atualizarPesoTotal();
 });
-
-
 
 

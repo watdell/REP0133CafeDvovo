@@ -196,8 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Mensagem de sucesso e redirecionamento
         echo "<h2>Produto atualizado com sucesso!</h2>";
-        echo "<p>Você será redirecionado em 2 segundos...</p>";
-        echo '<meta http-equiv="refresh" content="2;url=\'../../../public/relatorios/produtos/produtos.php\'">';
+        echo "<p>Você será redirecionado em 1 segundos...</p>";
+        echo '<meta http-equiv="refresh" content="1;url=\'../../../public/relatorios/produtos/produtos.php\'">';
 
         // Fecha statements e conexão
         $stmt_update->close();

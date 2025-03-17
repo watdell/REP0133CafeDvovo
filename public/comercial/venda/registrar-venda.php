@@ -43,7 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_item->execute();
         }
 
-        echo "Venda cadastrada com sucesso!";
+         // Mensagem de sucesso e redirecionamento
+         echo "<h2>Venda cadastrada com sucesso!</h2>";
+         echo "<p>Você será redirecionado em 1 segundos...</p>";
+         echo '<meta http-equiv="refresh" content="1;url=\'../caixa/caixa.php\'">';
+ 
     } else {
         echo "Erro ao cadastrar a venda: " . $stmt->error;
     }

@@ -17,12 +17,12 @@
             $conn = dbConnection();
             
             // Buscar clientes
-            $stmtClientes = $conn->prepare("SELECT * FROM pessoa");
+            $stmtClientes = $conn->prepare("SELECT * FROM pessoa ORDER BY nome ASC");
             $stmtClientes->execute();
             $resultClientes = $stmtClientes->get_result();
 
             // Buscar produtos
-            $stmtProdutos = $conn->prepare("SELECT * FROM produto");
+            $stmtProdutos = $conn->prepare("SELECT * FROM produto ORDER BY nome ASC");
             $stmtProdutos->execute();
             $resultProdutos = $stmtProdutos->get_result();
         ?>  
