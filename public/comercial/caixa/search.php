@@ -38,7 +38,9 @@
         $c = 'id' . substr($t, 0, -1);
     }
 
-    $sql="SELECT * FROM $t WHERE $c LIKE '%".$q."%'";
+    $order = 'id' . substr($t, 0, -1);
+
+    $sql="SELECT * FROM $t WHERE $c LIKE '%".$q."%' ORDER BY " . $order . " DESC LIMIT 30";
     $stmt= $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
