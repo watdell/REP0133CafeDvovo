@@ -59,10 +59,10 @@
 
         while($row = mysqli_fetch_array($result)) {
             echo "<div class='itens_shown'>
-                <a style='width:20%'>" . $row['identrada'] . "</a>
-                <a style='width:20%'>" . $row['descricao'] . "</a>
-                <a style='width:20%'>" . $row['valor'] . "</a>
-                <a style='width:20%'>" . $row['data'] . "</a>";
+                <a style='width:20%;overflow:hidden;'>" . $row['identrada'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['descricao'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['valor'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['data'] . "</a>";
 
                 if ($d != 'innertable' and $p != 'caixa') {
                     echo "<form id='field' action='entradas_del.php' method='post'>
@@ -87,11 +87,11 @@
 
         while($row = mysqli_fetch_array($result)) {
             echo "<div class='itens_shown'>
-                <a style='width:20%'>" . $row['iddespesa'] . "</a>
-                <a style='width:20%'>" . $row['categoria'] . "</a>
-                <a style='width:20%'>" . $row['descricao'] . "</a>
-                <a style='width:20%'>" . $row['valor'] . "</a>
-                <a style='width:20%'>" . $row['data'] . "</a>";
+                <a style='width:20%;overflow:hidden;'>" . $row['iddespesa'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['categoria'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['descricao'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['valor'] . "</a>
+                <a style='width:20%;overflow:hidden;'>" . $row['data'] . "</a>";
 
                 if ($d != 'innertable') {
                     echo "<form id='field' action='despesas_del.php' method='post'>
@@ -122,6 +122,10 @@
             p.nome
         LIKE
             '%" . $q . "%'
+        ORDER BY
+            iv.venda_id DESC
+        LIMIT
+            30
     ";
 
     $stmt = $conn->prepare($sql);
@@ -150,10 +154,10 @@
     // Now iterate over the grouped data and display it
     foreach ($vendas as $venda) {
         echo "<div class='itens_shown'>
-            <a style='width:20%'>" . $venda['venda_id'] . "</a>
-            <a style='width:20%'>" . implode("<br>", $venda['produtos']) . "</a>
-            <a style='width:20%'>" . $venda['total'] . "</a>
-            <a style='width:20%'>" . $venda['data_venda'] . "</a>
+            <a style='width:20%;overflow:hidden;'>" . $venda['venda_id'] . "</a>
+            <a style='width:20%;overflow:hidden;'>" . implode("<br>", $venda['produtos']) . "</a>
+            <a style='width:20%;overflow:hidden;'>" . $venda['total'] . "</a>
+            <a style='width:20%;overflow:hidden;'>" . $venda['data_venda'] . "</a>
         </div><hr>";
     }
 }
