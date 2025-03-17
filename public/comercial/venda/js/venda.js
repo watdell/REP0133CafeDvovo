@@ -180,6 +180,18 @@ document.querySelectorAll(".produto-qntd, .desconto").forEach(input => {
 let select = document.getElementById('select-produto-0');
 atualizarPreco(select);
 
+document.getElementById('formulario-geral').addEventListener('submit', function(event) {
+    
+    let confirmar = window.confirm("Deseja registrar essa venda?")
+    if (!confirmar){
+        event.preventDefault();
+    }
+});
 
+function confirmEnvio() {
+    if (window.confirm("Deseja registrar essa venda?")){
+
+    }
+}
 
 
