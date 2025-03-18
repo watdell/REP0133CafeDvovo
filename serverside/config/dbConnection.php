@@ -12,7 +12,7 @@
     $user = 'usuario';     // Nome de usuário do MySQL
     $password = '12345678'; // Senha do MySQL
     $database = 'cafedvovo_adrian'; // Nome do banco de dados
-
+    
     // Criando a conexão com o banco de dados
     $conn = new mysqli($host, $user, $password, $database, $port);
 
