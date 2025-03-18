@@ -273,3 +273,6 @@ input[type=submit]:hover {
     border-radius: 10px;
 }
 
+input[type=file] {
+    width: 70%;
+}
