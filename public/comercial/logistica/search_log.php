@@ -17,6 +17,11 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
+    $sql1="SELECT id_venda FROM entregas";
+    $stmt1= $conn->prepare($sql1);
+    $stmt1->execute();
+    $result1 = $stmt1->get_result();
+
     if ($t == 'vendas') {
 
         echo '<div class="table_header">
@@ -28,12 +33,24 @@
         echo '<hr style="height:4px;background-color:black">';
 
         while($row = mysqli_fetch_array($result)) {
+            while($row1 = mysqli_fetch_array($result1)) {
+                if ($row['venda_id'] == $row1['id_venda']) {
+                $sett = "<button type='submit' style='background-color:rgb(104, 104, 104);min-width:20%;' disabled>ENTREGUE</button>
+                    </form><hr>";
+                    break;
+                } else {
+                $sett = "<button type='submit' style='background-color:rgb(141, 82, 40);min-width:20%;'>ENTREGUE</button>
+                    </form><hr>";
+                }
+            }
+            
             echo "<form class='itens_shown' action='entregas.php' method='post' style='width:100%;'>
                     <input type='number' name='id' style='width:12%;overflow:hidden;' readonly value=" . $row['venda_id'] ."></input>
                     <input name='data' style='width:27%;overflow:hidden;' readonly value='" . $row['data_venda'] ."'></input>
-                    <input name='data' style='width:27%;overflow:hidden;' readonly value='" . DateMod('+3 day',new DateTime($row['data_venda'])) ."'></input>
-                    <button type='submit' style='background-color:rgb(141, 82, 40);min-width:20%;'>ENTREGUE</button>
-                </form><hr>";
+                    <input name='data' style='width:27%;overflow:hidden;' readonly value='" . DateMod('+3 day',new DateTime($row['data_venda'])) ."'></input>";
+
+            echo $sett;
+                    
         }
     }
 
