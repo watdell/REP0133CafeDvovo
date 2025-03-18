@@ -24,7 +24,7 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
                 <h2>PENDENTES</h2>
-                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por data de venda' oninput='search(this.value)'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por data de venda' onchange='search(this.value)'></input>
                 <h2>ENTREGAS</h2>
             </div>
 

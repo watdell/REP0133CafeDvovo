@@ -31,7 +31,7 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
                 <h2>Entradas</h2>
-                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por descrição' oninput='doobsearch()'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por descrição' onchange='doobsearch()'></input>
                 <h2 id="despesas-title1">Despesas</h2>
             </div>
 
