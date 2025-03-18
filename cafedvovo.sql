@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Mar-2025 às 05:33
+-- Tempo de geração: 18-Mar-2025 às 21:40
 -- Versão do servidor: 10.4.6-MariaDB
 -- versão do PHP: 7.2.22
 
@@ -41,12 +41,8 @@ CREATE TABLE `despesas` (
 --
 
 INSERT INTO `despesas` (`iddespesa`, `categoria`, `descricao`, `valor`, `data`) VALUES
-(5, 'poiuyf', 'jkfgjktjyyy', '-556.00', '2025-03-06 14:46:50'),
-(9, 'poiuyf', 'tete', '-87.80', '2025-03-12 19:13:40'),
 (11, 'wfwrjngukhi', '55', '-67.00', '2025-03-12 19:19:08'),
-(14, 'poiuyf', 'car', '-50.00', '2025-03-05 23:59:02'),
-(15, 'yfukfyukfykuooo', 'Viagem no tempo', '-12435.00', '2024-09-04 00:01:39'),
-(16, 'TEST', 'tete', '-456.00', '2025-01-16 00:13:49');
+(14, 'poiuyf', 'car', '-50.00', '2025-03-05 23:59:02');
 
 -- --------------------------------------------------------
 
@@ -65,12 +61,8 @@ CREATE TABLE `despesa_categoria` (
 --
 
 INSERT INTO `despesa_categoria` (`idcategoria`, `tipo`, `nome`) VALUES
-(1, 'fixo', 'TEST'),
-(2, 'fixo', 'vhqwefl'),
-(3, 'variavel', 'wfwrjngukhi'),
-(4, 'variavel', 'yfukfyukfykuooo'),
-(5, 'variavel', 'poiuyf'),
-(6, 'fixo', 'Fábio');
+(6, 'fixo', 'Fábio'),
+(7, 'variavel', 'FUNK');
 
 -- --------------------------------------------------------
 
@@ -150,11 +142,22 @@ CREATE TABLE `entradas` (
 --
 
 INSERT INTO `entradas` (`identrada`, `valor`, `descricao`, `data`) VALUES
-(1, '56.00', 'uivbargg', '2025-03-06 15:27:27'),
-(29, '346.90', 'gg', '2025-03-12 23:52:37'),
-(30, '97.00', 'eetr av', '2025-03-05 23:59:30'),
-(31, '777.77', 'loteria', '2025-02-04 00:00:30'),
-(32, '99.00', '4678', '2025-03-13 01:29:36');
+(32, '99.00', '4678', '2025-03-13 01:29:36'),
+(39, '1234567890.24', 'tr', '2025-03-14 21:26:18'),
+(41, '456.00', 'w', '2025-03-14 21:26:28');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `entregas`
+--
+
+CREATE TABLE `entregas` (
+  `id_entrega` int(11) NOT NULL,
+  `id_venda` varchar(255) NOT NULL,
+  `data_venda` datetime DEFAULT NULL,
+  `data_entrega` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -748,6 +751,12 @@ ALTER TABLE `entradas`
   ADD PRIMARY KEY (`identrada`);
 
 --
+-- Índices para tabela `entregas`
+--
+ALTER TABLE `entregas`
+  ADD PRIMARY KEY (`id_entrega`);
+
+--
 -- Índices para tabela `fornecedor`
 --
 ALTER TABLE `fornecedor`
@@ -824,13 +833,13 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT de tabela `despesas`
 --
 ALTER TABLE `despesas`
-  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `despesa_categoria`
 --
 ALTER TABLE `despesa_categoria`
-  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `endereco`
@@ -842,7 +851,13 @@ ALTER TABLE `endereco`
 -- AUTO_INCREMENT de tabela `entradas`
 --
 ALTER TABLE `entradas`
-  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de tabela `entregas`
+--
+ALTER TABLE `entregas`
+  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `insumo`
