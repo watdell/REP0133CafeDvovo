@@ -1,20 +1,14 @@
 <?php
-    include '../../serverside/queries/db_queries.php';
-    include '../../serverside/config/dbConnection.php';
-    include '../../includes/main-sidebar.php';
+  include '../../serverside/queries/db_queries.php';
+  include '../../serverside/config/dbConnection.php';
+  include '../../includes/main-sidebar.php';
 
-    $conn = dbConnection();
-
-    if ($conn->connect_error) {
-        die("Erro de conexão: " . $conn->connect_error);
-    }
-
-    if ($_SERVER ['REQUEST_METHOD']=="POST" && $_POST('action')=='create')
-    $nome
+  $conn = dbConnection();
+    
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +24,31 @@
         <div class="navbar" id="navbar"></div>
         <br>
         <button onclick="abrirmodal()">Gerenciar insumos</button>
+        <div id="crudModal" class="modal">
 
+            <div class="modal-content">
+                <span onclick="fecharModal()" style="cursor:pointer; float:right;">&times;</span>
+                <h2>Adicionar Insumo</h2>
+                <form method="POST" action="conexao.php">
+                    <label>Nome:</label>
+                    <input type="text" name="nome" required><br><br>
+
+                    <label>Unidade de Medida:</label>
+                    <input type="text" name="unidade_medida" required><br><br>
+
+                    <label>Custo Unitário (R$):</label>
+                    <input type="number" step="0.01" name="custo_unitario" required><br><br>
+
+                    <label>Estoque Atual:</label>
+                    <input type="number" name="estoque_atual" required><br><br>
+
+                    <label>Data de Validade:</label>
+                    <input type="date" name="data_validade" required><br><br>
+
+                    <button type="submit" name="action" value="create">Adicionar</button>
+                </form>
+            </div>
+        </div>
         
 
         <?php
@@ -48,6 +66,7 @@
                                 <th>Estoque Atual</th>
                                 <th>Data de Validade</th>
                                 <th>Data de Cadastro</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>";
@@ -61,6 +80,7 @@
                             <td>{$row['estoque_atual']}</td>
                             <td>" . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
                             <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
+                            <td><button onclick='confirmarExclusao({$row['insumo_id']})'>Excluir</button></td>
                           </tr>";
                 }
             
@@ -69,5 +89,35 @@
                 echo "<p>Nenhum resultado encontrado.</p>";
             }
         ?>
-    </main>
-</body>
+        <script>
+    function abrirmodal() {
+        document.getElementById("crudModal").style.display = "block";
+    }
+
+    function fecharModal() {
+        document.getElementById("crudModal").style.display = "none";
+    }
+    function confirmarExclusao(id) {
+            if (confirm("Tem certeza que deseja excluir este insumo?")) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'conexcao_d.php'; // Defina a URL de destino para o mesmo arquivo ou outro.
+
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'insumo_id';
+                input.value = id;
+                form.appendChild(input);
+
+                var actionInput = document.createElement('input');
+                actionInput.type = 'hidden';
+                actionInput.name = 'action';
+                actionInput.value = 'delete';
+                form.appendChild(actionInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+</script>
+  
