@@ -46,7 +46,7 @@
                 <button onclick="location.href='../index.php'">VOLTAR</button>
             </div>
 
-            <div style="display:flex;flex-direction:row;min-height:600px">
+            <div style="display:flex;flex-direction:row;">
 
                 <div id='innertable' class="innertable" style="width:100%">
                     <!-- THIS IS WHERE THE MAGIC HAPPENS -->
