@@ -30,24 +30,40 @@ if (isset($_POST['submit'])) {
                 // Convert the sheet into an array of rows
                 $rows = $sheet->toArray();
 
+                $space = FALSE;
+
                 // Loop through each row in the Excel file
                 foreach ($rows as $index => $row) {
-                    // Skip the first row (headers)
-                    if ($index === 0) {
-                        continue;
-                    }
                     // Assuming the Excel file has columns: valor, desc
                     // Modify this based on your actual columns
-                    $valor = $row[0];
-                    $desc = $row[1];
+                    foreach ($row as $deep_index => $deep_row) {
+                        if ($deep_row == NULL) {
+                        } else { 
+                            $full = $deep_index;
+                            break;
+                        }
+                    }
 
-                    echo "ID: $id, Valor: $valor, Desc: $desc\n";
+                    $valor = $row[$full];
+                    $desc = $row[$full + 1];
 
-                    // Insert data into database
+                    if ($valor == NULL || $desc == NULL) {
+                        continue;
+                    };
+
+                    // Skip the first row (headers)
+                     
+                    if ($space == TRUE) {
+                    echo "Valor: $valor, Desc: $desc\n";
+
+                        // Insert data into database
                     $sql = "INSERT INTO entradas (valor, descricao) VALUES (?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("ds", $valor, $desc); // Adjust the data types accordingly
                     $stmt->execute();
+                    }
+
+                    $space = TRUE;
                 }
                 echo "Data successfully inserted into the database.";
             } catch (Exception $e) {
