@@ -83,7 +83,6 @@ function adicionarProduto() {
     document.getElementById(`sub-total-${produtoIndex}`).value = (parseFloat(preco_unit1) * parseFloat(1)).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     //Aqui ele coloca o onchange no select que foi criado dinamicamente
-    detectarMudancaProdutoSelects();
     atualizarTotal();    
 
 }
@@ -113,96 +112,73 @@ function AtualizarDadosProduto(id) {
 }*/
 
 
-// Função responsável por pegar o evento change no select dos insumos e verificar se a opção selecionada foi "Adicionar Novo Insumo"
-function detectarMudancaProdutoSelects() {
-    document.querySelectorAll('.produto-select').forEach(select => {
-        
-        select.addEventListener('change', function() {            
-            AtualizarDadosProduto(this.value); // Envia o valor selecionado (ID do produto) 
-        });
-
-    });
-}
-
-// Esse aqui é pra quando carregar a página pra ele colocar o onchange no primeiro select estático criado.
-window.addEventListener('load', detectarMudancaProdutoSelects);
-
-
 function atualizarPreco(select) {
-    let selectedOption = select.options[select.selectedIndex]; // Obtém a opção selecionada
-    let precoUnitario = selectedOption.getAttribute("data-preco"); // Obtém o preço do atributo data-preco
-    
-    let row = select.closest("tr"); // Encontra a linha correspondente
-    row.querySelector(".valor-unit").value = parseFloat(precoUnitario).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Define o valor unitário
-    calcularSubtotal(row.querySelector(".produto-qntd")); // Atualiza o subtotal
+    let selectedOption = select.options[select.selectedIndex]; 
+    let precoUnitario = parseFloat(selectedOption.getAttribute("data-preco")) || 0;
+
+    let row = select.closest("tr");
+    row.querySelector(".valor-unit").value = formatarNumero(precoUnitario); 
+    calcularSubtotal(row.querySelector(".produto-qntd")); 
     atualizarTotal();
 }
 
 function calcularSubtotal(input) {
     let row = input.closest("tr");
-    let preco = parseFloat(row.querySelector(".valor-unit").value) || 0;
-    let qntd = parseInt(input.value) || 0;
-    row.querySelector(".sub-total").value = (preco * qntd).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let preco = converterParaNumero(row.querySelector(".valor-unit").value);
+    let qntd = converterParaNumero(input.value);
+    let subtotal = preco * qntd;
+
+    row.querySelector(".sub-total").value = formatarNumero(subtotal);
     atualizarTotal();
 }
 
 function atualizarTotal() {
     let subtotal = 0;
 
-    // Soma os subtotais dos produtos
     document.querySelectorAll(".sub-total").forEach(input => {
-        let valor = input.value.replace(/\./g, "").replace(",", "."); // Remove pontos e troca vírgula por ponto
-        let numero = parseFloat(valor) || 0;
+        let numero = converterParaNumero(input.value);
         subtotal += numero;
     });
 
-    let desconto = document.getElementById("desconto").value.replace(/\./g, "").replace(",", "."); 
-    let descontoNumero = parseFloat(desconto) || 0;
+    let desconto = converterParaNumero(document.getElementById("desconto").value);
+    let total = subtotal - (subtotal * desconto / 100);
 
-    let total = subtotal - (subtotal*descontoNumero/100);
+    if (total < 0) total = 0;
 
-    // Evita valores negativos
-    if (total < 0) {
-        total = 0;
-    }
-
-    // Exibe o total formatado com vírgula
-    document.getElementById("total").innerText = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+    document.getElementById("total").value = formatarNumero(total, 2); // 4 casas decimais
 }
 
+// 🔹 Função para converter valores formatados em número (1.234,56 → 1234.56)
+function converterParaNumero(valor) {
+    if (!valor) return 0;
+    return parseFloat(valor.replace(/\./g, "").replace(",", ".")) || 0;
+}
 
-// Distribui o evento para ser atualizado o subtotal e o total quando o usuario digitar algo nos inputs de quantidade e desconto, criados de forma fixa 
-document.querySelectorAll(".produto-qntd, .desconto").forEach(input => {
+// 🔹 Função para formatar número no padrão brasileiro (1234.56 → "1.234,56")
+function formatarNumero(valor, casasDecimais = 2) {
+    return valor.toLocaleString("pt-BR", { minimumFractionDigits: casasDecimais, maximumFractionDigits: casasDecimais });
+}
+
+document.querySelectorAll(".produto-qntd, #desconto").forEach(input => {
     input.addEventListener("input", atualizarTotal);
 });
 
-// Atualiza o preço unitário e subtotal do primeiro select que é carregado de forma fixa junto com a página
 let select = document.getElementById('select-produto-0');
 atualizarPreco(select);
 
-
 document.getElementById('formulario-geral').addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede o envio do formulário
-
-    let desconto = document.getElementById('desconto').value;
+    event.preventDefault();
 
     if (emptyValueQntd()) {
-        window.alert("Preencha a quantidade!");
-        return; // Interrompe a execução para evitar a confirmação
+        alert("Preencha a quantidade!");
+        return;
     }
 
-    let confirmar = window.confirm("Deseja registrar essa venda?");
-    if (confirmar) {
-        this.submit(); // Envia o formulário apenas se o usuário confirmar
+    if (confirm("Deseja registrar essa venda?")) {
+        this.submit();
     }
 });
 
 function emptyValueQntd() {
     return Array.from(document.querySelectorAll('.produto-qntd')).some(element => !element.value);
 }
-
-
-
-
-
-

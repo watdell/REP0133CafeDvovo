@@ -77,7 +77,7 @@
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2" style="text-align: center;">
-                                <span class="total">Total: R$</span> <span id="total" class="total">0.00</span>
+                                <span class="total">Total: R$</span> <input type="text" id="total" name="total" readonly>
                             </td>
                         </tr>
                     </table>
