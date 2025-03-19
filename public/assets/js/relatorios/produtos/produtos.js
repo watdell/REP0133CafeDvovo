@@ -225,3 +225,20 @@ function converterParaMoeda(valor) {
 
     return valorMoedaDigitos;
 }
+
+// FUNÇÂO DE PROCURA 
+
+function search(str,inta = "innertable") {
+    document.getElementById(inta).innerHTML = '';
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
+        }
+    };
+
+    console.log(i)
+
+    xmlhttp.open("GET","produto_search.php?tipo="+i+"&q="+str.toLowerCase(),true);
+    xmlhttp.send();
+}

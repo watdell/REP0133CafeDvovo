@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Produtos</title>
     <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/relatorios/relatorio-produtos/relatorio-produtos.css">
+    <link rel="stylesheet" href="../../assets/css/relatorios/relatorio-produtos/relatorio-produtos.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <?php include('../../../includes/main-sidebar.php'); ?>
@@ -18,6 +18,10 @@
         <div class="catalogo-container">
             <section class="catalogo-top">
                 <h1>Catálogo de Produtos</h1>
+
+                <!-- BARRA DE PROCURA -->
+                <input id='search' class='procura' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por nome' onchange='search(this.value,"catalogo-grid")'></input>
+
                 <div>
                     <button id="btn-list" class="btn-adicionar">Lista</button>
                     <button id="add-produto" onclick="fabricarProduto()" class="btn-adicionar">+ Adicionar Produto</button>
@@ -168,7 +172,7 @@
             <input type="text" id="produto-id-hidden" hidden>
         </div>
     </div>
-<script src="../../assets/js/relatorios/produtos/produtos.js"></script>
+<script src="../../assets/js/relatorios/produtos/produtos.js?v=<?php echo time(); ?>"></script>
 <script src="../../assets/js/main.js"></script>
 </body>
 </html>

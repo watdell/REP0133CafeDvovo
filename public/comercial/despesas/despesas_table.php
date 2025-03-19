@@ -1,10 +1,12 @@
 <?php
 include '../../../serverside/config/dbConnection.php';
 
-if ($_POST['val'] < 0 || !is_numeric($_POST['val'])) {
+if (!is_numeric($_POST['val'])) {
     $valor = 0;
-    } else {
+    } else if ($_POST['val'] > 0) {
         $valor = $_POST['val'] * -1;
+    } else {
+        $valor = $_POST['val'];
     }
 // Get client ID from POST
 $tipo = $_POST['tipo'];

@@ -2,6 +2,7 @@
     width: fit-content;
     height: fit-content;
     min-height: 600px;
+    min-width: 550px;
     background-color: #fdf7e3;
     border: 1px solid #d9b38c;
     padding: 20px;
@@ -97,6 +98,11 @@
     background-color: #b5651d;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .innerdiv, .restable {
@@ -253,3 +259,17 @@ input[type=submit]:hover {
         justify-content: space-between
     }
 }
+
+.valwarn {
+    background-color: rgb(252, 252, 184);
+    width: 100%;
+    color: rgb(136, 40, 35);
+    align-self: center;
+    display: none;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid rgb(201, 171, 0);
+    border-radius: 10px;
+}
+
