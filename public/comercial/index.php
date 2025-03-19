@@ -18,11 +18,11 @@
             <h1>O que você gostaria de registrar?</h1>
             <br>
             <ul class="ul-selecione">
-                <li><a href="/public/comercial/orcamento/orcamento.php">Orçamento</a></li>
+                <!-- <li><a href="/public/comercial/orcamento/orcamento.php">Orçamento</a></li> -->
                 <li><a href="/public/comercial/venda/venda.php">Venda</a></li>
                 <!-- <li><a href="/public/servicos/cadastro-servicos/servicos_home.php">Serviços</a></li>
-                <li><a href="/public/comercial/pagamento/pagamento.php">Pagamento</a></li>
-                <li><a href="/public/comercial/pos-venda/pos-venda.php">Pós Venda</a></li>-->
+                <li><a href="/public/comercial/pagamento/pagamento.php">Pagamento</a></li>-->
+                <li><a href="/public/comercial/logistica/logistica.php">Logistica</a></li>
                 <li><a href="/public/comercial/despesas/despesas.php">Despesa</a></li> 
                 <li><a href="/public/comercial/entradas/entradas.php">Entradas</a></li> 
                 <li><a href="/public/comercial/caixa/caixa.php">Caixa</a></li>

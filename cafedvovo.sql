@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Mar-2025 às 18:20
+-- Tempo de geração: 18-Mar-2025 às 21:40
 -- Versão do servidor: 10.4.6-MariaDB
 -- versão do PHP: 7.2.22
 
@@ -32,7 +32,7 @@ CREATE TABLE `despesas` (
   `iddespesa` int(11) NOT NULL,
   `categoria` varchar(50) NOT NULL,
   `descricao` varchar(255) NOT NULL,
-  `valor` double NOT NULL,
+  `valor` decimal(14,2) NOT NULL,
   `data` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -41,12 +41,8 @@ CREATE TABLE `despesas` (
 --
 
 INSERT INTO `despesas` (`iddespesa`, `categoria`, `descricao`, `valor`, `data`) VALUES
-(1, 'TEST', 'tweawe', 4567, '2025-03-06 13:21:50'),
-(2, 'TEST', 'asrdgfawef', 656, '2025-03-06 13:29:04'),
-(3, 'Fábio', 'ergaer', 23.33, '2025-03-06 13:29:34'),
-(5, 'poiuyf', 'jkfgjktjyyy', -556, '2025-03-06 14:46:50'),
-(6, 'poiuyf', 'ki', -456236253, '2025-03-06 16:32:43'),
-(7, 'yfukfyukfykuooo', 'ddgf', -86, '2025-03-11 13:23:35');
+(11, 'wfwrjngukhi', '55', '-67.00', '2025-03-12 19:19:08'),
+(14, 'poiuyf', 'car', '-50.00', '2025-03-05 23:59:02');
 
 -- --------------------------------------------------------
 
@@ -65,12 +61,8 @@ CREATE TABLE `despesa_categoria` (
 --
 
 INSERT INTO `despesa_categoria` (`idcategoria`, `tipo`, `nome`) VALUES
-(1, 'fixo', 'TEST'),
-(2, 'fixo', 'vhqwefl'),
-(3, 'variavel', 'wfwrjngukhi'),
-(4, 'variavel', 'yfukfyukfykuooo'),
-(5, 'variavel', 'poiuyf'),
-(6, 'fixo', 'Fábio');
+(6, 'fixo', 'Fábio'),
+(7, 'variavel', 'FUNK');
 
 -- --------------------------------------------------------
 
@@ -140,7 +132,7 @@ INSERT INTO `endereco` (`endereco_id`, `pais`, `cep`, `estado`, `cidade`, `bairr
 
 CREATE TABLE `entradas` (
   `identrada` int(11) NOT NULL,
-  `valor` float DEFAULT NULL,
+  `valor` decimal(14,2) DEFAULT NULL,
   `descricao` varchar(255) DEFAULT NULL,
   `data` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -150,9 +142,22 @@ CREATE TABLE `entradas` (
 --
 
 INSERT INTO `entradas` (`identrada`, `valor`, `descricao`, `data`) VALUES
-(1, 56, 'uivbargg', '2025-03-06 15:27:27'),
-(2, 345345, 'jhhhhhhhhh', '2025-03-06 15:27:47'),
-(3, 90000, 'testing guiking', '2025-03-11 13:41:42');
+(32, '99.00', '4678', '2025-03-13 01:29:36'),
+(39, '1234567890.24', 'tr', '2025-03-14 21:26:18'),
+(41, '456.00', 'w', '2025-03-14 21:26:28');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `entregas`
+--
+
+CREATE TABLE `entregas` (
+  `id_entrega` int(11) NOT NULL,
+  `id_venda` varchar(255) NOT NULL,
+  `data_venda` datetime DEFAULT NULL,
+  `data_entrega` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -284,7 +289,8 @@ INSERT INTO `itens_venda` (`item_venda_id`, `venda_id`, `produto`, `quantidade`,
 (2, 1, '19', 4, '15.00', '60.00'),
 (3, 2, '1', 3, '15.00', '45.00'),
 (4, 2, '18', 1, '25.00', '25.00'),
-(5, 2, '20', 4, '17.00', '68.00');
+(5, 2, '20', 4, '17.00', '68.00'),
+(7, 4, '19', 3, '15.00', '45.00');
 
 -- --------------------------------------------------------
 
@@ -712,7 +718,8 @@ CREATE TABLE `vendas` (
 
 INSERT INTO `vendas` (`venda_id`, `cliente_id`, `total`, `data_venda`) VALUES
 (1, 102, '85.00', '2025-03-07 13:32:51'),
-(2, 110, '128.00', '2025-03-07 13:45:11');
+(2, 110, '128.00', '2025-03-07 13:45:11'),
+(4, 98, '45.00', '2025-03-13 00:59:52');
 
 --
 -- Índices para tabelas despejadas
@@ -742,6 +749,12 @@ ALTER TABLE `endereco`
 --
 ALTER TABLE `entradas`
   ADD PRIMARY KEY (`identrada`);
+
+--
+-- Índices para tabela `entregas`
+--
+ALTER TABLE `entregas`
+  ADD PRIMARY KEY (`id_entrega`);
 
 --
 -- Índices para tabela `fornecedor`
@@ -820,13 +833,13 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT de tabela `despesas`
 --
 ALTER TABLE `despesas`
-  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `despesa_categoria`
 --
 ALTER TABLE `despesa_categoria`
-  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `endereco`
@@ -838,7 +851,13 @@ ALTER TABLE `endereco`
 -- AUTO_INCREMENT de tabela `entradas`
 --
 ALTER TABLE `entradas`
-  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de tabela `entregas`
+--
+ALTER TABLE `entregas`
+  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `insumo`
@@ -850,7 +869,7 @@ ALTER TABLE `insumo`
 -- AUTO_INCREMENT de tabela `itens_venda`
 --
 ALTER TABLE `itens_venda`
-  MODIFY `item_venda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `item_venda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `pessoa`
@@ -874,7 +893,7 @@ ALTER TABLE `telefone`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `venda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `venda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para despejos de tabelas

@@ -1,0 +1,8 @@
+{
+    "name": "vendor/cafe",
+    "description": "excell import",
+    "type": "library",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.19"
+    }
+}

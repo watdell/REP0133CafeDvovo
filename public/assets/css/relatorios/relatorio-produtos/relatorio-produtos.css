@@ -234,3 +234,14 @@ section h2 {
     display: inline-block;
 }
 
+
+.procura {
+    padding: 8px 18px;
+    background-color: #fff5ec;
+    color: #53320c;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #53320c;
+}

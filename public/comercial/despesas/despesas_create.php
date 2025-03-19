@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,7 +47,7 @@
                         <label for="cat">Categoria:</label>
 
 
-                        <select id='catf' name="catf">
+                        <select id='catf' name="catf" onchange='Stuff("catf")' style='display:none'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'fixo'";
 
@@ -61,7 +61,7 @@
                             ?>
                         </select>
 
-                        <select id='catv' style="display:none" name="catv">
+                        <select id='catv' name="catv" onchange='Stuff("catv")' style='display:none'>
                             <?php
                                 $sql = "SELECT nome FROM despesa_categoria WHERE tipo = 'variavel'";
 
@@ -84,23 +84,49 @@
                         <input type="text" id="desc" name="desc" maxlength="255" required>
 
                         <label for="nome">Valor:</label>
-                        <input type="float" id="val" name="val" maxlength="255" required>
+                        <input type="number" step='0.01' id="val" name="val" maxlength="255" required onchange='thewarn()'>
                         </div>
 
-                        <br><br>
+                        <br>
+                        <a id='valwarn' class='valwarn'>VALOR SERÁ REGISTRADO COMO NEGATIVO</a>
+                        <br>
 
-                        <div class="innerdiv" style="justify-content:space-evenly">
+                        <div class="innerdiv" style="justify-content:center; margin: 0px 10px; gap: 10px;">
 
-                        <button onclick="location.href='despesas_cat.php'" style="width:45%">CRIAR CATEGORIA</button>
-                        <button class="register-btn" type="submit"  style="width:45%">Registrar Despesa</button>
+                        <button class="register-btn" type="submit"  style="width:100%;">Registrar Despesa</button>
 
                         </div>
 
                 </form>
 
+                <div class="innerdiv" style="justify-content:center; margin: 0px 10px; gap: 10px;">
+
+                <div class="itens_shown" style="justify-content:space-evenly;align-content:center; gap: 10px;padding-top: 10px">
+                    <button onclick="location.href='despesas_cat.php'" style="width:100%;align-self:center">CRIAR CATEGORIA</button>
+                    <form action="despesas_cat_del.php" method="post" style="width:100%;">
+                        <input type="text" id="catd" name="catd" maxlength="255" hidden>
+                        <button type="submit" style="width:100%;">DELETAR CATEGORIA</button>
+                    </form>
+                </div>
+                </div>
+
         </div>
     </main>
-<script src="../public/assets/js/main.js">
-</script>
+<script src="../public/assets/js/main.js"></script>
+<script>
+    document.getElementById('tipo').value = getCookie('tipo');
+
+    if (document.getElementById('tipo').value == 'fixo') {
+        document.getElementById('catf').style.display = 'flex';
+        document.getElementById('catv').style.display = 'none';
+
+        Stuff('catf');
+    } else {
+        document.getElementById('catf').style.display = 'none';
+        document.getElementById('catv').style.display = 'flex';
+
+        Stuff('catv')
+    }
+    </script>
 </body>
 </html>
