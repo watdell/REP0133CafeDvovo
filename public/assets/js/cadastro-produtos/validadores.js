@@ -89,29 +89,30 @@ function validarFormSessaoInsumos() {
     }
 
     console.log(soma);
-    if (soma != pesoTotalProduto) {
+    console.log('soma');
+    /*if (soma != pesoTotalProduto) {
         mensagem.push("Erro: A soma da quantidade de insumo precisa ser igual ao peso total! \n");
-    } else {
-        const resultadoSomaTotalQntd = somarCustoInsumos();
-        const menorDataValidadeInsumo = verMenorData();
+    } else {}*/
+    
+    const resultadoSomaTotalQntd = somarCustoInsumos();
+    const menorDataValidadeInsumo = verMenorData();
 
-        if (resultadoSomaTotalQntd) {
-            let custoTotalUnidade = document.getElementById('custo-total-unidade');
-            let inputEscondidoMenorData = document.getElementById('insumo-menor-data');
+    if (resultadoSomaTotalQntd) {
+        let custoTotalUnidade = document.getElementById('custo-total-unidade');
+        let inputEscondidoMenorData = document.getElementById('insumo-menor-data');
 
-            // Convertemos em valor moeda
-            const valorMoeda = converterParaMoeda(resultadoSomaTotalQntd);
+        // Convertemos em valor moeda
+        const valorMoeda = converterParaMoeda(resultadoSomaTotalQntd);
 
-            // Atualizamos o valor do input desabilitado da sessão financeiro com o valor do total dos insumos para referência
-            custoTotalUnidade.value = "";
-            custoTotalUnidade.value = valorMoeda.trim();
-            custoTotalUnidade.setAttribute('data-custo_total', resultadoSomaTotalQntd);
+        // Atualizamos o valor do input desabilitado da sessão financeiro com o valor do total dos insumos para referência
+        custoTotalUnidade.value = "";
+        custoTotalUnidade.value = valorMoeda.trim();
+        custoTotalUnidade.setAttribute('data-custo_total', resultadoSomaTotalQntd);
 
-            // Colocamos o valor da menor data de validade dos insumos para poder ser enviada pelo formulário no final.
-            // Ela será a data de validade do produto.
-            inputEscondidoMenorData.value = menorDataValidadeInsumo;
-            console.log(inputEscondidoMenorData.value);
-        }
+        // Colocamos o valor da menor data de validade dos insumos para poder ser enviada pelo formulário no final.
+        // Ela será a data de validade do produto.
+        inputEscondidoMenorData.value = menorDataValidadeInsumo;
+        console.log(inputEscondidoMenorData.value);
     }
 
     return mensagem;

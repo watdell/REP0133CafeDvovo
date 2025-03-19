@@ -94,7 +94,7 @@
                             <select style="width: 70%;" class="insumo-select" name="insumo[]" id="select-insumo-0">
                                 <option>Saborizante de Caramelo - R$ 12/ml - disponível 1000/ml</option>                
                             </select>
-                            <label for="quantidade-insumo-1">g:</label>
+                            <label for="quantidade-insumo-1">qtd:</label>
                             <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;" step="1">
                             <i id="0" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</i>
                         </div>
@@ -128,7 +128,7 @@
                     <label for="estoque-minimo">Estoque Mínimo:</label>
                     <div class="qntd-estoque-total-container">
                         <input type="number" name="estoque-minimo" value="0" id="estoque-minimo" placeholder="Ex: 10">  
-                        <div id="check-estoque-possibilidade" class="check-estoque-possibilidade">Disponibilidade</div>
+                        <!-- <div id="check-estoque-possibilidade" class="check-estoque-possibilidade">Disponibilidade</div> -->
                     </div>
                     
                     <button type="button" onclick="submitForm()" class="register-btn">Salvar</button>
