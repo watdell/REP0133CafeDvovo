@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../public/assets/css/main.css">
     <link rel="stylesheet" href="../../../public/assets/css/despesas/style.css?v=<?php echo time(); ?>">
+    <script src="../../../public/assets/js/comercial/despesa/despesa.js?v=<?php echo time(); ?>"></script>
     <title>Document</title>
 
     <?php
@@ -16,6 +17,11 @@
 
         if ($conn->connect_error) {
             die("Erro de conexão: " . $conn->connect_error);
+        }
+
+        function fiend($criteria) {
+            $stu = $criteria . "%";
+            return $stu;
         }
         
         ?>
@@ -30,52 +36,20 @@
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">
                 <h2>Entradas</h2>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' oninput='search("entradas","select-search")'></input>
+                <select id="select-search" style="margin-left:10px;width:17%" onchange="setcook()">
+                    <option id="select-search-descricao" value="descricao">DESC</option>
+                    <option id="select-search-id" value="id">ID</option>
+                    <option id="select-search-valor" value="valor">VALOR</option>
+                    <option id="select-search-data" value="data">DATA</option>
+                </select>
+                <button onclick="location.href='../index.php'">VOLTAR</button>
             </div>
 
             <div style="display:flex;flex-direction:row;min-height:600px">
 
-                <div class="innertable" style="width:100%">
-                <div class="table_header">
-                    <a style="width:20%">ID</a>
-                    <a style="width:20%">descricao</a>
-                    <a style="width:20%">valor</a>
-                    <a style="width:20%">data</a>
-                    <a style="width:3%">DEL</a>
-                </div>
-                <hr style='height:4px;background-color:black'><br>
-                    <?php
-
-                    $sql= "SELECT * FROM entradas";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    while($row = $result->fetch_assoc()) {
-                        ?>
-                        <div class='itens_shown'>
-                        <a style="width:25%"><?php  
-                        echo $row['identrada'];?> </a>
-                        <a style="width:25%"><?php
-                        echo $row['descricao'];?> </a>
-                        <a style="width:25%"><?php
-                        echo $row['valor'];?> </a>
-                        <a style="width:25%"><?php
-                        echo $row['data'];
-                        if ($row['valor'] == 0){
-                            ?>
-                            <script>window.alert('Verifique o ID : <?php echo $row['identrada'];?>')</script>
-                            <?php
-                        }
-                        ?> </a>
-                        <form id='field' action='entradas_del.php' method='post'>
-                            <input type='hidden' name='id' value='<?php echo $row["identrada"]?>'>
-                            <button type="submit">X</button></form>
-                    </div>
-                        <hr>
-                        <?php
-                    }
-
-                    ?>
+                <div id='innertable' class="innertable" style="width:100%">
+                    <!-- THIS IS WHERE THE MAGIC HAPPENS -->
                 </div>
 
             </div>
@@ -110,5 +84,14 @@
         
     </main>
 <script src="../public/assets/js/main.js"></script>
+<script>
+    function setcook() {
+        setCookie('select-search', document.getElementById("select-search").value, 2);
+    }
+
+    document.getElementById('select-search-' + getCookie('select-search','entr')).selected = true;
+
+    search("entradas","select-search");
+</script>
 </body>
 </html>
