@@ -182,3 +182,57 @@ document.getElementById('formulario-geral').addEventListener('submit', function(
 function emptyValueQntd() {
     return Array.from(document.querySelectorAll('.produto-qntd')).some(element => !element.value);
 }
+
+
+
+document.getElementById("freteForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let formData = new FormData();
+    formData.append("cep_origem", document.getElementById("cep_origem").value);
+    formData.append("cep_destino", document.getElementById("cep_destino").value);
+    formData.append("peso", document.getElementById("peso").value);
+    formData.append("valor", document.getElementById("valor").value);
+    formData.append("largura", document.getElementById("largura").value);
+    formData.append("altura", document.getElementById("altura").value);
+    formData.append("comprimento", document.getElementById("comprimento").value);
+
+    fetch("calculo-frete.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        // Log da resposta do servidor antes de tentar converter para JSON
+        console.log(response);
+        
+        if (!response.ok) {
+            throw new Error("Erro na resposta do servidor: " + response.statusText);
+        }
+        
+        return response.text(); // Retorna como texto primeiro
+    })
+    .then(texto => {
+        console.log("Resposta do servidor:", texto);
+        
+        // Tenta converter o texto em JSON
+        try {
+            const data = JSON.parse(texto);
+            
+            let resultado = "";
+            if (data && Array.isArray(data)) {
+                data.forEach(servico => {
+                    resultado += ` ${servico.name}<br> Prazo: ${servico.delivery_time} dias<br> Valor: R$ ${servico.price}<br><br>`;
+                });
+            } else {
+                resultado = "Erro ao calcular o frete.";
+            }
+            document.getElementById("resultado").innerHTML = resultado;
+        } catch (e) {
+            console.error("Erro ao analisar a resposta como JSON:", e);
+            document.getElementById("resultado").innerHTML = "Erro ao calcular o frete.";
+        }
+    })
+    .catch(error => console.error("Erro:", error));
+});
+
+ 

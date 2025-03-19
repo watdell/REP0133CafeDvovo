@@ -84,10 +84,41 @@
                     <br>
                     <button id="add-produto" type="button" class="register-btn">Adicionar Produto</button>
                 </fieldset>
+                <br>
+                <fieldset>
+                    
+                </fieldset>
+                <br>
             </section>
             
             <button id="Registrar Venda" type="submit" class="register-sell">Registrar Venda</button>
         </form>
+        <br>
+        <h2>Calcular Frete</h2>
+        <form id="freteForm">
+            <label>CEP Origem:</label>
+            <input type="text" id="cep_origem" name="cep_origem" required><br><br>
+
+            <label>CEP Destino:</label>
+            <input type="text" id="cep_destino" name="cep_destino" required><br><br>
+
+            <label>Peso (kg):</label>
+            <input type="number" id="peso" name="peso" step="0.1" required><br><br>
+
+            <label>Valor Declarado (R$):</label>
+            <input type="number" id="valor" name="valor_declarado" step="0.01" required><br><br>
+
+            <label>Dimensões (cm):</label><br>
+            <label>Largura:</label> <input type="number" id="largura" name="largura" required>
+            <label>Altura:</label> <input type="number" id="altura" name="altura" required>
+            <label>Comprimento:</label> <input type="number" id="comprimento" name="comprimento" required><br><br>
+
+            <button type="submit">Calcular Frete</button>
+        </form>
+        <br><br>
+        <h3>Resultado:</h3>
+        <p id="resultado"></p>
+        <br>
     </main>
 
     <script src="./js/venda.js"></script>    

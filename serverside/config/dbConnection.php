@@ -8,7 +8,7 @@
 
     // Configurações do banco de dados
     $host = 'localhost'; // Endereço do servidor
-    $port = 3307;        // Porta do MySQL do XAMPP (verifique no painel de controle do XAMPP)
+    $port = 3306;        // Porta do MySQL do XAMPP (verifique no painel de controle do XAMPP)
     $user = 'usuario';     // Nome de usuário do MySQL
     $password = '12345678'; // Senha do MySQL
     $database = 'cafedvovo'; // Nome do banco de dados
