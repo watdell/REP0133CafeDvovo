@@ -8,6 +8,9 @@
     if ($conn->connect_error) {
         die("Erro de conexão: " . $conn->connect_error);
     }
+
+    if ($_SERVER ['REQUEST_METHOD']=="POST" && $_POST('action')=='create')
+    $nome
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +29,10 @@
     <main class="content">
         <div class="navbar" id="navbar"></div>
         <br>
+        <button onclick="abrirmodal()">Gerenciar insumos</button>
+
+        
+
         <?php
             $sql = "SELECT * FROM insumo";
             $result = $conn->query($sql);
