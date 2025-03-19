@@ -7,7 +7,7 @@
     <title>Sistema - Café de Vovô</title>
 </head>
 <body>
-    <?php include('../../includes/produtos-sidebar.php'); ?>
+    <?php include('../../includes/main-sidebar.php'); ?>
     <?php include('../../includes/topbar.php'); ?>
 
     <main class="content">
