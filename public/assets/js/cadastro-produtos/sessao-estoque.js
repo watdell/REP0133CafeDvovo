@@ -67,7 +67,7 @@ function alertaReporEstoque(){
     }
 }
 // Vai capturar o click do botão de id especificado, e acionar a função alertaReporEstoque para o evento.
-document.getElementById('quantidade-para-estoque').addEventListener('input', divAlertaEstoqueInput);
-document.getElementById('check-estoque-possibilidade').addEventListener('click', alertaReporEstoque);
+//document.getElementById('quantidade-para-estoque').addEventListener('input', divAlertaEstoqueInput);
+//document.getElementById('check-estoque-possibilidade').addEventListener('click', alertaReporEstoque);
 
 

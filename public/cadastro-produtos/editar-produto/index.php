@@ -14,7 +14,7 @@
 </head>
 <body>
     <?php 
-        include('../../../includes/produtos-sidebar.php'); 
+        include('../../../includes/main-sidebar.php'); 
         include('../../../includes/topbar.php'); 
         include('../../../serverside/config/dbConnection.php'); 
         

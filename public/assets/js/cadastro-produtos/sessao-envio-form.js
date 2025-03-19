@@ -6,9 +6,9 @@ function validarFormSessaoEstoque() {
     const estoqueAlerta = checarMaximoEstoquePossivel();
 
     let mensagem = [];
-    if (estoqueAlerta.length > 0) { 
+    /*if (estoqueAlerta.length > 0) { 
         mensagem.push("Estoque de insumo insuficiente");
-    }
+    }*/
     if (!qntdParaEstoque.value) {
         mensagem.push("Digite uma quantidade para estoque!")
     }
