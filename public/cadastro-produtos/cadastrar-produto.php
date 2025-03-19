@@ -122,8 +122,8 @@
             <section id="estoque" class="tabcontent"> 
                 <fieldset id="fieldset-estoque" class="fieldset">
                     <legend>Controle de Estoque</legend>
-                    <label for="quantidade-estoque">Quantidade para estoque:</label>
-                    <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="1" placeholder="Quantidade para ter em estoque.">
+                    <label for="quantidade-estoque">Quantidade inicial para estoque</label>
+                    <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="0" placeholder="Quantidade atual do estoque">
                     
                     <label for="estoque-minimo">Estoque Mínimo:</label>
                     <div class="qntd-estoque-total-container">
