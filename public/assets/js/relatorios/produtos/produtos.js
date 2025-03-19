@@ -226,6 +226,10 @@ function converterParaMoeda(valor) {
     return valorMoedaDigitos;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 93e438c07c3a05742163c9fee386b31e073a6f7f
 // FUNÇÂO DE PROCURA 
 
 function search(str,inta = "innertable") {

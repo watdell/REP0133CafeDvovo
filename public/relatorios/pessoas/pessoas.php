@@ -15,8 +15,19 @@
         <br>
         <section class="reports">
             <!-- Funcionários -->
+            <div class="button-add-pessoa">
+                    <div>
+                        <h2>Funcionário</h2>
+                    </div>
+                    <div>
+                        <form action="../../cadastro-pessoas/index.php">
+                            <button class="button-submit" type="submit">Adicionar Pessoa</button>
+                        </form>
+                    </div>
+                </div>
             <div class="report-category">
-                <h2>Funcionários</h2>
+                
+                
                 <div class="card-grid">
                     <?php 
 
