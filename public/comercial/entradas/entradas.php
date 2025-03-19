@@ -54,7 +54,7 @@
 
             </div>
 
-            <div class="itens_shown" style="justify-content:space-between">
+            <div class="itens_shown" style="justify-content:space-between;padding-top: 10px;">
 
             <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:40%'>REGISTRAR NOVA ENTRADA</button>
 

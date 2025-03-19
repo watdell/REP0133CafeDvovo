@@ -30,7 +30,7 @@
         if ($d != 'innertable' and $p != 'caixa') {
             echo '<a style="width:7%">DEL</a>';
         };
-        echo '</div><hr style="height:4px;background-color:black"><br>';
+        echo '</div><hr style="height:4px;background-color:black">';
 
         while($row = mysqli_fetch_array($result)) {
             echo "<div class='itens_shown'>
@@ -58,7 +58,7 @@
         if ($d != 'innertable') {
             echo '<a style="width:7%">DEL</a>';
         };
-        echo '</div><hr style="height:4px;background-color:black"><br>';
+        echo '</div><hr style="height:4px;background-color:black">';
 
         while($row = mysqli_fetch_array($result)) {
             echo "<div class='itens_shown'>
@@ -78,7 +78,7 @@
     }
 
     if ($d == 'innertable2') {
-        echo "<br><hr style='height:4px;background-color:black'><br>";
+        echo "<br><a style='font-size:1.5rem;color:#5a3e2b;'>Vendas</a><br>";
     
         $sql = "
         SELECT 
