@@ -18,7 +18,7 @@
             <ul class="ul-selecione">
                 <li><a href="./pessoas/pessoas.php">Registro de pessoas</a></li>
                 <li><a href="./produtos/produtos.php">Registro de produtos</a></li>
-                <li><a href="excel/importar_excel.php">importar excell</a></li>
+                <li><a href="excel/importar_excel.php">Importar Excell</a></li>
             </ul>
         </nav>
     </main>
