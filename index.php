@@ -12,19 +12,29 @@
     function DateMod($mod) {
         $vencDate = new DateTime();
         $vencDate->modify($mod);
-        return $vencDate->format('Y-m-d H:i:s');
+        echo $vencDate->format('Y-m-d H:i:s');
     };
 
     function SelectData($table,$mod) {
         $conn = dbConnection();
 
-        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' GROUP BY DAY(data)";
+        if ($mod == '-30 day') {
+            $TypeDate = 'GROUP BY DAY(data)';
+        } else {
+            $TypeDate = 'GROUP BY MONTH(data)';
+        }
+
+        $sql= "SELECT data, SUM(valor) AS valor_diario FROM $table WHERE data > '" . DateMod($mod) . "' $TypeDate";
         $stmt= $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result(); 
 
         while($row = $result->fetch_assoc()) {
+            if ($mod == '-30 day') {
             $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,10));
+            } else { 
+            $x[] = array("y" => $row['valor_diario'], "label" => substr($row['data'],0,7));
+            }
         }
         return $x;
     };
@@ -79,6 +89,13 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
         window.onload = function () {
 
         function BuildCanvas(id,name,returnal,color) {
+            
+            CanvasJS.addColorSet("Custom",
+                [//colorSet Array
+                "#483327",
+                "#b08c3c"              
+                ]);
+            
             var chart = new CanvasJS.Chart(id, {
                 title: {
                     text: name
@@ -111,11 +128,12 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
             title: {
                 text: "CAIXA"
             },
+            colorSet: "Custom",
+            backgroundColor: "transparent",
             data: [{
                 type: "pie",
                 indexLabel: "{y}",
                 yValueFormatString: "\"R$\"#,##0.00",
-                indexLabelPlacement: "inside",
                 indexLabelFontColor: "#36454F",
                 indexLabelFontSize: 18,
                 indexLabelFontWeight: "bolder",
@@ -136,19 +154,117 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
     
     <main class="content" style="width:90%">
 
-    <button onclick="mes()">Dia / Mês</button>
+    <!-- <button onclick="mes()">Dia / Mês</button> -->
     <div class="navbar" id="navbar"></div>
 
         <section class="charts">
-        <div id="chartContainerDay" style="height: 400px; width: 100%;"></div>
-        <div id="chartContainerMonth" style="height: 400px; width: 100%;display:none;"></div>
+        <div id="inicial" style="width:100%;">
+            <div class="table" style="display:flex;justify-content:space-evenly">
+        <div class="subtotal" style="display:flex;flex-direction:column;width:40%">
+            <a style="width:40%;font-size:30px">Lucro Líquido:  </a>
+                <a id='col_cal' style="width:40%;font-size:30px"><?php
 
-        <div id="chartContainerDayE" style="height: 400px; width: 100%;"></div>
-        <div id="chartContainerMonthE" style="height: 400px; width: 100%;display:none;"></div>
+                    $sql= "SELECT valor FROM despesas";
+                    $stmt= $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $subtotal = 0;
 
-        <div id="pieContainer" style="height: 400px; width: 100%;"></div>
+                    while($row = $result->fetch_assoc()) {
+                        $subtotal = $subtotal + $row['valor'];
+                    }
+
+                    $sql= "SELECT valor FROM entradas";
+                    $stmt= $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while($row = $result->fetch_assoc()) {
+                        $subtotal = $subtotal + $row['valor'];
+                    }
+
+                    $sql= "SELECT total FROM vendas";
+                    $stmt= $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while($row = $result->fetch_assoc()) {
+                        $subtotal = $subtotal + $row['total'];
+                    }
+
+                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
+                    ?></a><br><br>
+                    <a style="width:40%;font-size:30px">Despesas:</a>
+                    <a style="width:40%;font-size:30px;color:#8e0321"><?php
+
+                    $sql= "SELECT valor FROM despesas";
+                    $stmt= $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $subtotal = 0;
+
+                    while($row = $result->fetch_assoc()) {
+                        $subtotal = $subtotal + $row['valor'];
+                    }
+                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
+                    ?></a><br><br>
+                    <a style="width:40%;font-size:30px">Entradas:</a>
+                    <a style="width:40%;font-size:30px;color:#0d8e03"><?php
+                    $subtotal = 0;
+
+                    $sql= "SELECT valor FROM entradas";
+                    $stmt= $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    while($row = $result->fetch_assoc()) {
+                        $subtotal = $subtotal + $row['valor'];
+                    }
+
+                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
+                    ?></a><br><br>
+                    <a style="width:40%;font-size:30px">Vendas:</a>
+                    <a style="width:40%;font-size:30px;color:#0d8e03"><?php
+                    $subtotal = 0;
+
+                        $sql= "SELECT total FROM vendas";
+                        $stmt= $conn->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        while($row = $result->fetch_assoc()) {
+                            $subtotal = $subtotal + $row['total'];
+                        }
+                    echo "R$ "  .  number_format($subtotal, 2, ',', '.');
+                    ?></a>
+                </div>
+            <div id="pieContainer" style="height: 400px; width: 50%;"></div>
+            </div>
+        </div>
+
+        <div class="itens_shown" style="margin: 0;">
+
+        <div id="chartContainerDay" style="height: 400px; width: 48%;"></div>
+
+        <div id="chartContainerDayE" style="height: 400px; width: 48%;"></div> 
+
+        </div>
+
+        <hr style="width:100%;border: 1px dashed #483327">
+
+
+        <div class="itens_shown" style="margin: 0;">
+
+        <div id="chartContainerMonth" style="height: 400px; width: 48%;"></div>
+
+        <div id="chartContainerMonthE" style="height: 400px; width: 48%;"></div>
+
+        </div>
+
+        
            
         </section>   
+        <br>
     </main>
 
 <script src="./public/assets/js/main.js"></script>
@@ -167,6 +283,17 @@ $pieDataPoints[] = array("y" => $total, "label" => "ENTRADAS");
             document.getElementById("chartContainerDayE").style.display= 'flex';
         }
     }
+    function calcularTotal() {
+        if (document.getElementById('col_cal').innerHTML[3] != '-') {
+            document.getElementById('col_cal').style.color = '#0d8e03';
+        } else {
+            document.getElementById('col_cal').style.color = '#8e0321';
+        }
+        if (document.getElementById('col_cal').innerHTML.length > 20) {
+            document.getElementById('col_cal').innerHTML = 'Verifique valores';
+        }
+    }
+    calcularTotal();
 </script>
 
 </body>

@@ -69,7 +69,7 @@
 
                         echo "<hr style='height:3px;background-color:black'><br>";
 
-                        $sql= "SELECT venda_id, produto, SUM(subtotal) AS total_val_unitario FROM itens_venda GROUP BY venda_id;";
+                        $sql= "SELECT venda_id, produto FROM itens_venda GROUP BY venda_id;";
                         $stmt= $conn->prepare($sql);
                         $stmt->execute();
                         $result = $stmt->get_result();
@@ -89,9 +89,18 @@
                             while($row2 = $result2->fetch_assoc()) {
                                 echo $row2['nome'];      
                             }      
-                            ?> </a>
+                            ?></a>
                             <a style="width:20%"><?php
-                            echo $row['total_val_unitario'];?> </a>
+
+                             $sql4= "SELECT total FROM vendas WHERE venda_id = '" . $row["venda_id"] . "'";
+                             $stmt4= $conn->prepare($sql4);
+                             $stmt4->execute();
+                             $result4 = $stmt4->get_result();
+
+                            while($row4 = $result4->fetch_assoc()) {
+                                echo $row4['total'];  
+                            } 
+                            ?> </a>
                             <a style="width:20%"><?php
 
                                 $sql1= "SELECT data_venda FROM vendas WHERE venda_id = '" . $row['venda_id'] . "' LIMIT 1;";
@@ -176,13 +185,13 @@
                         $subtotal = $subtotal + $row['valor'];
                     }
 
-                    $sql= "SELECT subtotal FROM itens_venda";
+                    $sql= "SELECT total FROM vendas";
                     $stmt= $conn->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
                     while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['subtotal'];
+                        $subtotal = $subtotal + $row['total'];
                     }
 
                     echo "R$ "  .  number_format($subtotal, 2, ',', '.');
@@ -205,7 +214,7 @@
         } else {
             document.getElementById('col_cal').style.color = '#8e0321';
         }
-        if (document.getElementById('col_cal').innerHTML.length > 13) {
+        if (document.getElementById('col_cal').innerHTML.length > 20) {
             document.getElementById('col_cal').innerHTML = 'Verifique valores';
         }
     }
