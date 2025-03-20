@@ -62,10 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $quantidade = intval($quantidades[$i]);
             $preco_unitario = floatval(str_replace(',', '.', $valores_unit[$i]));
             $subtotalConvertidoFloat = converterParaNumero($subtotais[$i]);
-        
 
             $stmt_item->execute();
         }
+        
+        $stmt_despacho = $conn->prepare("INSERT INTO despacho (cliente_id, venda_id, nome_empresa, prazo, data_entrega, valor) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt_despacho->bind_param("iisisd", $cliente, $id_venda, $nomeFrete, $prazoFrete, $dataEntrega, $valorFrete);
+
+        $stmt_despacho->execute();
 
          // Mensagem de sucesso e redirecionamento
          echo "<h2>Venda cadastrada com sucesso!</h2>";
