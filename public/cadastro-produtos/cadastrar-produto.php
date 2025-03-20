@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +101,11 @@
                     </div>
                     <input id="insumo-menor-data" name="menor-data" type="text" hidden>
                     <input id="qntd-insumo-lista" name="qntd-insumo-lista[]" type="text" hidden>
-                    <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
+                    <div>
+                        <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
+                        <button id="create-insumo"  onclick="botaoAddNovoInsumo()" type="button" class="register-btn">Criar insumo</button>
+                    </div>
+                    
                 </fieldset>
             </section>
             

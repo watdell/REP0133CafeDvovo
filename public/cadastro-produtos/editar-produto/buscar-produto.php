@@ -5,7 +5,7 @@ include ('../../../serverside/config/dbConnection.php');
 
 $conn = dbConnection();
 
-$sql = "SELECT * FROM insumo";
+$sql = "SELECT * FROM insumo ORDER BY nome ASC";
 
 $result = $conn->query($sql);
 

@@ -49,7 +49,7 @@ if ($stmt) {
             
             $produto = [
                 'produto_id' => $row['produto_id'],
-                //'imagem' => $row['imagem'],
+                'imagem' => base64_encode($row['imagem']),
                 'tipo_imagem' => $row['tipo_imagem'],
                 'nome' => $row['nome'],
                 'categoria' => $row['categoria'],
