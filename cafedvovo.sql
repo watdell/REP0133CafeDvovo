@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20-Mar-2025 às 21:51
+-- Tempo de geração: 20-Mar-2025 às 20:42
 -- Versão do servidor: 10.4.6-MariaDB
 -- versão do PHP: 7.2.22
 
@@ -66,7 +66,8 @@ CREATE TABLE `despesas` (
 
 INSERT INTO `despesas` (`iddespesa`, `categoria`, `descricao`, `valor`, `data`) VALUES
 (11, 'wfwrjngukhi', '55', '-67.00', '2025-03-12 19:19:08'),
-(14, 'poiuyf', 'car', '-50.00', '2025-03-05 23:59:02');
+(14, 'poiuyf', 'car', '-50.00', '2025-03-05 23:59:02'),
+(24, 'FUNK', 'Guilherme', '-5400.00', '2025-03-19 15:43:47');
 
 -- --------------------------------------------------------
 
@@ -166,9 +167,14 @@ CREATE TABLE `entradas` (
 --
 
 INSERT INTO `entradas` (`identrada`, `valor`, `descricao`, `data`) VALUES
-(32, '99.00', '4678', '2025-03-13 01:29:36'),
-(39, '1234567890.24', 'tr', '2025-03-14 21:26:18'),
-(41, '456.00', 'w', '2025-03-14 21:26:28');
+(55, '123.00', 'sad', '2025-03-19 15:40:22'),
+(56, '312.00', 'wqsd', '2025-03-19 15:40:22'),
+(57, '123.00', 'mad', '2025-03-19 15:40:22'),
+(58, '312.00', 'bad', '2025-03-19 15:40:22'),
+(60, '2.00', 'food', '2025-03-19 15:40:22'),
+(61, '323.00', 'mood', '2025-03-19 15:40:22'),
+(62, '0.00', 'we2', '2025-03-19 15:40:22'),
+(63, '3212.00', '1231', '2025-03-19 15:43:56');
 
 -- --------------------------------------------------------
 
@@ -241,6 +247,7 @@ CREATE TABLE `insumo` (
   `custo_unitario` float NOT NULL,
   `custo_total` float NOT NULL,
   `estoque_atual` int(11) NOT NULL,
+  `estoque_minimo` int(11) NOT NULL,
   `data_validade` varchar(35) NOT NULL,
   `data_cadastro` varchar(45) NOT NULL,
   `estoque_minimo` int(11) NOT NULL
@@ -405,13 +412,11 @@ INSERT INTO `produto` (`produto_id`, `imagem`, `tipo_imagem`, `nome`, `categoria
 (1, '', '', 'Café Arábica', 'Café', 'Café 100% Arábica de alta qualidade.', 'capsula', 250, 0, 0.5, 15, 100, 20, '0', '2024-01-01'),
 (3, '', '', 'Café Espresso', 'Café', 'Mistura de grãos Arábica e Robusta para espresso.', 'pacote', 250, 12, 0.6, 18, 80, 15, '2025-12-31', '2024-01-03'),
 (4, '', '', 'Café Gourmet', 'Café', 'Café especial com notas de chocolate.', 'pacote', 250, 15, 0.75, 25, 50, 10, '2025-12-31', '2024-01-04'),
-(5, '', '', 'Café Mocha', 'Café', 'Café com sabor de chocolate e especiarias.', 'pacote', 250, 14, 0.7, 22, 70, 12, '2025-12-31', '2024-01-05'),
 (6, '', '', 'Café Orgânico', 'Café', 'Café produzido de forma sustentável e orgânica.', 'pacote', 250, 13, 0.65, 20, 90, 15, '2025-12-31', '2024-01-06'),
 (7, '', '', 'Café Descafeinado', 'Café', 'Café descafeinado, perfeito para sensíveis à cafeína.', 'pacote', 250, 11, 0.55, 17, 60, 10, '2025-12-31', '2024-01-07'),
 (8, '', '', 'Café com Baunilha', 'Café', 'Café aromatizado com essência de baunilha.', 'pacote', 250, 12, 0.6, 18, 75, 15, '2025-12-31', '2024-01-08'),
 (9, '', '', 'Café com Canela', 'Café', 'Café aromatizado com canela.', 'pacote', 250, 12, 0.6, 18, 80, 15, '2025-12-31', '2024-01-09'),
 (10, '', '', 'Café Intenso', 'Café', 'Mistura de grãos intensos para paladares exigentes.', 'pacote', 250, 14, 0.7, 21, 70, 12, '2025-12-31', '2024-01-10'),
-(11, '', '', 'Café da Manhã', 'Café', 'Café suave ideal para o café da manhã.', 'pacote', 250, 9, 0.45, 13, 100, 20, '2025-12-31', '2024-01-11'),
 (12, '', '', 'Café Frances', 'Café', 'Café com sabor forte e corpo robusto.', 'pacote', 250, 10, 0.5, 15, 80, 15, '2025-12-31', '2024-01-12'),
 (13, '', '', 'Café Italiano', 'Café', 'Café com notas de caramelo e chocolate.', 'pacote', 250, 13, 0.65, 20, 60, 10, '2025-12-31', '2024-01-13'),
 (14, '', '', 'Café do Brasil', 'Café', 'Café de origem brasileira com sabor adocicado.', 'pacote', 250, 11, 0.55, 17, 70, 12, '2025-12-31', '2024-01-14'),
@@ -500,10 +505,6 @@ INSERT INTO `produto_insumo` (`produto_id`, `insumo_id`, `qntd_insumo`) VALUES
 (4, 3, 5),
 (4, 4, 10),
 (4, 7, 20),
-(5, 1, 150),
-(5, 3, 10),
-(5, 4, 10),
-(5, 5, 10),
 (6, 1, 150),
 (6, 3, 5),
 (6, 7, 30),
@@ -523,9 +524,6 @@ INSERT INTO `produto_insumo` (`produto_id`, `insumo_id`, `qntd_insumo`) VALUES
 (10, 3, 10),
 (10, 7, 30),
 (10, 9, 5),
-(11, 1, 200),
-(11, 3, 5),
-(11, 18, 10),
 (12, 1, 200),
 (12, 3, 5),
 (12, 8, 5),
@@ -861,7 +859,7 @@ ALTER TABLE `despacho`
 -- AUTO_INCREMENT de tabela `despesas`
 --
 ALTER TABLE `despesas`
-  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `iddespesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `despesa_categoria`
@@ -879,7 +877,7 @@ ALTER TABLE `endereco`
 -- AUTO_INCREMENT de tabela `entradas`
 --
 ALTER TABLE `entradas`
-  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `identrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de tabela `entregas`
@@ -909,7 +907,7 @@ ALTER TABLE `pessoa`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `produto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `produto_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT de tabela `telefone`

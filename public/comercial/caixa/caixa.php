@@ -116,7 +116,7 @@
 
     doobsearch()
 
-    </script>
+</script>
 
 </body>
 </html>
