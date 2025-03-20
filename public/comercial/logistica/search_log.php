@@ -9,9 +9,10 @@
 
 if ($t == 'vendas') {
 
-    $sql = "SELECT v.venda_id, v.data_venda, e.id_venda AS delivered 
+    $sql = "SELECT v.venda_id, v.data_venda, d.data_entrega, e.id_venda AS delivered
         FROM $t v 
-        LEFT JOIN entregas e ON v.venda_id = e.id_venda
+        LEFT JOIN despacho AS d ON v.venda_id = d.venda_id
+        LEFT JOIN entregas AS e ON d.venda_id = e.id_venda
         WHERE v.$c LIKE ? 
         ORDER BY v.venda_id DESC LIMIT 30";
 
@@ -36,14 +37,10 @@ if ($t == 'vendas') {
             $sett = "<button type='submit' style='background-color:rgb(141, 82, 40);min-width:20%;'>ENTREGUE</button><hr>";
         }
 
-        $date = new DateTime($row['data_venda']);
-        $date->modify('+10 days');
-        $estimatedDate = $date->format('Y-m-d');
-
         echo "<form class='itens_shown' action='entregas.php' method='post' style='width:100%;'>
                 <input type='number' name='id' style='width:12%;overflow:hidden;' readonly value='" . $row['venda_id'] . "'>
-                <input name='data' style='width:27%;overflow:hidden;' readonly value='" . $row['data_venda'] . "'>
-                <input name='data_estimada' style='width:27%;overflow:hidden;' readonly value='" . $estimatedDate . "'>
+                <input style='width:27%;overflow:hidden;' readonly value='" . $row['data_venda'] . "'>
+                <input name='data' style='width:27%;overflow:hidden;' readonly value='" . $row['data_entrega'] . "'>
                 $sett
               </form>";
     }
@@ -58,7 +55,7 @@ if ($t == 'vendas') {
 
     echo '<div class="table_header">
             <a style="width:15%">ID</a>
-            <a style="width:25%">DATA DE VENDA</a>
+            <a style="width:25%">DATA DE ESTIMADA</a>
             <a style="width:25%">DATA DE ENTREGA</a>
             <a style="width:20%">OPÇÃO</a>
           </div>';
