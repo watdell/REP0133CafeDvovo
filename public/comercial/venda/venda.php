@@ -16,9 +16,14 @@
         <?php
             include('../../../serverside/config/dbConnection.php'); 
             $conn = dbConnection();
-            
+
             // Buscar clientes
-            $stmtClientes = $conn->prepare("SELECT * FROM pessoa ORDER BY nome ASC");
+            $stmtClientes = $conn->prepare("SELECT pessoa.*, endereco.cep
+                                FROM pessoa
+                                INNER JOIN endereco 
+                                ON pessoa.pessoa_id = endereco.pessoa_id
+                                ORDER BY pessoa.nome ASC");
+
             $stmtClientes->execute();
             $resultClientes = $stmtClientes->get_result();
 
@@ -32,9 +37,9 @@
             <section>
                 <fieldset>
                     <legend>Cliente</legend>
-                    <select style="width: 34.5%" type="text" name="cliente" id="cliente">
+                    <select style="width: 34.5%" type="text" onchange='mudarCliente()' name="cliente" id="cliente">
                         <?php while ($row = $resultClientes->fetch_assoc()) { ?>
-                            <option data-cep="<?= $row['cep']; ?>" value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
+                            <option data-cep="<?=  $row['cep']; ?>" value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
                         <?php } ?>   
                     </select>
                 </fieldset>
@@ -97,7 +102,7 @@
                     
                     <div class="form-group">
                         <label for="cep_origem">CEP de Origem:</label>
-                        <input type="text" id="cep_origem" name="cep_origem" required>
+                        <input type="text" id="cep_origem" value='30441-021' name="cep_origem" required>
                     </div>
 
                     <div class="form-group">

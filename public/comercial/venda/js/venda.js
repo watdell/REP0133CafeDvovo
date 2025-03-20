@@ -185,9 +185,7 @@ function emptyValueQntd() {
 }
 
 
-
-document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
-    // Captura os valores dos campos
+function enviarParametrosAjax() {
     let params = new URLSearchParams({
         cep_origem: document.getElementById("cep_origem").value,
         cep_destino: document.getElementById("cep_destino").value,
@@ -260,6 +258,13 @@ document.getElementById("calcular-frete-btn").addEventListener("click", function
         }
     })
     .catch(error => console.error("Erro:", error));
+}
+
+document.getElementById('cliente').addEventListener('change', enviarParametrosAjax);
+
+document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
+    // Captura os valores dos campos
+    enviarParametrosAjax();
 });
 
 // Função para capturar o serviço selecionado e enviá-lo ao backend
@@ -345,3 +350,17 @@ function formatarData() {
     // Preencher o campo hidden
     document.getElementById('dataFormatoBanco').value = dataParaBanco;
   }
+
+  // Função para preencher o CEP quando o usuário mudar o cliente
+    function mudarCliente() {
+        let select_cliente = document.getElementById('cliente');
+
+        // Obtém a opção selecionada corretamente
+        let optionSelected = select_cliente.options[select_cliente.selectedIndex];
+
+        let cep = optionSelected.getAttribute('data-cep');
+
+        document.getElementById('cep_destino').value = cep;
+
+        // Exibe a opção no alerta (ou pode acessar o atributo data-cep se necessário)
+    }
