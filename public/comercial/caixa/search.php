@@ -78,7 +78,8 @@
     }
 
     if ($d == 'innertable2') {
-        echo "<br><hr style='height:4px;background-color:black'><br>";
+        echo "<br><a style='font-size:1.5rem'>Vendas</a>
+        <hr style='height:4px;background-color:black'>";
     
         $sql = "
         SELECT 
