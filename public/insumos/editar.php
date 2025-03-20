@@ -4,8 +4,18 @@
   include '../../includes/main-sidebar.php';
 
   $conn = dbConnection();
-    
-?>
+  
+  $id = $_GET['id'];
+  $nome = $_GET['nome'];
+  $unidade_medida = $_GET['unidade_medida'];
+  $custo_unitario = $_GET['custo_unitario'];
+  $estoque_atual = $_GET['estoque_atual'];
+  $data_validade = $_GET['data_validade'];
+  $data_cadastro = $_GET['data_cadastro'];
+
+  // Exemplo de como preencher um formulário de edição:
+?> 
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,100 +34,33 @@
         <div class="navbar" id="navbar"></div>
         <br>
 
-        <input type="search" id="search" onchange="search('searchbody')"></input>
         
-        <table border="1" cellspacing='0' cellpadding='8'>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Unidade de Medida</th>
-                <th>Custo Unitário (R$)</th>
-                <th>Estoque Atual</th>
-                <th>Data de Validade</th>
-                                <th>Data de Cadastro</th>
-                                <th>Excluir</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-        <tbody id='searchbody'></tbody></table>
+        
+    <form action="conexao_e.php" method="post">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" value="<?php echo $nome; ?>" required><br>
+
+        <label for="unidade_medida">Unidade de Medida:</label>
+        <input type="text" name="unidade_medida" value="<?php echo $unidade_medida; ?>" required><br>
+
+        <label for="custo_unitario">Custo Unitário:</label>
+        <input type="text" name="custo_unitario" value="<?php echo $custo_unitario; ?>" required><br>
+
+        <label for="estoque_atual">Estoque Atual:</label>
+        <input type="text" name="estoque_atual" value="<?php echo $estoque_atual; ?>" required><br>
+
+        <label for="data_validade">Data de Validade:</label>
+        <input type="text" name="data_validade" value="<?php echo $data_validade; ?>" required><br>
+
+        <label for="data_cadastro">Data de Cadastro:</label>
+        <input type="text" name="data_cadastro" value="<?php echo $data_cadastro; ?>" required><br>
+
+        <button type="submit">Salvar alterações</button>
+    </form>
 
         
-
-        <?php
-            /*$sql = "SELECT * FROM insumo";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                echo "<table border='1' cellspacing='0' cellpadding='8'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Unidade de Medida</th>
-                                <th>Custo Unitário (R$)</th>
-                                <th>Estoque Atual</th>
-                                <th>Data de Validade</th>
-                                <th>Data de Cadastro</th>
-                                <th>Excluir</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody id='searchbody'>TEST";
-                
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['insumo_id']}</td>
-                            <td>{$row['nome']}</td>
-                            <td>{$row['unidade_medida']}</td>
-                            <td>" . number_format($row['custo_unitario'], 2, ',', '.') . "</td>
-                            <td>{$row['estoque_atual']}</td>
-                            <td>" . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
-                            <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
-                            <td><button onclick='confirmarExclusao({$row['insumo_id']})'>Excluir</button></td>
-                            <td><button onclick='editarInsumo({$row['insumo_id']})'>Editar</button></td>
-                          </tr>";
-                }
-                          
-            
-                echo "</tbody></table>";
-            } else {
-                echo "<p>Nenhum resultado encontrado.</p>";
-            }*/
-        ?>
-    </main>
-        <script src="insumos.js"></script>
-        <script>
-    function abrirmodal() {
-        document.getElementById("crudModal").style.display = "block";
-    }
-
-    function fecharModal() {
-        document.getElementById("crudModal").style.display = "none";
-    }
-    function confirmarExclusao(id) {
-            if (confirm("Tem certeza que deseja excluir este insumo?")) {
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = 'conexcao_d.php'; // Defina a URL de destino para o mesmo arquivo ou outro.
-
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'insumo_id';
-                input.value = id;
-                form.appendChild(input);
-
-                var actionInput = document.createElement('input');
-                actionInput.type = 'hidden';
-                actionInput.name = 'action';
-                actionInput.value = 'delete';
-                form.appendChild(actionInput);
-
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
-    search('searchbody');
+        
+<script>
+    
 </script>
-
-  

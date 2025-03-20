@@ -21,11 +21,18 @@
                 <td>' . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
                 <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
                 <td><button onclick='confirmarExclusao(" . $row['insumo_id'] . ")'>Excluir</button></td>
-                <td><button onclick='editarInsumo(" .$row['insumo_id'] . ")'>Editar</button></td>
+                <td><button onclick='confirmarEdicao(". $row['insumo_id'] .")'>edição</button></td>
             </tr>";
         }
 
+       
+     
     $stmt->close();
     $conn->close();
 
+
+
     mysqli_close($conn);
+    ?>
+       
+       

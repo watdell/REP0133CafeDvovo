@@ -23,12 +23,14 @@
     <main class="content">
         <div class="navbar" id="navbar"></div>
         <br>
-        <button onclick="abrirmodal()">Gerenciar insumos</button>
+
+        
         <div id="crudModal" class="modal">
 
             <div class="modal-content">
                 <span onclick="fecharModal()" style="cursor:pointer; float:right;">&times;</span>
                 <h2>Adicionar Insumo</h2>
+                <input type="search" id="search" onchange="search('searchbody')"></input>
                 <form method="POST" action="conexao.php">
                     <label>Nome:</label>
                     <input type="text" name="nome" required><br><br>
@@ -45,53 +47,33 @@
                     <label>Data de Validade:</label>
                     <input type="date" name="data_validade" required><br><br>
 
-                    <button type="submit" name="action" value="create">Adicionar</button>
+                    <button type="submit" name="action" value="update">Adicionar</button>
                 </form>
             </div>
         </div>
+        
+        
+        <table border="1" cellspacing='0' cellpadding='8'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Unidade de Medida</th>
+                    <th>Custo Unitário (R$)</th>
+                    <th>Estoque Atual</th>
+                    <th>Data de Validade</th>
+                    <th>Data de Cadastro</th>
+                    <th>Excluir</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+        <tbody id='searchbody'></tbody></table> 
 
         
 
-        <?php
-            $sql = "SELECT * FROM insumo";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                echo "<table border='1' cellspacing='0' cellpadding='8'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Unidade de Medida</th>
-                                <th>Custo Unitário (R$)</th>
-                                <th>Estoque Atual</th>
-                                <th>Data de Validade</th>
-                                <th>Data de Cadastro</th>
-                                <th>Excluir</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody>";
-                
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>{$row['insumo_id']}</td>
-                            <td>{$row['nome']}</td>
-                            <td>{$row['unidade_medida']}</td>
-                            <td>" . number_format($row['custo_unitario'], 2, ',', '.') . "</td>
-                            <td>{$row['estoque_atual']}</td>
-                            <td>" . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
-                            <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
-                            <td><button onclick='confirmarExclusao({$row['insumo_id']})'>Excluir</button></td>
-                            <td><button onclick='editarInsumo({$row['insumo_id']})'>Editar</button></td>
-                          </tr>";
-                }
-            
-                echo "</tbody></table>";
-            } else {
-                echo "<p>Nenhum resultado encontrado.</p>";
-            }
-        ?>
+       
+    </main>
+        <script src="insumos.js"></script>
         <script>
     function abrirmodal() {
         document.getElementById("crudModal").style.display = "block";
@@ -100,6 +82,30 @@
     function fecharModal() {
         document.getElementById("crudModal").style.display = "none";
     }
+
+ 
+    function confirmarEdicao() {
+            
+            var nome = document.getElementById("nome" + id).innerText;
+            var unidade_medida = document.getElementById("unidade_medida" + id).innerText;
+            var custo_unitario = document.getElementById("custo_unitario-" + id).innerText;
+            var estoque_atual = document.getElementById("estoque_atual" + id).innerText;
+            var data_validade = document.getElementById("data_validade" + id).innerText;
+            var data_cadastro = document.getElementById("data_cadastro" + id).innerText;
+
+            if (confirm("Deseja realmente editar o insumo?")) {
+                window.location.href = "editar.php?id=" + id +
+                    "&nome=" + encodeURIComponent(nome) +
+                    "&unidade_medida=" + encodeURIComponent(unidade_medida) +
+                    "&custo_unitario=" + encodeURIComponent(custo_unitario) +
+                    "&estoque_atual=" + encodeURIComponent(estoque_atual) +
+                    "&data_validade=" + encodeURIComponent(data_validade) +
+                    "&data_cadastro=" + encodeURIComponent(data_cadastro);
+            }
+        }
+
+
+
     function confirmarExclusao(id) {
             if (confirm("Tem certeza que deseja excluir este insumo?")) {
                 var form = document.createElement('form');
@@ -122,5 +128,7 @@
                 form.submit();
             }
         }
+    search('searchbody');
 </script>
+
   

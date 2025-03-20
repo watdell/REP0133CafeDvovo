@@ -8,7 +8,7 @@
         die("Erro de conexão: " . $conn->connect_error);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == 'delete') {
+    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == 'update') {
         $id = $_POST["insumo_id"];
         $nome = $_POST['nome'];
         $unidade_medida = $_POST['unidade_medida'];
