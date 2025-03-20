@@ -20,3 +20,20 @@ function handleResize() {
 }
 
 window.addEventListener('resize', handleResize);
+
+function main_search(str, search_file, table, inta) {
+    // Definindo variáveis
+    document.getElementById(inta).innerHTML = '';
+    var xmlhttp = new XMLHttpRequest();
+
+    // Coletando dados da tabela
+    xmlhttp.open("GET",search_file+"?&q="+str+"&t="+table.toLowerCase(),true);
+    xmlhttp.send();
+
+    // Enviando os dados para o html
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
+        }
+    };
+}
