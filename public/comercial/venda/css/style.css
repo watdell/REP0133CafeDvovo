@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: row;
     max-width: 900px;
-    background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -120,6 +119,7 @@ input:focus, select:focus {
     transition: background 0.3s;
     margin-top: 10px;
     width: 60px;
+    margin-bottom: 9px;
 }
 
 button:hover {
@@ -140,8 +140,8 @@ table {
 }
 
 th, td {
-    border: 1px solid #a1887f;
-    padding: 8px;
+    border: 0px solid #a1887f;
+    padding: 5px;
     text-align: left;
 }
 
@@ -158,9 +158,14 @@ tr:hover {
     background-color: #e6d6c5;
 }
 
+.total-div{
+    display: flex;
+    flex-direction: row;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
-    .form-result-container {
+    .container-frete {
         flex-direction: column;
     }
 }

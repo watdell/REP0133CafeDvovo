@@ -50,7 +50,7 @@ function adicionarProduto() {
 
     var td5 = document.createElement("td");
     var btnRemover = document.createElement("button");
-    btnRemover.classList.add("icon-delete");
+    btnRemover.classList.add("button-smal");
     btnRemover.innerHTML = "🗑️";
     btnRemover.onclick = function() {
         novaLinha.remove();
