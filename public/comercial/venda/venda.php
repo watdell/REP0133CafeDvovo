@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../../public/assets/css/main.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Sistema de Vendas</title>
+    
 </head>
 <body>
     <?php include('../../../includes/main-sidebar.php'); ?>
@@ -27,7 +28,7 @@
             $resultProdutos = $stmtProdutos->get_result();
         ?>  
 
-        <form id="formulario-geral" method="post" class="form-group" action="./registrar-venda.php" enctype="multipart/form-data">
+        <form id="formulario-geral" method="post" class="form-venda" action="./registrar-venda.php" enctype="multipart/form-data">
             <section>
                 <fieldset>
                     <label for="cliente">Cliente</label>
@@ -65,7 +66,7 @@
                             <td><input class="produto-qntd" type="number" name="qntd-produto[]" id="produto-qntd" style="width: 60px;" step="1" min="1" value="1" oninput="calcularSubtotal(this)"></td>
                             <td><input class="valor-unit" type="text" name="valor-unit[]" id="valor-unit" style="width: 70px;" readonly></td>
                             <td><input class="sub-total" type="text" name="sub-total[]"  id="sub-total" style="width: 70px;" readonly></td>
-                            <td><button type="button" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</button></td>
+                            <td><button type="button" class="button-smal " onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</button></td>
                         </tr>
                         <tr></tr>
                         <tr>
@@ -82,43 +83,67 @@
                         </tr>
                     </table>
                     <br>
-                    <button id="add-produto" type="button" class="register-btn">Adicionar Produto</button>
+                    <button id="add-produto" type="button" class="register-btn button-big">Adicionar Produto</button>
                 </fieldset>
-                <br>
-                <fieldset>
-                    
-                </fieldset>
+                                                
                 <br>
             </section>
+            <div class="container-frete">
+                <fieldset class="field-container-frete">
+                    <legend>Calcular Frete</legend>
+                    <form id="freteForm" action="calculo-frete.php" method="post">
+                        <div class="form-group">
+                            <label for="cep_origem">CEP de Origem:</label>
+                            <input type="text" id="cep_origem" name="cep_origem" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cep_destino">CEP de Destino:</label>
+                            <input type="text" id="cep_destino" name="cep_destino" required>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="peso">Peso (kg):</label>
+                                <input type="text" id="peso" name="peso" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="valor_declarado">Valor Declarado (R$):</label>
+                                <input type="text" id="valor_declarado" name="valor_declarado" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="largura">Largura (cm):</label>
+                                <input type="text" id="largura" name="largura" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="altura">Altura (cm):</label>
+                                <input type="text" id="altura" name="altura" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comprimento">Comprimento (cm):</label>
+                                <input type="text" id="comprimento" name="comprimento" required>
+                            </div>
+                        </div>
+                        <br>
+                        <button id="calcular-frete-btn" class="button-big" type="button">Calcular Frete</button>
+                </fieldset>
+                <fieldset class="field-result">
+                    <legend>Resultado</legend>
+                    <div id="resultado" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+                </fieldset>
+                
+            </div>
+            <button id="Registrar Venda" type="submit" class="register-sell button-big ">Registrar Venda</button>
             
-            <button id="Registrar Venda" type="submit" class="register-sell">Registrar Venda</button>
         </form>
         <br>
-        <h2>Calcular Frete</h2>
-        <form id="freteForm">
-            <label>CEP Origem:</label>
-            <input type="text" id="cep_origem" name="cep_origem" required><br><br>
 
-            <label>CEP Destino:</label>
-            <input type="text" id="cep_destino" name="cep_destino" required><br><br>
-
-            <label>Peso (kg):</label>
-            <input type="number" id="peso" name="peso" step="0.1" required><br><br>
-
-            <label>Valor Declarado (R$):</label>
-            <input type="number" id="valor" name="valor_declarado" step="0.01" required><br><br>
-
-            <label>Dimensões (cm):</label><br>
-            <label>Largura:</label> <input type="number" id="largura" name="largura" required>
-            <label>Altura:</label> <input type="number" id="altura" name="altura" required>
-            <label>Comprimento:</label> <input type="number" id="comprimento" name="comprimento" required><br><br>
-
-            <button type="submit">Calcular Frete</button>
-        </form>
-        <br><br>
-        <h3>Resultado:</h3>
-        <p id="resultado"></p>
-        <br>
     </main>
 
     <script src="./js/venda.js"></script>    

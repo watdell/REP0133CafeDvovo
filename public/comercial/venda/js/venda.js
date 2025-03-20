@@ -185,46 +185,50 @@ function emptyValueQntd() {
 
 
 
-document.getElementById("freteForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
+//    event.preventDefault(); // Impede o envio tradicional do formulário
 
-    let formData = new FormData();
-    formData.append("cep_origem", document.getElementById("cep_origem").value);
-    formData.append("cep_destino", document.getElementById("cep_destino").value);
-    formData.append("peso", document.getElementById("peso").value);
-    formData.append("valor", document.getElementById("valor").value);
-    formData.append("largura", document.getElementById("largura").value);
-    formData.append("altura", document.getElementById("altura").value);
-    formData.append("comprimento", document.getElementById("comprimento").value);
+    // Captura os valores dos campos
+    let params = new URLSearchParams({
+        cep_origem: document.getElementById("cep_origem").value,
+        cep_destino: document.getElementById("cep_destino").value,
+        peso: document.getElementById("peso").value,
+        valor_declarado: document.getElementById("valor_declarado").value,
+        largura: document.getElementById("largura").value,
+        altura: document.getElementById("altura").value,
+        comprimento: document.getElementById("comprimento").value
+    });
 
-    fetch("calculo-frete.php", {
-        method: "POST",
-        body: formData
+    // Faz a requisição GET com os parâmetros na URL
+    fetch(`calculo-frete.php?${params.toString()}`, {
+        method: "GET"
     })
     .then(response => {
-        // Log da resposta do servidor antes de tentar converter para JSON
-        console.log(response);
-        
+        console.log(response); // Log da resposta para debug
+
         if (!response.ok) {
             throw new Error("Erro na resposta do servidor: " + response.statusText);
         }
-        
-        return response.text(); // Retorna como texto primeiro
+
+        return response.text(); // Primeiro retorna como texto para debug
     })
     .then(texto => {
         console.log("Resposta do servidor:", texto);
-        
-        // Tenta converter o texto em JSON
+
         try {
             const data = JSON.parse(texto);
-            
+
             let resultado = "";
             if (data && Array.isArray(data)) {
                 data.forEach(servico => {
-                    resultado += ` ${servico.name}<br> Prazo: ${servico.delivery_time} dias<br> Valor: R$ ${servico.price}<br><br>`;
+                    if (!servico.error) {
+                        resultado += ` ${servico.name}<br> Prazo: ${servico.delivery_time} dias<br> Valor: R$ ${servico.price}<br><br>`;
+                    } else {
+                        resultado += `${servico.name}: ${servico.error}<br><br>`; 
+                    }
                 });
             } else {
-                resultado = "Erro ao calcular o frete.";
+                //resultado = "Erro ao calcular o frete.";
             }
             document.getElementById("resultado").innerHTML = resultado;
         } catch (e) {
