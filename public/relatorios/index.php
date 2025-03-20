@@ -19,7 +19,8 @@
                 <li><a href="./pessoas/pessoas.php">Registro de pessoas</a></li>
                 <li><a href="./produtos/produtos.php">Registro de produtos</a></li>
                 <li><a href="./estoque/estoque.php">Visualizar Estoque</a></li>
-                <li><a href="./excel/importar_excel.php">Importar Excel</a></li>
+                <li><a style="background-color:rgb(104, 104, 104)">Importar Excel</a></li>
+           <!-- <li><a href="./excel/importar_excel.php">Importar Excel</a></li> -->
             </ul>
         </nav>
     </main>
