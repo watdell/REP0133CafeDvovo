@@ -91,62 +91,73 @@
                                                 
                 <br>
             </section>
-            <div class="container-frete">
-                    <fieldset class="field-container-frete">
-                        <legend>Calcular Frete</legend>
-                        
-                            <div class="form-group">
-                                <label for="cep_origem">CEP de Origem:</label>
-                                <input type="text" id="cep_origem" name="cep_origem" required>
-                            </div>
+            <section class="container-frete">
+                <fieldset class="field-container-frete">
+                    <legend>Calcular Frete</legend>
+                    
+                    <div class="form-group">
+                        <label for="cep_origem">CEP de Origem:</label>
+                        <input type="text" id="cep_origem" name="cep_origem" required>
+                    </div>
 
-                            <div class="form-group">
-                                <label for="cep_destino">CEP de Destino:</label>
-                                <input type="text" id="cep_destino" name="cep_destino" required>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="peso">Peso (kg):</label>
-                                    <input type="text" id="peso" name="peso" required>
-                                </div>
+                    <div class="form-group">
+                        <label for="cep_destino">CEP de Destino:</label>
+                        <input type="text" id="cep_destino" name="cep_destino" required>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="peso">Peso (kg):</label>
+                            <input type="text" id="peso" name="peso" required>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="valor_declarado">Valor Declarado (R$):</label>
-                                    <input type="text" id="valor_declarado" name="valor_declarado" required>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="valor_declarado">Valor Declarado (R$):</label>
+                            <input type="text" id="valor_declarado" name="valor_declarado" required>
+                        </div>
+                    </div>
 
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="largura">Largura (cm):</label>
-                                    <input type="text" id="largura" name="largura" required>
-                                </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="largura">Largura (cm):</label>
+                            <input type="text" id="largura" name="largura" required>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="altura">Altura (cm):</label>
-                                    <input type="text" id="altura" name="altura" required>
-                                </div>
+                        <div class="form-group">
+                            <label for="altura">Altura (cm):</label>
+                            <input type="text" id="altura" name="altura" required>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="comprimento">Comprimento (cm):</label>
-                                    <input type="text" id="comprimento" name="comprimento" required>
-                                </div>
-                            </div>
-                            <br>
-                            <button id="calcular-frete-btn" class="button-big" type="button">Calcular Frete</button>
-                    </fieldset>
-                    <fieldset class="field-result">
-                        <legend>Resultado</legend>
-                        <div id="resultado" style="margin-top: 20px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;"></div>
-                    </fieldset>
-                  
-           
-            </div>
+                        <div class="form-group">
+                            <label for="comprimento">Comprimento (cm):</label>
+                            <input type="text" id="comprimento" name="comprimento" required>
+                        </div>
+                    </div>
+                    <br>
+                    <button id="calcular-frete-btn" class="button-big" type="button">Calcular Frete</button>
+                </fieldset>
+                <fieldset class="field-result">
+                    <legend>Resultado</legend>
+                    <div id="resultado" style="margin-top: 20px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;"></div>
+                </fieldset>     
+            </section>
+            <br>
+            <section>
+            <fieldset>
+                <legend>Data Estimada de Entrega</legend>
+                <div style="display: flex; flex-direction:row;">
+                    <span style="margin-top: 7px;">Entrega prevista para:</span> &nbsp; <input type="text" style="border: none; width: 20%; font-weight:bold; font-size:16px;" name="data-entrega" id="data-entrega" readonly required>
+                </div>
+                <input name="dataFormatoBanco" id="dataFormatoBanco" type="text" style="display: none;">
+            </fieldset>
+            </section>
+
             <input id='nome-frete' style='display:none;' name='nome-frete' type="text">
             <input id='prazo-frete' style='display:none;' name='prazo-frete' type="text">
             <input id='valor-frete' style='display:none;' name='valor-frete' type="text">
+
             <br>
+
             <button id="Registrar Venda" type="submit" class="register-sell button-big ">Registrar Venda</button>
             
         </form>

@@ -282,7 +282,66 @@ function registrarVenda() {
     nomeFrete.value = servicoSelecionado.name;
     prazoFrete.value = prazoInput ? prazoInput.value : servicoSelecionado.delivery_time; // Usa o valor do input ou do JSON como fallback
     valorFrete.value = servicoSelecionado.price;
+
+    atualizarDataEntrega();
+    formatarData();
 }
 
 
- 
+function atualizarDataEntrega() {
+    let prazoInput = document.getElementById("prazo-frete");
+    let dataEntregaSpan = document.getElementById("data-entrega");
+
+    let prazo = parseInt(prazoInput.value, 10);
+    if (isNaN(prazo) || prazo < 0) {
+        dataEntregaSpan.textContent = "Data inválida";
+        return;
+    }
+
+    let hoje = new Date();
+    hoje.setDate(hoje.getDate() + prazo); // Soma o prazo em dias à data atual
+
+    let dataFormatada = hoje.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+
+    dataEntregaSpan.value = dataFormatada;
+}
+
+
+function formatarData() {
+    const dataTexto = document.getElementById('data-entrega').value;
+  
+    // Convertendo o formato 'segunda-feira, 26 de março de 2025' para '2025-03-26'
+    // Usamos uma função para mapear o nome dos meses para o formato correto
+    const meses = {
+      "janeiro": "01",
+      "fevereiro": "02",
+      "março": "03",
+      "abril": "04",
+      "maio": "05",
+      "junho": "06",
+      "julho": "07",
+      "agosto": "08",
+      "setembro": "09",
+      "outubro": "10",
+      "novembro": "11",
+      "dezembro": "12"
+    };
+  
+    // Remover o dia da semana (ex: "segunda-feira,")
+    const partes = dataTexto.split(", ");
+    const dataFormatada = partes[1].split(" de ");
+    const dia = dataFormatada[0].padStart(2, '0'); // Adiciona zero à esquerda, se necessário
+    const mes = meses[dataFormatada[1].toLowerCase()];
+    const ano = dataFormatada[2];
+  
+    // Formato final 'yyyy-mm-dd'
+    const dataParaBanco = `${ano}-${mes}-${dia}`;
+  
+    // Preencher o campo hidden
+    document.getElementById('dataFormatoBanco').value = dataParaBanco;
+  }

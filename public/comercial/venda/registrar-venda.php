@@ -30,6 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subtotais = $_POST['sub-total']; // Array de subtotais
     $total = $_POST['total'];
 
+    $nomeFrete = $_POST['nome-frete'];
+    $prazoFrete = $_POST['prazo-frete'];
+    $valorFrete = $_POST['valor-frete'];
+    $dataEntrega = $_POST['dataFormatoBanco'];
+
     $totalConvertidoFloat = converterParaNumero($total);
 
     // Convertendo os subtotais para número (caso estejam no formato com vírgula) - errado.. não somava corretamente os valores (corrigir depois.. por hora substitui pelo total já calculado por js vindo da outra página)
