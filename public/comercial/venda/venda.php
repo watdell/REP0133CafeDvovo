@@ -34,7 +34,7 @@
                     <legend>Cliente</legend>
                     <select style="width: 34.5%" type="text" name="cliente" id="cliente">
                         <?php while ($row = $resultClientes->fetch_assoc()) { ?>
-                            <option value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
+                            <option data-cep="<?= $row['cep']; ?>" value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
                         <?php } ?>   
                     </select>
                 </fieldset>

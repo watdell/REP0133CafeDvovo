@@ -1,0 +1,12 @@
+CREATE TABLE despacho (
+    despacho_id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    venda_id INT NOT NULL,
+    nome_empresa VARCHAR(50),
+    prazo VARCHAR(50),
+    data_entrega VARCHAR(50),
+    valor DOUBLE,
+    FOREIGN KEY (venda_id) REFERENCES vendas(venda_id), 
+    FOREIGN KEY (cliente_id) REFERENCES pessoa(pessoa_id)
+   
+)
