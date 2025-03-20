@@ -8,19 +8,42 @@
         die("Erro de conexão: " . $conn->connect_error);
     }
 
-    ($_SERVER ['REQUEST_METHOD']=="POST" && $_POST['action']=='create'){
-        $id= $_POST["insumo_id"];
-        echo $id . "<br>";
-        $nome= $_POST['nome'] ;
-        echo $nome . "<br>";
+    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == 'delete') {
+        $id = $_POST["insumo_id"];
+        $nome = $_POST['nome'];
         $unidade_medida = $_POST['unidade_medida'];
-        echo $unidade_medida . "<br>";
         $custo_unitario = $_POST['custo_unitario'];
-        echo $custo_unitario . "<br>";
         $estoque_atual = $_POST['estoque_atual'];
-        echo $estoque_atual . "<br>";
         $data_validade = $_POST['data_validade'];
-        echo $data_validade . "<br>";
-    }
 
-    sql= "UPDATE  insumo SET insumo (nome, unidade_medida, custo_unitario, estoque_atual, data_validade, data_cadastro) WHERE insumo_id = 1";
+        
+        echo $id . "<br>";
+        echo $nome . "<br>";
+        echo $unidade_medida . "<br>";
+        echo $custo_unitario . "<br>";
+        echo $estoque_atual . "<br>";
+        echo $data_validade . "<br>";
+
+        $sql = "UPDATE insumo 
+                SET nome = ?, unidade_medida = ?, custo_unitario = ?, estoque_atual = ?, data_validade = ?
+                WHERE insumo_id = ?";
+
+        $stmt = $conn->prepare($sql);
+        
+        if (!$stmt) {
+            die("Erro na preparação da query: " . $conn->error);
+        }
+
+        
+        $stmt->bind_param("ssdisi", $nome, $unidade_medida, $custo_unitario, $estoque_atual, $data_validade, $id);
+
+      
+        if ($stmt->execute()) {
+            echo "Registro atualizado com sucesso!";
+        } else {
+            echo "Erro ao atualizar: " . $stmt->error;
+        }
+
+        
+    }
+?>

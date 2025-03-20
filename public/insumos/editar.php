@@ -23,36 +23,29 @@
     <main class="content">
         <div class="navbar" id="navbar"></div>
         <br>
-        <button onclick="abrirmodal()">Gerenciar insumos</button>
-        <div id="crudModal" class="modal">
 
-            <div class="modal-content">
-                <span onclick="fecharModal()" style="cursor:pointer; float:right;">&times;</span>
-                <h2>Adicionar Insumo</h2>
-                <form method="POST" action="conexao.php">
-                    <label>Nome:</label>
-                    <input type="text" name="nome" required><br><br>
+        <input type="search" id="search" onchange="search('searchbody')"></input>
+        
+        <table border="1" cellspacing='0' cellpadding='8'>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Unidade de Medida</th>
+                <th>Custo Unitário (R$)</th>
+                <th>Estoque Atual</th>
+                <th>Data de Validade</th>
+                                <th>Data de Cadastro</th>
+                                <th>Excluir</th>
+                                <th>Editar</th>
+                            </tr>
+                        </thead>
+        <tbody id='searchbody'></tbody></table>
 
-                    <label>Unidade de Medida:</label>
-                    <input type="text" name="unidade_medida" required><br><br>
-
-                    <label>Custo Unitário (R$):</label>
-                    <input type="number" step="0.01" name="custo_unitario" required><br><br>
-
-                    <label>Estoque Atual:</label>
-                    <input type="number" name="estoque_atual" required><br><br>
-
-                    <label>Data de Validade:</label>
-                    <input type="date" name="data_validade" required><br><br>
-
-                    <button type="submit" name="action" value="create">Adicionar</button>
-                </form>
-            </div>
-        </div>
         
 
         <?php
-            $sql = "SELECT * FROM insumo";
+            /*$sql = "SELECT * FROM insumo";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -66,10 +59,11 @@
                                 <th>Estoque Atual</th>
                                 <th>Data de Validade</th>
                                 <th>Data de Cadastro</th>
-                                <th>Ações</th>
+                                <th>Excluir</th>
+                                <th>Editar</th>
                             </tr>
                         </thead>
-                        <tbody>";
+                        <tbody id='searchbody'>TEST";
                 
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
@@ -81,14 +75,18 @@
                             <td>" . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
                             <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
                             <td><button onclick='confirmarExclusao({$row['insumo_id']})'>Excluir</button></td>
+                            <td><button onclick='editarInsumo({$row['insumo_id']})'>Editar</button></td>
                           </tr>";
                 }
+                          
             
                 echo "</tbody></table>";
             } else {
                 echo "<p>Nenhum resultado encontrado.</p>";
-            }
+            }*/
         ?>
+    </main>
+        <script src="insumos.js"></script>
         <script>
     function abrirmodal() {
         document.getElementById("crudModal").style.display = "block";
@@ -119,5 +117,7 @@
                 form.submit();
             }
         }
+    search('searchbody');
 </script>
+
   
