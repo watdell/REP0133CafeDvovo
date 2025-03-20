@@ -166,6 +166,7 @@ document.querySelectorAll(".produto-qntd, #desconto").forEach(input => {
 let select = document.getElementById('select-produto-0');
 atualizarPreco(select);
 
+
 document.getElementById('formulario-geral').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -186,8 +187,6 @@ function emptyValueQntd() {
 
 
 document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
-//    event.preventDefault(); // Impede o envio tradicional do formulário
-
     // Captura os valores dos campos
     let params = new URLSearchParams({
         cep_origem: document.getElementById("cep_origem").value,
@@ -220,17 +219,41 @@ document.getElementById("calcular-frete-btn").addEventListener("click", function
 
             let resultado = "";
             if (data && Array.isArray(data)) {
-                data.forEach(servico => {
+                data.forEach((servico, index) => {
                     if (!servico.error) {
-                        resultado += ` ${servico.name}<br> Prazo: ${servico.delivery_time} dias<br> Valor: R$ ${servico.price}<br><br>`;
+                        resultado += `
+                            <label style="display:block; cursor:pointer;">
+                                <div style='display:flex; flex-direction:row; gap:10px'>
+                                    <div> 
+                                        <input onclick='registrarVenda()' type="radio" style="margin-top:10px" name="frete" value='${JSON.stringify(servico)}'>  
+                                    </div>
+                                    <div>
+                                        <strong>${servico.name}</strong>
+                                        <br>
+                                        <div style='display:flex; flex-direction:row;'>
+                                            Prazo: <input type='number' oninput='registrarVenda()' style='width: 60px; height: 20px; margin-bottom: 0px;' value='${servico.delivery_time}' > &nbsp;dias 
+                                        </div>
+                                        Valor: R$ ${servico.price}
+                                    </div>
+                                </div>
+                            </label>
+                            <br><br>
+                        `;
                     } else {
                         resultado += `${servico.name}: ${servico.error}<br><br>`; 
                     }
                 });
+
+                // Adiciona o botão de registrar venda
+                //resultado += `<button id="registrar-venda-btn">Registrar Venda</button>`;
             } else {
-                //resultado = "Erro ao calcular o frete.";
+                resultado = "Erro ao calcular o frete.";
             }
+
             document.getElementById("resultado").innerHTML = resultado;
+
+            // Adiciona o evento ao botão "Registrar Venda"
+            //document.getElementById("registrar-venda-btn").addEventListener("click", registrarVenda);
         } catch (e) {
             console.error("Erro ao analisar a resposta como JSON:", e);
             document.getElementById("resultado").innerHTML = "Erro ao calcular o frete.";
@@ -238,5 +261,28 @@ document.getElementById("calcular-frete-btn").addEventListener("click", function
     })
     .catch(error => console.error("Erro:", error));
 });
+
+// Função para capturar o serviço selecionado e enviá-lo ao backend
+function registrarVenda() {
+    let selecionado = document.querySelector("input[name='frete']:checked");
+
+    if (!selecionado) {
+        alert("Selecione um serviço de frete antes de registrar a venda.");
+        return;
+    }
+
+    let servicoSelecionado = JSON.parse(selecionado.value);
+
+    let prazoInput = selecionado.closest("label").querySelector("input[type='number']"); // Encontra o input mais próximo
+
+    let nomeFrete = document.getElementById('nome-frete');
+    let prazoFrete = document.getElementById('prazo-frete');
+    let valorFrete = document.getElementById('valor-frete');
+
+    nomeFrete.value = servicoSelecionado.name;
+    prazoFrete.value = prazoInput ? prazoInput.value : servicoSelecionado.delivery_time; // Usa o valor do input ou do JSON como fallback
+    valorFrete.value = servicoSelecionado.price;
+}
+
 
  
