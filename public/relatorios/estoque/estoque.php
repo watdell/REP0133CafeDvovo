@@ -56,11 +56,19 @@
 
 <script src="../../../public/assets/js/main.js"></script>
 <script>
-    function doobsearch(str) {
-        main_search(str,"search_estoque.php","produto", "innertable");
-        main_search(str,"search_estoque.php","insumo", "innertable2");
+    async function doobsearch(str) {
+        try {
+            await main_search(str, "search_estoque.php", "produto", "innertable");
+            console.log("Busca de produtos concluída!");
+
+            await main_search(str, "search_estoque.php", "insumo", "innertable2");
+            console.log("Busca de insumos concluída!");
+        } catch (error) {
+            console.error("Erro na busca:", error);
+        }
     }
 
+    // Chamada inicial para carregar os itens ao abrir a página
     doobsearch("");
 
 </script>

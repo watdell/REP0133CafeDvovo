@@ -73,5 +73,3 @@ if ($t == 'vendas') {
 
     $stmt->close();
     $conn->close();
-
-    mysqli_close($conn);

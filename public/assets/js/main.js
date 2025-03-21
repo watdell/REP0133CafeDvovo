@@ -21,19 +21,28 @@ function handleResize() {
 
 window.addEventListener('resize', handleResize);
 
+// Função de busca de produtos
 function main_search(str, search_file, table, inta) {
-    // Definindo variáveis
-    document.getElementById(inta).innerHTML = '';
-    var xmlhttp = new XMLHttpRequest();
+    return new Promise((resolve, reject) => {
+        // Limpando o conteúdo anterior
+        document.getElementById(inta).innerHTML = '';
+        var xmlhttp = new XMLHttpRequest();
 
-    // Coletando dados da tabela
-    xmlhttp.open("GET",search_file+"?&q="+str+"&t="+table.toLowerCase(),true);
-    xmlhttp.send();
+        // Coletando dados da tabela
+        xmlhttp.open("GET", search_file + "?&q=" + str + "&t=" + table.toLowerCase(), true);
+        xmlhttp.send();
 
-    // Enviando os dados para o html
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
-        }
-    };
+        // Enviando os dados para o HTML
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    document.getElementById(inta).insertAdjacentHTML("beforeend", this.responseText);
+                    resolve(); // Resolve a Promise após o sucesso
+                } else {
+                    reject("Erro na requisição: " + this.status); // Rejeita em caso de erro
+                }
+            }
+        };
+    });
 }
+
