@@ -29,6 +29,14 @@
     padding-top: 5px;
 }
 
+.itens_shown > span {
+    color: #9e6632;
+}
+
+.table-header > span {
+    color: #9e6632;
+}
+
 .innertable-content {
     display:flex;
     flex-direction:row;
@@ -41,7 +49,7 @@
 .innertable {
     margin-top: 10px;
     width: 100%;
-    min-width: 600px;
+    min-width: 800px;
     height: 600px;
     background-color: #ffffff;
     border: 1px solid #e0c3a5;
@@ -146,6 +154,7 @@ div.disponivel {
 
 div.disponivel > a {
     color: white;
+    font-size: 0.8em;
 }
 
 div.escasso {
@@ -158,6 +167,7 @@ div.escasso {
 
 div.escasso > a {
     color: white;
+    font-size: 0.8em;
 }
 
 div.indisponivel {
@@ -170,6 +180,7 @@ div.indisponivel {
 
 div.indisponivel > a {
     color: white;
+    font-size: 0.8em;
 }
 
 #estoque-title1 {

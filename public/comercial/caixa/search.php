@@ -44,12 +44,12 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Verificação de resultados
-    if ($result->num_rows === 0) {
-        echo "Nenhum resultado encontrado para a consulta.<br>";
-    } else {
+    // Debug: Verificação de resultados
+    //if ($result->num_rows === 0) {
+        //echo "Nenhum resultado encontrado para a consulta.<br>";
+    //} else {
         //echo "Resultados encontrados: " . $result->num_rows . "<br>";
-    }
+    //}
 
     // Renderização da tabela para entradas
     if ($t == 'entradas') {

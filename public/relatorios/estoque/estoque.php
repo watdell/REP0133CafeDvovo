@@ -34,7 +34,7 @@
 
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;justify-content: space-between">
                 <h2>Produtos</h2>
-                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por descrição' onchange='doobsearch(this.value)'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por descrição' oninput='doobsearch(this.value)'></input>
                 <h2 id="estoque-title1">Insumos</h2>
             </div>
 
@@ -43,7 +43,7 @@
                     <!-- THIS IS WHERE THE MAGIC HAPPENS --> 
                 </div>
                 <div class="table-header">
-                    <h2 id="estoque-title2">Despesas</h2>
+                    <h2 id="estoque-title2">Insumos</h2>
                 </div> 
                 <div id="innertable2" class="innertable">
                     <!-- THIS IS WHERE THE MAGIC HAPPENS -->
