@@ -131,6 +131,7 @@ function calcularSubtotal(input) {
 
     row.querySelector(".sub-total").value = formatarNumero(subtotal);
     atualizarTotal();
+    calcularPesoTotal();
 }
 
 function atualizarTotal() {
@@ -367,12 +368,15 @@ function formatarData() {
         // Exibe a opção no alerta (ou pode acessar o atributo data-cep se necessário)
     }
 
-
+    // Vai calcular o peso dos insumos multiplicando o valor da data-peso da opção selecionada com a quantidade do campo de qntd mais próximo
     function calcularPesoTotal() {
         let selects = document.querySelectorAll('.produto-select');
+        
         let peso = 0;
+        let qntd = 0;
         selects.forEach(dataPeso => {
-            peso += parseFloat(dataPeso.options[dataPeso.selectedIndex].getAttribute('data-peso'));
+            qntd = parseFloat(dataPeso.closest('tr').querySelector('.produto-qntd').value);
+            peso += parseFloat(dataPeso.options[dataPeso.selectedIndex].getAttribute('data-peso')) * qntd;
         });
         document.getElementById('peso').value = peso/1000;
     }

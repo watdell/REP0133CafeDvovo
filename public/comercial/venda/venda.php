@@ -38,6 +38,7 @@
                 <fieldset>
                     <legend>Cliente</legend>
                     <select style="width: 34.5%" type="text" onchange='mudarCliente()' name="cliente" id="cliente">
+                        <option>Selecione um Cliente</option>
                         <?php while ($row = $resultClientes->fetch_assoc()) { ?>
                             <option data-cep="<?=  $row['cep']; ?>" value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
                         <?php } ?>   
@@ -61,6 +62,7 @@
                                 <div id="div-produtos">
                                     <div class="produto">
                                         <select style="width: 70%;" class="produto-select" name="produto[]" id="select-produto-0" onchange="atualizarPreco(this)">
+                                            <option>Selecione um Produto</option>
                                             <?php while ($row = $resultProdutos->fetch_assoc()) { ?>
                                                 <option value="<?= $row['produto_id']; ?>" data-preco="<?= $row['preco_venda']; ?>" data-peso="<?=  $row['peso']; ?>"><?= $row['nome']; ?></option>
                                             <?php } ?>               
