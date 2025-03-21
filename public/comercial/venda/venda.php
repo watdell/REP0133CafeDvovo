@@ -62,7 +62,7 @@
                                     <div class="produto">
                                         <select style="width: 70%;" class="produto-select" name="produto[]" id="select-produto-0" onchange="atualizarPreco(this)">
                                             <?php while ($row = $resultProdutos->fetch_assoc()) { ?>
-                                                <option value="<?= $row['produto_id']; ?>" data-preco="<?= $row['preco_venda']; ?>"><?= $row['nome']; ?></option>
+                                                <option value="<?= $row['produto_id']; ?>" data-preco="<?= $row['preco_venda']; ?>" data-peso="<?=  $row['peso']; ?>"><?= $row['nome']; ?></option>
                                             <?php } ?>               
                                         </select>
                                     </div>

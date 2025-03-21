@@ -120,6 +120,7 @@ function atualizarPreco(select) {
     row.querySelector(".valor-unit").value = formatarNumero(precoUnitario); 
     calcularSubtotal(row.querySelector(".produto-qntd")); 
     atualizarTotal();
+    calcularPesoTotal();
 }
 
 function calcularSubtotal(input) {
@@ -146,6 +147,7 @@ function atualizarTotal() {
     if (total < 0) total = 0;
 
     document.getElementById("total").value = formatarNumero(total, 2); // 4 casas decimais
+    document.getElementById('valor_declarado').value = formatarNumero(total, 2);
 }
 
 // 🔹 Função para converter valores formatados em número (1.234,56 → 1234.56)
@@ -363,4 +365,14 @@ function formatarData() {
         document.getElementById('cep_destino').value = cep;
 
         // Exibe a opção no alerta (ou pode acessar o atributo data-cep se necessário)
+    }
+
+
+    function calcularPesoTotal() {
+        let selects = document.querySelectorAll('.produto-select');
+        let peso = 0;
+        selects.forEach(dataPeso => {
+            peso += parseFloat(dataPeso.options[dataPeso.selectedIndex].getAttribute('data-peso'));
+        });
+        document.getElementById('peso').value = peso/1000;
     }
