@@ -1,0 +1,18 @@
+SEMPRE QUE HOUVER ALTERAÇÕES EM ALGUMA TABELA NA DATABASE, DEIXE-A AQUI
+
+\---------- EXEMPLO ----------/
+-> Branch (branch):
+# (mensagem)
+# Consulta SQL:
+---------------------
+(consulta)
+---------------------
+
+\---------- MUDANÇAS ----------/
+-> Branch estoque:
+# Adicionei o campo estoque_minimo na tabela insumo
+# Consulta SQL:
+---------------------
+ALTER TABLE insumo
+ADD estoque_minimo int(11) NOT NULL;
+---------------------
