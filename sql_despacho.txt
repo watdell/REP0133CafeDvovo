@@ -6,7 +6,6 @@ CREATE TABLE despacho (
     prazo VARCHAR(50),
     data_entrega VARCHAR(50),
     valor DOUBLE,
-    FOREIGN KEY (venda_id) REFERENCES vendas(venda_id), 
-    FOREIGN KEY (cliente_id) REFERENCES pessoa(pessoa_id)
-   
-)
+    FOREIGN KEY (venda_id) REFERENCES vendas(venda_id) ON DELETE CASCADE, 
+    FOREIGN KEY (cliente_id) REFERENCES pessoa(pessoa_id) ON DELETE CASCADE
+);
