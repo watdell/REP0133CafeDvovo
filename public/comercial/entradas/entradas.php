@@ -9,34 +9,52 @@
     <title>Document</title>
 
     <?php
-        include '../../../serverside/queries/db_queries.php';
-        include '../../../serverside/config/dbConnection.php';
-        include '../../../includes/main-sidebar.php';
+        // Ativando a exibição de erros
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
 
-        $conn = dbConnection();
-
-        if ($conn->connect_error) {
-            die("Erro de conexão: " . $conn->connect_error);
+        // Função para registrar logs de erro em arquivo
+        function logError($message) {
+            file_put_contents('error_log.txt', $message . PHP_EOL, FILE_APPEND);
         }
 
-        function fiend($criteria) {
-            $stu = $criteria . "%";
-            return $stu;
+        try {
+            include '../../../serverside/queries/db_queries.php';
+            include '../../../serverside/config/dbConnection.php';
+
+            // Estabelecendo a conexão com o banco de dados
+            $conn = dbConnection();
+            if (!$conn) {
+                logError("Erro de conexão: " . mysqli_connect_error());
+                die("Erro de conexão: " . mysqli_connect_error());
+            }
+            echo "<script>console.log('Conexão estabelecida com sucesso');</script>";
+
+            // Função para criar um padrão de pesquisa
+            function fiend($criteria) {
+                $stu = $criteria . "%";
+                return $stu;
+            }
+
+        } catch (Exception $e) {
+            logError("Erro no bloco de conexão: " . $e->getMessage());
+            die("Erro interno no servidor: " . $e->getMessage());
         }
-        
-        ?>
-
-
+    ?>
 </head>
+
 <body>
+    <?php include('../../../includes/main-sidebar.php'); ?>
+    <?php include('../../../includes/topbar.php'); ?>
     <header class="topbar">ENTRADAS</header>
 
     <main class="content">
+        <div class="navbar" id="navbar"></div>
 
         <div class='table' style="flex-direction:column;">
             <div class="table-header" style="width:100%;display:flex;flex-direction:row;">
                 <h2>Entradas</h2>
-                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' onchange='search("entradas","select-search")'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' onchange='search("entradas","select-search")'>
                 <select id="select-search" style="margin-left:10px;width:17%" onchange="setcook()">
                     <option id="select-search-descricao" value="descricao">DESC</option>
                     <option id="select-search-id" value="id">ID</option>
@@ -47,51 +65,74 @@
             </div>
 
             <div style="display:flex;flex-direction:row;">
-
                 <div id='innertable' class="innertable" style="width:100%">
                     <!-- THIS IS WHERE THE MAGIC HAPPENS -->
                 </div>
-
             </div>
 
             <div class="itens_shown" style="justify-content:space-between;padding-top:10px">
 
-            <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:40%'>REGISTRAR NOVA ENTRADA</button>
+                <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:40%'>REGISTRAR NOVA ENTRADA</button>
 
-            <div class="subtotal">
-                <a style="width:40%;font-size:30px">Subtotal:</a>
-                <a style="width:40%;font-size:30px"><?php
+                <div class="subtotal">
+                    <a style="width:40%;font-size:30px">Subtotal:</a>
+                    <a style="width:40%;font-size:30px">
+                        <?php
+                            try {
+                                // Consulta para obter os valores
+                                $sql = "SELECT valor FROM entradas";
+                                $stmt = $conn->prepare($sql);
+                                if (!$stmt) {
+                                    logError("Erro na preparação da consulta: " . $conn->error);
+                                    die("Erro na preparação da consulta: " . $conn->error);
+                                }
 
-                    $sql= "SELECT valor FROM entradas";
-                    $stmt= $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $subtotal = 0;
+                                // Executando a consulta
+                                if (!$stmt->execute()) {
+                                    logError("Erro na execução da consulta: " . $stmt->error);
+                                    die("Erro na execução da consulta: " . $stmt->error);
+                                }
 
-                    while($row = $result->fetch_assoc()) {
-                        $subtotal = $subtotal + $row['valor'];
-                    }
-                    echo "R$" . number_format($subtotal, 2, ',', '.');
+                                // Obtendo o resultado
+                                $result = $stmt->get_result();
+                                if ($result === false) {
+                                    logError("Erro ao obter o resultado: " . $stmt->error);
+                                    die("Erro ao obter o resultado: " . $stmt->error);
+                                }
 
-                    ?></a>
-            </div>
+                                $subtotal = 0;
+                                while ($row = $result->fetch_assoc()) {
+                                    $subtotal += $row['valor'];
+                                }
+                                echo "R$" . number_format($subtotal, 2, ',', '.');
+                                
+                                // Fechando a conexão e a instrução
+                                $stmt->close();
+                                $conn->close();
+                                echo "<script>console.log('Consulta e fechamento realizados com sucesso');</script>";
+
+                            } catch (Exception $e) {
+                                logError("Erro ao calcular o subtotal: " . $e->getMessage());
+                                echo "Erro ao calcular o subtotal";
+                            }
+                        ?>
+                    </a>
+                </div>
 
             </div>
         
         </div>
 
-        
-        
     </main>
-<script src="../public/assets/js/main.js"></script>
-<script>
-    function setcook() {
-        setCookie('select-search', document.getElementById("select-search").value, 2);
-    }
 
-    document.getElementById('select-search-' + getCookie('select-search','entr')).selected = true;
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        function setcook() {
+            setCookie('select-search', document.getElementById("select-search").value, 2);
+        }
 
-    search("entradas","select-search");
-</script>
+        document.getElementById('select-search-' + getCookie('select-search', 'entr')).selected = true;
+        search("entradas", "select-search");
+    </script>
 </body>
 </html>

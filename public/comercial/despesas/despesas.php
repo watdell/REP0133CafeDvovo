@@ -11,7 +11,6 @@
     <?php
         include '../../../serverside/queries/db_queries.php';
         include '../../../serverside/config/dbConnection.php';
-        include '../../../includes/main-sidebar.php';
 
         $conn = dbConnection();
 
@@ -24,6 +23,8 @@
 
 </head>
 <body>
+    <?php include('../../../includes/main-sidebar.php'); ?>
+    <?php include('../../../includes/topbar.php'); ?>
     <header class="topbar">DESPESAS</header>
 
     <main class="content">
@@ -79,7 +80,7 @@
         
         
     </main>
-<script src="../public/assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 <script>
     function setcook() {
         setCookie('select-search-d', document.getElementById("select-search").value, 2);

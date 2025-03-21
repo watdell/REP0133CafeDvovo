@@ -67,18 +67,28 @@ function thewarn() {
 }
 
 function search(table, cook, caix = false, inta = "innertable") {
+    // Obtém o valor de pesquisa e limpa o conteúdo da tabela
     str = document.getElementById("search").value.toLowerCase();
     document.getElementById(inta).innerHTML = '';
+
+    // Cria o objeto XMLHttpRequest
     var xmlhttp = new XMLHttpRequest();
-    if (caix == true) {
-        xmlhttp.open("GET","search.php?q="+str+"&c=descricao&p=caixa&d="+inta+"&t="+table,true);
-        } else {
-        xmlhttp.open("GET","../caixa/search.php?q="+str+"&d=false&p=not&c="+getCookie(cook,'entr')+"&t="+table,true);
-        }
-    xmlhttp.send();
+
+    // Configura a função de callback para tratar a resposta
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
+            // Insere o resultado na div apropriada
+            document.getElementById(inta).insertAdjacentHTML("beforeend", this.responseText);
         }
     };
+
+    // Configura a requisição com base no valor de 'caix'
+    if (caix === true) {
+        xmlhttp.open("GET", "search.php?q=" + str + "&c=descricao&p=caixa&d=" + inta + "&t=" + table, true);
+    } else {
+        xmlhttp.open("GET", "../caixa/search.php?q=" + str + "&d=false&p=not&c=" + getCookie(cook, 'entr') + "&t=" + table, true);
+    }
+
+    // Envia a requisição
+    xmlhttp.send();
 }
