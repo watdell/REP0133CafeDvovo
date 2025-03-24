@@ -16,9 +16,14 @@
         <?php
             include('../../../serverside/config/dbConnection.php'); 
             $conn = dbConnection();
-            
+
             // Buscar clientes
-            $stmtClientes = $conn->prepare("SELECT * FROM pessoa ORDER BY nome ASC");
+            $stmtClientes = $conn->prepare("SELECT pessoa.*, endereco.cep
+                                FROM pessoa
+                                INNER JOIN endereco 
+                                ON pessoa.pessoa_id = endereco.pessoa_id
+                                ORDER BY pessoa.nome ASC");
+
             $stmtClientes->execute();
             $resultClientes = $stmtClientes->get_result();
 
@@ -32,9 +37,10 @@
             <section>
                 <fieldset>
                     <legend>Cliente</legend>
-                    <select style="width: 34.5%" type="text" name="cliente" id="cliente">
+                    <select style="width: 34.5%" type="text" onchange='mudarCliente()' name="cliente" id="cliente">
+                        <option>Selecione um Cliente</option>
                         <?php while ($row = $resultClientes->fetch_assoc()) { ?>
-                            <option value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
+                            <option data-cep="<?=  $row['cep']; ?>" value="<?= $row['pessoa_id']; ?>"><?= $row['nome']; ?></option>
                         <?php } ?>   
                     </select>
                 </fieldset>
@@ -56,8 +62,9 @@
                                 <div id="div-produtos">
                                     <div class="produto">
                                         <select style="width: 70%;" class="produto-select" name="produto[]" id="select-produto-0" onchange="atualizarPreco(this)">
+                                            <option>Selecione um Produto</option>
                                             <?php while ($row = $resultProdutos->fetch_assoc()) { ?>
-                                                <option value="<?= $row['produto_id']; ?>" data-preco="<?= $row['preco_venda']; ?>"><?= $row['nome']; ?></option>
+                                                <option value="<?= $row['produto_id']; ?>" data-preco="<?= $row['preco_venda']; ?>" data-peso="<?=  $row['peso']; ?>"><?= $row['nome']; ?></option>
                                             <?php } ?>               
                                         </select>
                                     </div>
@@ -97,40 +104,40 @@
                     
                     <div class="form-group">
                         <label for="cep_origem">CEP de Origem:</label>
-                        <input type="text" id="cep_origem" name="cep_origem" required>
+                        <input type="text" class="if-changed-refresh-total" id="cep_origem" value='30441-021' name="cep_origem" required>
                     </div>
 
                     <div class="form-group">
                         <label for="cep_destino">CEP de Destino:</label>
-                        <input type="text" id="cep_destino" name="cep_destino" required>
+                        <input type="text" class="if-changed-refresh-total" id="cep_destino" name="cep_destino" required>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
                             <label for="peso">Peso (kg):</label>
-                            <input type="text" id="peso" name="peso" required>
+                            <input type="text" class="if-changed-refresh-total" id="peso" name="peso" required>
                         </div>
 
                         <div class="form-group">
                             <label for="valor_declarado">Valor Declarado (R$):</label>
-                            <input type="text" id="valor_declarado" name="valor_declarado" required>
+                            <input type="text" class="if-changed-refresh-total" id="valor_declarado" name="valor_declarado" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
                             <label for="largura">Largura (cm):</label>
-                            <input type="text" id="largura" name="largura" required>
+                            <input type="text" class="if-changed-refresh-total" id="largura" name="largura" value="10" required>
                         </div>
 
                         <div class="form-group">
                             <label for="altura">Altura (cm):</label>
-                            <input type="text" id="altura" name="altura" required>
+                            <input type="text" class="if-changed-refresh-total" id="altura" name="altura" value="20" required>
                         </div>
 
                         <div class="form-group">
                             <label for="comprimento">Comprimento (cm):</label>
-                            <input type="text" id="comprimento" name="comprimento" required>
+                            <input type="text" class="if-changed-refresh-total" id="comprimento" name="comprimento" value="15" required>
                         </div>
                     </div>
                     <br>

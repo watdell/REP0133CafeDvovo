@@ -83,7 +83,8 @@ function adicionarProduto() {
     document.getElementById(`sub-total-${produtoIndex}`).value = (parseFloat(preco_unit1) * parseFloat(1)).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     //Aqui ele coloca o onchange no select que foi criado dinamicamente
-    atualizarTotal();    
+    atualizarTotal();   
+    enviarParametrosAjax(); 
 
 }
 
@@ -120,6 +121,8 @@ function atualizarPreco(select) {
     row.querySelector(".valor-unit").value = formatarNumero(precoUnitario); 
     calcularSubtotal(row.querySelector(".produto-qntd")); 
     atualizarTotal();
+    calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
 function calcularSubtotal(input) {
@@ -130,9 +133,11 @@ function calcularSubtotal(input) {
 
     row.querySelector(".sub-total").value = formatarNumero(subtotal);
     atualizarTotal();
+    calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
-function atualizarTotal() {
+function atualizarTotal() { //Esse é o total geral
     let subtotal = 0;
 
     document.querySelectorAll(".sub-total").forEach(input => {
@@ -146,6 +151,7 @@ function atualizarTotal() {
     if (total < 0) total = 0;
 
     document.getElementById("total").value = formatarNumero(total, 2); // 4 casas decimais
+    document.getElementById('valor_declarado').value = formatarNumero(total, 2);
 }
 
 // 🔹 Função para converter valores formatados em número (1.234,56 → 1234.56)
@@ -185,9 +191,7 @@ function emptyValueQntd() {
 }
 
 
-
-document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
-    // Captura os valores dos campos
+function enviarParametrosAjax() {
     let params = new URLSearchParams({
         cep_origem: document.getElementById("cep_origem").value,
         cep_destino: document.getElementById("cep_destino").value,
@@ -213,7 +217,7 @@ document.getElementById("calcular-frete-btn").addEventListener("click", function
     })
     .then(texto => {
         console.log("Resposta do servidor:", texto);
-
+        //essa parte vai fazer o código enviar uma resposta ajax para o servidor
         try {
             const data = JSON.parse(texto);
 
@@ -260,6 +264,13 @@ document.getElementById("calcular-frete-btn").addEventListener("click", function
         }
     })
     .catch(error => console.error("Erro:", error));
+}
+
+document.getElementById('cliente').addEventListener('change', enviarParametrosAjax);
+
+document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
+    // Captura os valores dos campos
+    enviarParametrosAjax();
 });
 
 // Função para capturar o serviço selecionado e enviá-lo ao backend
@@ -285,6 +296,7 @@ function registrarVenda() {
 
     atualizarDataEntrega();
     formatarData();
+    enviarParametrosAjax();
 }
 
 
@@ -345,3 +357,35 @@ function formatarData() {
     // Preencher o campo hidden
     document.getElementById('dataFormatoBanco').value = dataParaBanco;
   }
+
+  // Função para preencher o CEP quando o usuário mudar o cliente
+    function mudarCliente() {
+        let select_cliente = document.getElementById('cliente');
+
+        // Obtém a opção selecionada corretamente
+        let optionSelected = select_cliente.options[select_cliente.selectedIndex];
+
+        let cep = optionSelected.getAttribute('data-cep');
+
+        document.getElementById('cep_destino').value = cep;
+
+        // Exibe a opção no alerta (ou pode acessar o atributo data-cep se necessário)
+    }
+
+    // Vai calcular o peso dos insumos multiplicando o valor da data-peso da opção selecionada com a quantidade do campo de qntd mais próximo
+    function calcularPesoTotal() {
+        let selects = document.querySelectorAll('.produto-select');
+        
+        let peso = 0;
+        let qntd = 0;
+        selects.forEach(dataPeso => {
+            qntd = parseFloat(dataPeso.closest('tr').querySelector('.produto-qntd').value);
+            peso += parseFloat(dataPeso.options[dataPeso.selectedIndex].getAttribute('data-peso')) * qntd;
+        });
+        document.getElementById('peso').value = peso/1000;
+    }
+
+    //Isso aqui coloca o evento escutador input nos campos de texto com a classe 0f-changed-refresh-total
+    document.querySelectorAll('.if-changed-refresh-total').forEach(input => {
+        input.addEventListener('input', enviarParametrosAjax);
+    });
