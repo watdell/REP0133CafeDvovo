@@ -296,7 +296,6 @@ function registrarVenda() {
 
     atualizarDataEntrega();
     formatarData();
-    enviarParametrosAjax();
 }
 
 
