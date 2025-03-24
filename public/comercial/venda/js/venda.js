@@ -83,7 +83,8 @@ function adicionarProduto() {
     document.getElementById(`sub-total-${produtoIndex}`).value = (parseFloat(preco_unit1) * parseFloat(1)).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     //Aqui ele coloca o onchange no select que foi criado dinamicamente
-    atualizarTotal();    
+    atualizarTotal();   
+    enviarParametrosAjax(); 
 
 }
 
@@ -121,6 +122,7 @@ function atualizarPreco(select) {
     calcularSubtotal(row.querySelector(".produto-qntd")); 
     atualizarTotal();
     calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
 function calcularSubtotal(input) {
@@ -132,9 +134,10 @@ function calcularSubtotal(input) {
     row.querySelector(".sub-total").value = formatarNumero(subtotal);
     atualizarTotal();
     calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
-function atualizarTotal() {
+function atualizarTotal() { //Esse é o total geral
     let subtotal = 0;
 
     document.querySelectorAll(".sub-total").forEach(input => {
@@ -293,6 +296,7 @@ function registrarVenda() {
 
     atualizarDataEntrega();
     formatarData();
+    enviarParametrosAjax();
 }
 
 
@@ -380,3 +384,8 @@ function formatarData() {
         });
         document.getElementById('peso').value = peso/1000;
     }
+
+    //Isso aqui coloca o evento escutador input nos campos de texto com a classe 0f-changed-refresh-total
+    document.querySelectorAll('.if-changed-refresh-total').forEach(input => {
+        input.addEventListener('input', enviarParametrosAjax);
+    });

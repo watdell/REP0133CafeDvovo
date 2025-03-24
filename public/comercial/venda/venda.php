@@ -104,40 +104,40 @@
                     
                     <div class="form-group">
                         <label for="cep_origem">CEP de Origem:</label>
-                        <input type="text" id="cep_origem" value='30441-021' name="cep_origem" required>
+                        <input type="text" class="if-changed-refresh-total" id="cep_origem" value='30441-021' name="cep_origem" required>
                     </div>
 
                     <div class="form-group">
                         <label for="cep_destino">CEP de Destino:</label>
-                        <input type="text" id="cep_destino" name="cep_destino" required>
+                        <input type="text" class="if-changed-refresh-total" id="cep_destino" name="cep_destino" required>
                     </div>
                     <br>
                     <div class="row">
                         <div class="form-group">
                             <label for="peso">Peso (kg):</label>
-                            <input type="text" id="peso" name="peso" required>
+                            <input type="text" class="if-changed-refresh-total" id="peso" name="peso" required>
                         </div>
 
                         <div class="form-group">
                             <label for="valor_declarado">Valor Declarado (R$):</label>
-                            <input type="text" id="valor_declarado" name="valor_declarado" required>
+                            <input type="text" class="if-changed-refresh-total" id="valor_declarado" name="valor_declarado" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group">
                             <label for="largura">Largura (cm):</label>
-                            <input type="text" id="largura" name="largura" required>
+                            <input type="text" class="if-changed-refresh-total" id="largura" name="largura" value="10" required>
                         </div>
 
                         <div class="form-group">
                             <label for="altura">Altura (cm):</label>
-                            <input type="text" id="altura" name="altura" required>
+                            <input type="text" class="if-changed-refresh-total" id="altura" name="altura" value="20" required>
                         </div>
 
                         <div class="form-group">
                             <label for="comprimento">Comprimento (cm):</label>
-                            <input type="text" id="comprimento" name="comprimento" required>
+                            <input type="text" class="if-changed-refresh-total" id="comprimento" name="comprimento" value="15" required>
                         </div>
                     </div>
                     <br>
