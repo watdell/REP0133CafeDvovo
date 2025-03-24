@@ -5,13 +5,22 @@
 
   $conn = dbConnection();
   
-  $id = $_GET['id'];
-  $nome = $_GET['nome'];
-  $unidade_medida = $_GET['unidade_medida'];
-  $custo_unitario = $_GET['custo_unitario'];
-  $estoque_atual = $_GET['estoque_atual'];
-  $data_validade = $_GET['data_validade'];
-  $data_cadastro = $_GET['data_cadastro'];
+  $id = $_POST['id_sel'];
+
+  $sql="SELECT * FROM insumo WHERE insumo_id = $id";
+    $stmt= $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while($row = mysqli_fetch_array($result)) {
+        $nome = $row['nome'];
+        $unidade_medida= $row['unidade_medida'];
+        $custo_unitario= $row['custo_unitario'];
+        $estoque_atual= $row['estoque_atual'];
+        $data_validade= $row ['data_validade'];
+        };
+
+
 
   // Exemplo de como preencher um formulário de edição:
 ?> 
@@ -35,9 +44,9 @@
         <br>
 
         
-        
-    <form action="conexao_e.php" method="post">
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <form action="conexao_e.php" method="POST">
+    <input type="text" hidden name="id" value="<?php echo $id; ?>" required><br>
+
         <label for="nome">Nome:</label>
         <input type="text" name="nome" value="<?php echo $nome; ?>" required><br>
 
@@ -52,9 +61,6 @@
 
         <label for="data_validade">Data de Validade:</label>
         <input type="text" name="data_validade" value="<?php echo $data_validade; ?>" required><br>
-
-        <label for="data_cadastro">Data de Cadastro:</label>
-        <input type="text" name="data_cadastro" value="<?php echo $data_cadastro; ?>" required><br>
 
         <button type="submit">Salvar alterações</button>
     </form>

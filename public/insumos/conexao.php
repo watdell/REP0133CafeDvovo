@@ -8,7 +8,7 @@
         die("Erro de conexão: " . $conn->connect_error);
     }
 
-    if ($_SERVER ['REQUEST_METHOD']=="POST" && $_POST['action']=='create'){
+    if ($_SERVER ['REQUEST_METHOD']=="POST"){
 
     $nome= $_POST['nome'];
     echo $nome;

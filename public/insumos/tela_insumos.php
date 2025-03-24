@@ -84,25 +84,7 @@
     }
 
  
-    function confirmarEdicao() {
-            
-            var nome = document.getElementById("nome" + id).innerText;
-            var unidade_medida = document.getElementById("unidade_medida" + id).innerText;
-            var custo_unitario = document.getElementById("custo_unitario-" + id).innerText;
-            var estoque_atual = document.getElementById("estoque_atual" + id).innerText;
-            var data_validade = document.getElementById("data_validade" + id).innerText;
-            var data_cadastro = document.getElementById("data_cadastro" + id).innerText;
-
-            if (confirm("Deseja realmente editar o insumo?")) {
-                window.location.href = "editar.php?id=" + id +
-                    "&nome=" + encodeURIComponent(nome) +
-                    "&unidade_medida=" + encodeURIComponent(unidade_medida) +
-                    "&custo_unitario=" + encodeURIComponent(custo_unitario) +
-                    "&estoque_atual=" + encodeURIComponent(estoque_atual) +
-                    "&data_validade=" + encodeURIComponent(data_validade) +
-                    "&data_cadastro=" + encodeURIComponent(data_cadastro);
-            }
-        }
+    
 
 
 

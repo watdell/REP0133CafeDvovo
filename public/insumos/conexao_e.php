@@ -8,8 +8,8 @@
         die("Erro de conexão: " . $conn->connect_error);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == 'update') {
-        $id = $_POST["insumo_id"];
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $id = $_POST['id'];
         $nome = $_POST['nome'];
         $unidade_medida = $_POST['unidade_medida'];
         $custo_unitario = $_POST['custo_unitario'];
@@ -37,13 +37,9 @@
         
         $stmt->bind_param("ssdisi", $nome, $unidade_medida, $custo_unitario, $estoque_atual, $data_validade, $id);
 
-      
-        if ($stmt->execute()) {
-            echo "Registro atualizado com sucesso!";
-        } else {
-            echo "Erro ao atualizar: " . $stmt->error;
-        }
+        $stmt->execute();
 
+      
         
     }
 ?>
