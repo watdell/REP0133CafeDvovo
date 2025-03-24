@@ -19,6 +19,7 @@
                 <li><a href="./pessoas/pessoas.php">Registro de pessoas</a></li>
                 <li><a href="./produtos/produtos.php">Registro de produtos</a></li>
                 <li><a href="excel/importar_excel.php">Importar Excel</a></li>
+                <li><a href="../insumos/tela_insumos.php">Cadstro de insumos</a></li>
             </ul>
         </nav>
     </main>
