@@ -1,24 +1,20 @@
-<?php
-  include '../../serverside/queries/db_queries.php';
-  include '../../serverside/config/dbConnection.php';
-  include '../../includes/main-sidebar.php';
-
-  $conn = dbConnection();
-    
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../public/assets/css/main.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Insumos</title>
+
+    <!-- Includes e conexão com a database -->
+    <?php
+        include '../../includes/main-sidebar.php';
+        include('../../includes/topbar.php');
+    ?>
+
 </head>
 <body>
-    <?php include('../../includes/main-sidebar.php'); ?>
-    <?php include('../../includes/topbar.php'); ?>
+    <header class="topbar">Insumos</header>
 
     <main class="content">
         <div class="navbar" id="navbar"></div>
@@ -83,16 +79,11 @@
         document.getElementById("crudModal").style.display = "none";
     }
 
- 
-    
-
-
-
     function confirmarExclusao(id) {
             if (confirm("Tem certeza que deseja excluir este insumo?")) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'conexcao_d.php'; // Defina a URL de destino para o mesmo arquivo ou outro.
+                form.action = './conexcao_d.php';
 
                 var input = document.createElement('input');
                 input.type = 'hidden';
