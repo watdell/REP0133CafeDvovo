@@ -295,7 +295,7 @@ function registrarVenda() {
     valorFrete.value = servicoSelecionado.price;
 
     atualizarDataEntrega();
-    formatarData();
+    formatarData();// changes made
 }
 
 
