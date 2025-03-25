@@ -140,6 +140,3 @@
 }
 
     $stmt->close();
-    $conn->close();
-
-    mysqli_close($conn);

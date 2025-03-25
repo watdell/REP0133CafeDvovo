@@ -54,7 +54,7 @@
             <!-- TABLE HEADER -->
             <div class="table-header">
                 <h2>Insumos</h2>
-                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' oninput='search("innertable")'></input>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' oninput='executarPesquisa("innertable")'></input>
             </div>
 
             <!-- TABLE ITSELF -->
@@ -92,6 +92,10 @@
     }
 
     search('innertable');
+
+    function executarPesquisa(inta) {
+        search(inta);
+    }
 
 </script>
 </body>

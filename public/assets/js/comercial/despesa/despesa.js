@@ -67,18 +67,34 @@ function thewarn() {
 }
 
 function search(table, cook, caix = false, inta = "innertable") {
-    str = document.getElementById("search").value.toLowerCase();
-    document.getElementById(inta).innerHTML = '';
+    let str = document.getElementById("search").value.toLowerCase();
+    let tableContainer = document.getElementById(inta);
+
+    // Substitui o conteúdo pela div de carregamento
+    tableContainer.innerHTML = '<div>Carregando...</div>';
+
     var xmlhttp = new XMLHttpRequest();
-    if (caix == true) {
-        xmlhttp.open("GET","search.php?q="+str+"&c=descricao&p=caixa&d="+inta+"&t="+table,true);
-        } else {
-        xmlhttp.open("GET","../caixa/search.php?q="+str+"&d=false&p=not&c="+getCookie(cook,'entr')+"&t="+table,true);
-        }
+
+    let queryString = "?q=" + encodeURIComponent(str) + "&t=" + table;
+
+    if (caix) {
+        // Se 'caix' for verdadeiro, envia a requisição com os parâmetros adequados
+        queryString += "&c=descricao&p=caixa&d=" + inta;
+        xmlhttp.open("GET", "search.php" + queryString, true);
+    } else {
+        // Caso contrário, envia a requisição com parâmetros de filtro de cookie
+        queryString += "&d=false&p=not&c=" + getCookie(cook, 'entr');
+        xmlhttp.open("GET", "../caixa/search.php" + queryString, true);
+    }
+
+    // Envia a requisição
     xmlhttp.send();
+
+    // Aguarda a resposta do servidor
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById(inta).insertAdjacentHTML("beforeend",this.responseText);
+            // Insere os resultados na página, substituindo o indicador de carregamento
+            tableContainer.innerHTML = this.responseText;
         }
     };
 }
