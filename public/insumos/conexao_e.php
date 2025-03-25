@@ -38,8 +38,8 @@
         $stmt->bind_param("ssdisi", $nome, $unidade_medida, $custo_unitario, $estoque_atual, $data_validade, $id);
 
         $stmt->execute();
-
-      
-        
     }
+
+    // retorna a tela de insumos
+    header("Location: ./tela_insumos.php");
 ?>

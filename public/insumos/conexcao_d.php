@@ -17,6 +17,8 @@ if($_SERVER ['REQUEST_METHOD']=="POST" && $_POST['action']=='delete'){
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    }
+}
 
+// retorna a tela de insumos
+header("Location: ./tela_insumos.php");
 ?>

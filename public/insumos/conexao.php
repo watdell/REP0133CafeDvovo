@@ -27,6 +27,8 @@
     $stmt->execute();
     }
 
+    // retorna a tela de insumos
+    header("Location: ./tela_insumos.php");
 ?>
  
  

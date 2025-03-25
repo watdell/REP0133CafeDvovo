@@ -1,7 +1,43 @@
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.register-input input{
+    max-width: 15%;
+    max-height: 30px;
+}
+
+.register-input label{
+    font-size: 1em;
+    max-width: fit-content;
+}
+
+.edit-input {
+    width: 50%;
+    min-width: 0px !important;
+    flex-direction: column;
+}
+
+.edit-input input{
+    width: 70%;
+}
+
+.edit-input label{
+    display: inline-block;
+}
+
 .table {
-    width: fit-content;
+    width: fit-content; 
     height: fit-content;
-    min-width: 550px;
+    min-width: 70vw;
     background-color: #fdf7e3;
     border: 1px solid #d9b38c;
     padding: 20px;
@@ -10,14 +46,18 @@
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     display: flex;
+    margin-bottom:20px
 }
 
-.table_header {
+.table-header {
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
+}
+
+.table-header a {
+    text-align: center;
 }
 
 .itens_shown {
@@ -41,8 +81,8 @@
 .innertable {
     margin-top: 10px;
     width: 100%;
-    min-width: 600px;
-    height: 600px;
+    min-width: 1000px;
+    height: 550px;
     background-color: #ffffff;
     border: 1px solid #e0c3a5;
     padding: 20px;
@@ -54,6 +94,31 @@
     cursor: default;
     user-select: none; 
 }
+
+.innertable a {
+    width: 11.1111%;
+    overflow: hidden;
+}
+
+a:has(button){
+    width: 11.1111%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.innertable button {
+    width: 80%;
+    background-color: #b5651d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    height: fit-content;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.5s ease; 
+}
+
 .innertable::-webkit-scrollbar {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -75,18 +140,6 @@ input::-webkit-inner-spin-button {
 
 label, select, input {
     width: 24%;
-}
-
-button {
-    background-color: #d9534f; 
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    height: fit-content;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.5s ease; 
 }
 
 button:hover {
@@ -120,9 +173,10 @@ a {
     cursor: default;
 }
 
-input[type=submit] {
+input[type=submit], #submit {
     color: white;
-    background-color: #b5651d;color: white;
+    background-color: #b5651d;
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -131,77 +185,21 @@ input[type=submit] {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.edit-input #submit {
+    width: 100% !important;
+}
+
 input[type=submit]:hover {
     background-color: #d45b3c;
     transform: scale(1.05);
 }
-
-div.disponivel {
-    width:20%;
-    background-color: rgba(50, 168, 40, 0.837);
-    text-align: center;
-    padding: 5px 0px;
-    border-radius: 5px ;
-}
-
-div.disponivel > a {
-    color: white;
-}
-
-div.escasso {
-    width:20%;
-    background-color: rgba(234, 230, 39, 0.837);
-    text-align: center;
-    padding: 5px 0px;
-    border-radius: 5px ;
-}
-
-div.escasso > a {
-    color: white;
-}
-
-div.indisponivel {
-    width:20%;
-    background-color: rgba(222, 49, 49, 0.837);
-    text-align: center;
-    padding: 5px 0px;
-    border-radius: 5px ;
-}
-
-div.indisponivel > a {
-    color: white;
-}
-
-#estoque-title1 {
-    display: block;
-}
-
-#estoque-title2 {
-    display: none;
-}
-
 
 @media (max-width: 1600px) {
 
     .innertable-content {
         flex-wrap: wrap
     }
-
-    #estoque-title1 {
-        display: none;
-        color:rgba(233, 119, 79, 0.5)
-    }
     
-    #estoque-title2 {
-        display: block;
-    }
-    
-    .table-header {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between
-    }
 }
 
 input[type=file] {

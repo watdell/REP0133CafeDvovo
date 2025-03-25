@@ -1,42 +1,60 @@
 <?php
-    $q = strval($_GET['q']);
-    $t = 'insumo';
+$q = strval($_GET['q']);
+$t = 'insumo';
 
-    include '../../serverside/config/dbConnection.php';
+include '../../serverside/config/dbConnection.php';
 
-    $conn = dbConnection();
+// Conexão com a database
+$conn = dbConnection();
+if ($conn->connect_error) {
+    die("Erro de conexão: " . $conn->connect_error);
+}
 
-    $sql="SELECT * FROM $t WHERE nome LIKE '%".$q."%' ORDER BY nome ASC";
-    $stmt= $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while($row = mysqli_fetch_array($result)) {
-        echo '<tr>
-                <td name="id_sel" value="' . $row["insumo_id"] . '">' . $row["insumo_id"] . '</td>
-                <td>' . $row['nome'] . '</td>
-                <td>' . $row['unidade_medida'] . '</td>
-                <td>' . number_format($row['custo_unitario'], 2, ',', '.') . '</td>
-                <td>' . $row['estoque_atual'] . '</td>
-                <td>' . date('d/m/Y', strtotime($row['data_validade'])) . "</td>
-                <td>" . date('d/m/Y', strtotime($row['data_cadastro'])) . "</td>
-                <td><button onclick='confirmarExclusao(" . $row['insumo_id'] . ")'>Excluir</button></td>
-                <td><form method='POST' action='editar.php'>
-                    <input hidden value='" . $row["insumo_id"] . "' name='id_sel'> 
-                    <button type='submit'>edição</button>  
-                    </form>
-                </td>
-            </tr>";
-        }
-
-       
-     
-    $stmt->close();
-    $conn->close();
+// Gerando a query SQL
+$sql="SELECT * FROM $t WHERE nome LIKE '%".$q."%' ORDER BY nome ASC";
+$stmt= $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
 
+echo
+'<div class="table-header">
+<a style="width:11.11111%">ID</a>|
+<a style="width:11.11111%">nome</a>|
+<a style="width:11.11111%">unidade de medida</a>|
+<a style="width:11.11111%">custo unitário</a>|
+<a style="width:11.11111%">estoque atual</a>|
+<a style="width:11.11111%">data de validade</a>|
+<a style="width:11.11111%">data de cadastro</a>|
+<a style="width:11.11111%">editar</a>|
+<a style="width:11.11111%">excluir</a>';
+echo '</div><hr style="height:4px;background-color:black">';
 
-    mysqli_close($conn);
-    ?>
+while($row = mysqli_fetch_array($result)) {
+    echo 
+        "<div class='itens_shown'>
+        <a name='id_sel' value='" . $row["insumo_id"] . "'>" . $row["insumo_id"] . "</a>|
+        <a>" . $row['nome'] . "</a>|
+        <a>" . $row['unidade_medida'] . "</a>|
+        <a>" . $row['custo_unitario'] . "</a>|
+        <a>" . $row['estoque_atual'] . "</a>|
+        <a>" . $row['data_validade'] . "</a>|
+        <a>" . $row['data_cadastro'] . "</a>|
+
+        <a>
+        <form method='POST' action='editar.php'>
+        <input hidden value='" . $row["insumo_id"] . "' name='id_sel'> 
+        <button type='submit'>Edição</button>  
+        </form>
+        </a>|
+
+        <a><button onclick='confirmarExclusao(" . $row['insumo_id'] . ")'>Excluir</button></a>";
+
+        echo "</div><hr>";
+}
+$stmt->close();
+$conn->close();
+
+mysqli_close($conn);
        
        

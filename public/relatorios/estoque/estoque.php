@@ -6,23 +6,12 @@
     <!-- Essa parte carrega e garante que sempre vai carregar a versão mais resente em cache -->
     <link rel="stylesheet" href="../../assets/css/main.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../../assets/css/estoque/style.css?v=<?php echo time(); ?>">
-    <script src="../../assets/js/main.js?v=<?php echo time(); ?>"></script>
     <title>Estoque</title>
 
-    <!-- Includes e conexão com a database -->
+    <!-- Includes -->
     <?php
-        include '../../../serverside/queries/db_queries.php';
-        include '../../../serverside/config/dbConnection.php';
         include '../../../includes/main-sidebar.php';
-
-        $conn = dbConnection();
-
-        if ($conn->connect_error) {
-            die("Erro de conexão: " . $conn->connect_error);
-        }
-        
     ?>
-
 
 </head>
 <body>
@@ -54,7 +43,7 @@
 
     </main>
 
-<script src="../../../public/assets/js/main.js"></script>
+<script src="../../assets/js/main.js?v=<?php echo time(); ?>"></script>
 <script>
     function doobsearch(str) {
         main_search(str,"search_estoque.php","produto", "innertable");
@@ -62,7 +51,7 @@
     }
 
     doobsearch("");
-
+    
 </script>
 </body>
 </html>

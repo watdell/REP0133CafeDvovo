@@ -34,7 +34,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    padding-top: 5px;
+    padding: 5px;
 }
 
 .table_header {

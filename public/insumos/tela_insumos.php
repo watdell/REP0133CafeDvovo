@@ -1,116 +1,99 @@
-<?php
-  include '../../serverside/queries/db_queries.php';
-  include '../../serverside/config/dbConnection.php';
-  include '../../includes/main-sidebar.php';
-
-  $conn = dbConnection();
-    
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/assets/css/main.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <!-- Essa parte carrega e garante que sempre vai carregar a versão mais resente em cache -->
+    <link rel="stylesheet" href="../assets/css/main.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/insumos/style.css?v=<?php echo time(); ?>">
+    <title>Insumos</title>
+
+    <!-- Includes -->
+    <?php
+        include '../../includes/main-sidebar.php';
+    ?>
+
 </head>
 <body>
-    <?php include('../../includes/main-sidebar.php'); ?>
-    <?php include('../../includes/topbar.php'); ?>
+    <header class="topbar">Insumos</header>
 
-    <main class="content">
-        <div class="navbar" id="navbar"></div>
-        <br>
+    <main class="content" style="flex-direction:column;">
 
-        
-        <div id="crudModal" class="modal">
-
+    <div> <!-- essa div separa o modal de cadastrar input e a imagem -->
+        <!-- Cadastrar um insumo -->
+        <div class='table register-input' style="flex-direction:column;max-width:70vw;">
             <div class="modal-content">
-                <span onclick="fecharModal()" style="cursor:pointer; float:right;">&times;</span>
                 <h2>Adicionar Insumo</h2>
-                <input type="search" id="search" onchange="search('searchbody')"></input>
                 <form method="POST" action="conexao.php">
-                    <label>Nome:</label>
-                    <input type="text" name="nome" required><br><br>
+                    <div>
+                        <label>Nome:</label>
+                        <input type="text" name="nome" required><br><br>
 
-                    <label>Unidade de Medida:</label>
-                    <input type="text" name="unidade_medida" required><br><br>
+                        <label>Unidade de Medida:</label>
+                        <input type="text" name="unidade_medida" required><br><br>
 
-                    <label>Custo Unitário (R$):</label>
-                    <input type="number" step="0.01" name="custo_unitario" required><br><br>
+                        <label>Custo Unitário (R$):</label>
+                        <input type="number" step="0.01" name="custo_unitario" required><br><br>
 
-                    <label>Estoque Atual:</label>
-                    <input type="number" name="estoque_atual" required><br><br>
+                        <label>Estoque Atual:</label>
+                        <input type="number" name="estoque_atual" required><br><br>
 
-                    <label>Data de Validade:</label>
-                    <input type="date" name="data_validade" required><br><br>
+                        <label>Data de Validade:</label>
+                        <input type="date" name="data_validade" required><br><br>
 
-                    <button type="submit" name="action" value="update">Adicionar</button>
+                        <button id="submit" type="submit" name="action" value="update">Adicionar</button>
+                    </div>
                 </form>
             </div>
         </div>
-        
-        
-        <table border="1" cellspacing='0' cellpadding='8'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Unidade de Medida</th>
-                    <th>Custo Unitário (R$)</th>
-                    <th>Estoque Atual</th>
-                    <th>Data de Validade</th>
-                    <th>Data de Cadastro</th>
-                    <th>Excluir</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-        <tbody id='searchbody'></tbody></table> 
+    </div>
 
-        
+        <!-- Visualizador de insumos -->
+        <div class='table view-inputs' style="flex-direction:column;">
 
-       
+            <!-- TABLE HEADER -->
+            <div class="table-header">
+                <h2>Insumos</h2>
+                <input id='search' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por...' oninput='search("innertable")'></input>
+            </div>
+
+            <!-- TABLE ITSELF -->
+            <div style="display:flex;flex-direction:row;">
+                <div id='innertable' class="innertable" style="width:100%"></div>
+            </div>
+
+        </div>
     </main>
-        <script src="insumos.js"></script>
-        <script>
-    function abrirmodal() {
-        document.getElementById("crudModal").style.display = "block";
-    }
 
-    function fecharModal() {
-        document.getElementById("crudModal").style.display = "none";
-    }
-
- 
-    
-
-
-
+<script src="../assets/js/main.js?v=<?php echo time(); ?>"></script>
+<script src="../assets/js/insumos/insumos.js?v=<?php echo time(); ?>"></script>
+<script>
     function confirmarExclusao(id) {
-            if (confirm("Tem certeza que deseja excluir este insumo?")) {
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = 'conexcao_d.php'; // Defina a URL de destino para o mesmo arquivo ou outro.
+        if (confirm("Tem certeza que deseja excluir este insumo?")) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'conexcao_d.php'; // Defina a URL de destino para o mesmo arquivo ou outro.
 
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'insumo_id';
-                input.value = id;
-                form.appendChild(input);
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'insumo_id';
+            input.value = id;
+            form.appendChild(input);
 
-                var actionInput = document.createElement('input');
-                actionInput.type = 'hidden';
-                actionInput.name = 'action';
-                actionInput.value = 'delete';
-                form.appendChild(actionInput);
+            var actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = 'delete';
+            form.appendChild(actionInput);
 
-                document.body.appendChild(form);
-                form.submit();
-            }
+            document.body.appendChild(form);
+            form.submit();
         }
-    search('searchbody');
-</script>
+    }
 
+    search('innertable');
+
+</script>
+</body>
+</html>
   
