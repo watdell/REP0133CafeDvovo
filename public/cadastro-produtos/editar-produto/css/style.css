@@ -1,0 +1,5 @@
+.info-e-imagem {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

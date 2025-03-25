@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //echo "Tipo da imagem: " . htmlspecialchars($imageType);
 
     // Exibe valores recebidos para debug
-    foreach ($_POST as $key => $value) {
+    /*foreach ($_POST as $key => $value) {
        echo "Key: " . htmlspecialchars($key) . ", Value: " . (is_array($value) ? json_encode($value) : htmlspecialchars($value)) . "<br>";
-    }
+    }*/
 
     //$estoque_atual_insumo = json_decode($_POST['qntd-insumo-lista'], true) ?? [];
     
@@ -87,27 +87,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Edite para 32M ou 64M
     // depois para fins de consulta vc usa essa consulta sql no phpmyadmin msm pra ver o novo tamanho: SHOW VARIABLES LIKE 'max_allowed_packet';
     
-    $update = "
-    UPDATE produto
-    SET nome = '$nome_produto',
-        descricao = '$descricao_produto',
-        tipo = '$tipo_venda',
-        peso = '$peso_total',
-        custo = '$custo_total_unidade',
-        margem_lucro = '$margem_lucro',
-        preco_venda = '$preco_venda',
-        estoque_atual = '$quantidade_para_estoque',
-        estoque_minimo = '$estoque_minimo',
-        data_validade = '$menor_data'
+        $update = "UPDATE produto SET 
+            imagem = ?, 
+            tipo_imagem = ?, 
+            nome = ?, 
+            descricao = ?, 
+            tipo = ?, 
+            peso = ?, 
+            custo = ?, 
+            margem_lucro = ?, 
+            preco_venda = ?, 
+            estoque_atual = ?, 
+            estoque_minimo = ?, 
+            data_validade = ? 
+        WHERE produto_id = ?";
 
-    WHERE produto_id = $produto_id;
-    ";
-    try {
-        $conn->query($update); 
-    } catch (Exception $e) {
-        $success = false;
-        echo "Ocorreu um erro ao atualizar produtos: {$e->getMessage()}";
+    $stmt = $conn->prepare($update);
+    if ($stmt) {
+        $stmt->bind_param(
+            "ssssssdddisii", // Definindo os tipos de dados
+            $imageData, 
+            $imageType, 
+            $nome_produto, 
+            $descricao_produto, 
+            $tipo_venda, 
+            $peso_total, 
+            $custo_total_unidade, 
+            $margem_lucro, 
+            $preco_venda, 
+            $quantidade_para_estoque, 
+            $estoque_minimo, 
+            $menor_data, 
+            $produto_id
+        );
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            $success = false;
+            echo "Ocorreu um erro ao atualizar produtos: {$e->getMessage()}";
+        }
+        
+        $stmt->close();
+    } else {
+        echo "Erro ao preparar a query: " . $conn->error;
     }
+
 
     
     // Deleta os registros da tabela produto_insumo vinculados ao produto_id
@@ -171,8 +196,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Mensagem de sucesso e redirecionamento
         echo "<h2>Produto atualizado com sucesso!</h2>";
-        echo "<p>Você será redirecionado em 2 segundos...</p>";
-        echo '<meta http-equiv="refresh" content="2;url=\'../../../public/relatorios/produtos/produtos.php\'">';
+        echo "<p>Você será redirecionado em 1 segundos...</p>";
+        echo '<meta http-equiv="refresh" content="1;url=\'../../../public/relatorios/produtos/produtos.php\'">';
 
         // Fecha statements e conexão
         $stmt_update->close();

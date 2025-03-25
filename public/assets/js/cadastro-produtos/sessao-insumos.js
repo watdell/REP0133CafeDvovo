@@ -38,7 +38,7 @@ function adicionarInsumo1() {
 
     // Cria o HTML para o label e o input
     const labelSelect = `<label for="select-insumo-${insumoIndex}">Insumo: </label>`;
-    const labelInput = `<label style='margin-left: 5px;' for="qntd-insumo-${insumoIndex}">g: </label>`;
+    const labelInput = `<label style='margin-left: 5px;' for="qntd-insumo-${insumoIndex}">qtd: </label>`;
     const input = `<input style = 'width: 50px;' class='insumo-qntd' type="text" id="qntd-insumo-${insumoIndex}" name="qntd-insumo[]" />`;
     const deleteIcon = `<i id='${insumoIndex}'  onclick='deleteInsumoDiv(this)' class='icon-delete'>🗑️</i>`
     // Adiciona o select, labels e input ao div
@@ -83,6 +83,17 @@ function detectarMudancaInsumoSelects() {
         });
 
     });
+}
+
+
+function botaoAddNovoInsumo() {
+    document.getElementById('modal-novo-insumo').style.display = 'flex';
+    atualizarSpanSubtotal(); // Importante caso a pessoa mude o insumo no select.
+    // Pegando dados do atributo e levando pro input em financeiro. (novo preço)
+    const resultadoSomaTotalQntd = somarCustoInsumos();
+    let custoTotalUnidade = document.getElementById('custo-total-unidade');
+    custoTotalUnidade.setAttribute('data-custo_total', resultadoSomaTotalQntd);
+    calcMargemLucro(); // Importante para recalcular a margem de lucro lá em financeiro baseado no novo preço
 }
 
 

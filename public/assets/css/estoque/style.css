@@ -12,20 +12,12 @@
     display: flex;
 }
 
-.table_show {
+.table_header {
     width: 100%;
-    height: auto;
-    min-height: 400px;
-    background-color: #fdf7e3;
-    border: 1px solid #d9b38c;
-    padding: 20px;
-    border-radius: 10px; 
-    color: #5a3e2b;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;
-    align-items: center
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .itens_shown {
@@ -35,30 +27,6 @@
     align-items: flex-start;
     justify-content: space-between;
     padding-top: 5px;
-}
-
-.table_header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.table_opt {
-    width: 100%;
-    height: auto;
-    min-height: 400px;
-    background-color: #fdf7e3;
-    border: 1px solid #d9b38c;
-    padding: 20px;
-    border-radius: 10px; 
-    color: #5a3e2b;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    display:flex;
-    align-items:start;
-    flex-direction: column;
 }
 
 .innertable-content {
@@ -105,21 +73,6 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-.innerdiv, .restable {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.endtable {
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
 label, select, input {
     width: 24%;
 }
@@ -141,39 +94,11 @@ button:hover {
     transform: scale(1.05); 
 }
 
-.register-btn {
-    background-color: #b5651d;
-    color: white;
-}
-
 .content {
     display: flex;
     justify-self: center;
     min-width: fit-content;
     max-height: fit-content;
-}
-
-.restable {
-    min-height: 20px;
-}
-
-.form {
-    margin-top: 15px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 3px; 
-}
-
-.formlabel {
-    width: 30%;
-    font-weight: bold;
-}
-
-.forminput {
-    width: 70%;
-    padding: 8px; 
-    border: 1px solid #d9b38c;
-    border-radius: 5px;
 }
 
 select, input {
@@ -184,7 +109,7 @@ select, input {
     margin-bottom: 10px;
 }
 
-select:focus, input:focus {
+input:focus {
     outline: none;
     border-color: #e9774f; 
     box-shadow: 0 0 5px rgba(233, 119, 79, 0.5); 
@@ -211,28 +136,47 @@ input[type=submit]:hover {
     transform: scale(1.05);
 }
 
-.vieworno {
-    display: flex;
-    flex-direction: row;
-    width: 100%; 
-    justify-content: center;
-    button {
-        width: 40%;
-        border-radius: 0;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-    button:hover {
-        width: 40%;
-        transform: scale(1);
-    }
+div.disponivel {
+    width:20%;
+    background-color: rgba(50, 168, 40, 0.837);
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px ;
 }
 
-#despesas-title1 {
+div.disponivel > a {
+    color: white;
+}
+
+div.escasso {
+    width:20%;
+    background-color: rgba(234, 230, 39, 0.837);
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px ;
+}
+
+div.escasso > a {
+    color: white;
+}
+
+div.indisponivel {
+    width:20%;
+    background-color: rgba(222, 49, 49, 0.837);
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px ;
+}
+
+div.indisponivel > a {
+    color: white;
+}
+
+#estoque-title1 {
     display: block;
 }
 
-#despesas-title2 {
+#estoque-title2 {
     display: none;
 }
 
@@ -243,12 +187,12 @@ input[type=submit]:hover {
         flex-wrap: wrap
     }
 
-    #despesas-title1 {
+    #estoque-title1 {
         display: none;
         color:rgba(233, 119, 79, 0.5)
     }
     
-    #despesas-title2 {
+    #estoque-title2 {
         display: block;
     }
     
@@ -258,19 +202,6 @@ input[type=submit]:hover {
         flex-direction: row;
         justify-content: space-between
     }
-}
-
-.valwarn {
-    background-color: rgb(252, 252, 184);
-    width: 100%;
-    color: rgb(136, 40, 35);
-    align-self: center;
-    display: none;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    border: 2px solid rgb(201, 171, 0);
-    border-radius: 10px;
 }
 
 input[type=file] {

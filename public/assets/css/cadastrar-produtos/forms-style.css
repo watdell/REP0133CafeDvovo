@@ -212,6 +212,13 @@ button.register-btn:hover {
     background-color: #704923;
 }
 
+/* Para a edição de produto, no final da página */
+.financ-estoque-info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 
 
 @media (max-width: 700px) {

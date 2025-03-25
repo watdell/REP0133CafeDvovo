@@ -1,149 +1,171 @@
-/* Estilo geral */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f1e3;
-    margin: 0;
-    padding: 0;
-    color: #3e2723;
-}
 
-.content {
-    padding: 30px;
-    background-color: #fdf8f1;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-/* Estilo da tabela */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #d4a373;
-}
-
-th {
-    background-color: #a56e3d;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-td {
-    background-color: #fff;
-    font-size: 14px;
-}
-
-td input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #d4a373;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #3e2723;
-    font-size: 14px;
-}
-
-td input:focus {
-    border-color: #8d6e63;
-    outline: none;
-}
-
-tr:hover {
-    background-color: #f9f4e7;
-}
-
-/* Botões */
-button {
-    background-color: #a56e3d;
-    color: white;
-    font-size: 14px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #8d6e63;
-}
-
-button.icon-delete {
-    background-color: #e64a19;
-    color: white;
-    font-size: 16px;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-button.icon-delete:hover {
-    background-color: #bf360c;
-}
-
-/* Estilo para as seções */
-fieldset {
-    border: 2px solid #d4a373;
+.container-frete {
+    display: flex;
+    flex-direction: row;
+    max-width: 900px;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap:30px;
+}
+
+
+/* Formulário e resultado lado a lado */
+.form-result-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    min-width: 50%;
+}
+
+/* Formulário ocupa metade do espaço */
+.form-container {
+    flex: 1;
+    min-width: 100%;
+}
+
+.field-container-frete {
+    min-width: 50%;  
+}
+
+
+.field-result {
+    min-width: 45%; 
+}
+
+
+/* Resultado ocupa metade do espaço */
+.result-container {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    background-color: #f8f0e7;
     border-radius: 8px;
-    background-color: #fff;
+    border: 2px solid #8d6e63;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    color: #5d4037;
+    margin-bottom: 15px;
+}
+
+/* Melhorias no fieldset */
+fieldset {
+    border: 1px solid #8d6e63;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #faf5ef;
 }
 
 legend {
-    font-size: 18px;
     font-weight: bold;
-    color: #a56e3d;
+    color: #6d4c41;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
-/* Formulário e inputs */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
+/* Inputs e seletores estilizados */
 label {
     font-weight: bold;
-    color: #3e2723;
+    color: #5d4037;
+    display: block;
+    margin-top: 10px;
 }
 
 input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #a1887f;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f5f1ed;
+    color: #4b382a;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #6d4c41;
+    box-shadow: 0 0 5px rgba(109, 76, 65, 0.3);
+}
+
+/* Botão refinado */
+.button-big {
+    background-color: #8d6e63;
+    color: white;
     padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #d4a373;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+    margin-top: 10px;
+    width: 100%;
 }
 
-select {
-    background-color: #fff;
+.button-smal {
+    background-color: #8d6e63;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+    margin-top: 10px;
+    width: 60px;
+    margin-bottom: 9px;
 }
 
-/* Total Section */
-.total {
-    font-size: 18px;
-    font-weight: bold;
-    color: #3e2723;
+button:hover {
+    background-color: #6d4c41;
 }
 
-#desconto {
-    width: 100px;
-    text-align: right;
+/* Tabela de resultados */
+.table-container {
+    overflow-x: auto;
+    width: 100%;
 }
 
-/* Adicionando efeitos suaves */
-input[type="number"], input[type="text"] {
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
-input[type="number"]:focus, input[type="text"]:focus {
-    background-color: #f7f4f1;
-    border-color: #8d6e63;
+th, td {
+    border: 0px solid #a1887f;
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    background-color: #8d6e63;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f5f1ed;
+}
+
+tr:hover {
+    background-color: #e6d6c5;
+}
+
+.total-div{
+    display: flex;
+    flex-direction: row;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-frete {
+        flex-direction: column;
+    }
 }

@@ -46,7 +46,7 @@
                 <button onclick="location.href='../index.php'">VOLTAR</button>
             </div>
 
-            <div style="display:flex;flex-direction:row;min-height:600px">
+            <div style="display:flex;flex-direction:row;">
 
                 <div id='innertable' class="innertable" style="width:100%">
                     <!-- THIS IS WHERE THE MAGIC HAPPENS -->
@@ -54,7 +54,7 @@
 
             </div>
 
-            <div class="itens_shown" style="justify-content:space-between">
+            <div class="itens_shown" style="justify-content:space-between;padding-top:10px">
 
             <button onclick="location.href='entradas_create.php'" style='background-color:#b5651d;width:40%'>REGISTRAR NOVA ENTRADA</button>
 

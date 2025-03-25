@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
 </head>
 <body> 
     
-    <?php include('../../includes/produtos-sidebar.php'); ?>
+    <?php include('../../includes/main-sidebar.php'); ?>
     <?php include('../../includes/topbar.php'); ?>
 
     <main class="content">
@@ -94,14 +94,18 @@
                             <select style="width: 70%;" class="insumo-select" name="insumo[]" id="select-insumo-0">
                                 <option>Saborizante de Caramelo - R$ 12/ml - disponível 1000/ml</option>                
                             </select>
-                            <label for="quantidade-insumo-1">g:</label>
+                            <label for="quantidade-insumo-1">qtd:</label>
                             <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;" step="1">
                             <i id="0" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</i>
                         </div>
                     </div>
                     <input id="insumo-menor-data" name="menor-data" type="text" hidden>
                     <input id="qntd-insumo-lista" name="qntd-insumo-lista[]" type="text" hidden>
-                    <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
+                    <div>
+                        <button id="add-insumo" type="button" class="register-btn">Adicionar insumo</button>
+                        <button id="create-insumo"  onclick="botaoAddNovoInsumo()" type="button" class="register-btn">Criar insumo</button>
+                    </div>
+                    
                 </fieldset>
             </section>
             
@@ -122,13 +126,13 @@
             <section id="estoque" class="tabcontent"> 
                 <fieldset id="fieldset-estoque" class="fieldset">
                     <legend>Controle de Estoque</legend>
-                    <label for="quantidade-estoque">Quantidade para estoque:</label>
-                    <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="1" placeholder="Quantidade para ter em estoque.">
+                    <label for="quantidade-estoque">Quantidade inicial para estoque</label>
+                    <input type="number" name="quantidade-para-estoque" id="quantidade-para-estoque" value="0" placeholder="Quantidade atual do estoque">
                     
                     <label for="estoque-minimo">Estoque Mínimo:</label>
                     <div class="qntd-estoque-total-container">
                         <input type="number" name="estoque-minimo" value="0" id="estoque-minimo" placeholder="Ex: 10">  
-                        <div id="check-estoque-possibilidade" class="check-estoque-possibilidade">Disponibilidade</div>
+                        <!-- <div id="check-estoque-possibilidade" class="check-estoque-possibilidade">Disponibilidade</div> -->
                     </div>
                     
                     <button type="button" onclick="submitForm()" class="register-btn">Salvar</button>

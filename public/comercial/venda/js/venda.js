@@ -40,7 +40,7 @@ function adicionarProduto() {
     td1.innerHTML = `${novoSelect.outerHTML}`;
 
     var td2 = document.createElement("td");
-    td2.innerHTML = `<input class='produto-qntd' type='number' name='qntd-produto[]' id='produto-qntd-${produtoIndex}' min='1' oninput='calcularSubtotal(this)' style='width: 50px;' value='1'>`;
+    td2.innerHTML = `<input class='produto-qntd' type='number' name='qntd-produto[]' id='produto-qntd-${produtoIndex}' min='1' oninput='calcularSubtotal(this)' style='width: 60px;' value='1'>`;
 
     var td3 = document.createElement("td");
     td3.innerHTML = `<input class='valor-unit' type='text' name='valor-unit[]' id='valor-unit-${produtoIndex}' style='width: 70px;'>`;
@@ -50,7 +50,7 @@ function adicionarProduto() {
 
     var td5 = document.createElement("td");
     var btnRemover = document.createElement("button");
-    btnRemover.classList.add("icon-delete");
+    btnRemover.classList.add("button-smal");
     btnRemover.innerHTML = "🗑️";
     btnRemover.onclick = function() {
         novaLinha.remove();
@@ -83,8 +83,8 @@ function adicionarProduto() {
     document.getElementById(`sub-total-${produtoIndex}`).value = (parseFloat(preco_unit1) * parseFloat(1)).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     //Aqui ele coloca o onchange no select que foi criado dinamicamente
-    detectarMudancaProdutoSelects();
-    atualizarTotal();
+    atualizarTotal();   
+    enviarParametrosAjax(); 
 
 }
 
@@ -113,69 +113,278 @@ function AtualizarDadosProduto(id) {
 }*/
 
 
-// Função responsável por pegar o evento change no select dos insumos e verificar se a opção selecionada foi "Adicionar Novo Insumo"
-function detectarMudancaProdutoSelects() {
-    document.querySelectorAll('.produto-select').forEach(select => {
-        
-        select.addEventListener('change', function() {            
-            AtualizarDadosProduto(this.value); // Envia o valor selecionado (ID do produto) 
-        });
-
-    });
-}
-
-// Esse aqui é pra quando carregar a página pra ele colocar o onchange no primeiro select estático criado.
-window.addEventListener('load', detectarMudancaProdutoSelects);
-
-
 function atualizarPreco(select) {
-    let selectedOption = select.options[select.selectedIndex]; // Obtém a opção selecionada
-    let precoUnitario = selectedOption.getAttribute("data-preco"); // Obtém o preço do atributo data-preco
-    
-    let row = select.closest("tr"); // Encontra a linha correspondente
-    row.querySelector(".valor-unit").value = parseFloat(precoUnitario).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // Define o valor unitário
-    calcularSubtotal(row.querySelector(".produto-qntd")); // Atualiza o subtotal
+    let selectedOption = select.options[select.selectedIndex]; 
+    let precoUnitario = parseFloat(selectedOption.getAttribute("data-preco")) || 0;
+
+    let row = select.closest("tr");
+    row.querySelector(".valor-unit").value = formatarNumero(precoUnitario); 
+    calcularSubtotal(row.querySelector(".produto-qntd")); 
     atualizarTotal();
+    calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
 function calcularSubtotal(input) {
     let row = input.closest("tr");
-    let preco = parseFloat(row.querySelector(".valor-unit").value) || 0;
-    let qntd = parseInt(input.value) || 0;
-    row.querySelector(".sub-total").value = (preco * qntd).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let preco = converterParaNumero(row.querySelector(".valor-unit").value);
+    let qntd = converterParaNumero(input.value);
+    let subtotal = preco * qntd;
+
+    row.querySelector(".sub-total").value = formatarNumero(subtotal);
     atualizarTotal();
+    calcularPesoTotal();
+    enviarParametrosAjax();
 }
 
-function atualizarTotal() {
+function atualizarTotal() { //Esse é o total geral
     let subtotal = 0;
 
-    // Soma os subtotais dos produtos
     document.querySelectorAll(".sub-total").forEach(input => {
-        let valor = parseFloat(input.value.replace(",", ".")) || 0; // Converte vírgula para ponto
-        subtotal += valor;
+        let numero = converterParaNumero(input.value);
+        subtotal += numero;
     });
 
-    let desconto = parseFloat(document.getElementById("desconto").value.replace(",", ".")) || 0;
-    let total = subtotal - desconto;
+    let desconto = converterParaNumero(document.getElementById("desconto").value);
+    let total = subtotal - (subtotal * desconto / 100);
 
-    // Evita valores negativos
-    if (total < 0) {
-        total = 0;
-    }
+    if (total < 0) total = 0;
 
-    // Exibe o total formatado com vírgula
-    document.getElementById("total").innerText = total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById("total").value = formatarNumero(total, 2); // 4 casas decimais
+    document.getElementById('valor_declarado').value = formatarNumero(total, 2);
 }
 
-// Distribui o evento para ser atualizado o subtotal e o total quando o usuario digitar algo nos inputs de quantidade e desconto, criados de forma fixa 
-document.querySelectorAll(".produto-qntd, .desconto").forEach(input => {
+// 🔹 Função para converter valores formatados em número (1.234,56 → 1234.56)
+function converterParaNumero(valor) {
+    if (!valor) return 0;
+    return parseFloat(valor.replace(/\./g, "").replace(",", ".")) || 0;
+}
+
+// 🔹 Função para formatar número no padrão brasileiro (1234.56 → "1.234,56")
+function formatarNumero(valor, casasDecimais = 2) {
+    return valor.toLocaleString("pt-BR", { minimumFractionDigits: casasDecimais, maximumFractionDigits: casasDecimais });
+}
+
+document.querySelectorAll(".produto-qntd, #desconto").forEach(input => {
     input.addEventListener("input", atualizarTotal);
 });
 
-// Atualiza o preço unitário e subtotal do primeiro select que é carregado de forma fixa junto com a página
 let select = document.getElementById('select-produto-0');
 atualizarPreco(select);
 
 
+document.getElementById('formulario-geral').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    if (emptyValueQntd()) {
+        alert("Preencha a quantidade!");
+        return;
+    }
+
+    if (confirm("Deseja registrar essa venda?")) {
+        this.submit();
+    }
+});
+
+function emptyValueQntd() {
+    return Array.from(document.querySelectorAll('.produto-qntd')).some(element => !element.value);
+}
 
 
+function enviarParametrosAjax() {
+    let params = new URLSearchParams({
+        cep_origem: document.getElementById("cep_origem").value,
+        cep_destino: document.getElementById("cep_destino").value,
+        peso: document.getElementById("peso").value,
+        valor_declarado: document.getElementById("valor_declarado").value,
+        largura: document.getElementById("largura").value,
+        altura: document.getElementById("altura").value,
+        comprimento: document.getElementById("comprimento").value
+    });
+
+    // Faz a requisição GET com os parâmetros na URL
+    fetch(`calculo-frete.php?${params.toString()}`, {
+        method: "GET"
+    })
+    .then(response => {
+        console.log(response); // Log da resposta para debug
+
+        if (!response.ok) {
+            throw new Error("Erro na resposta do servidor: " + response.statusText);
+        }
+
+        return response.text(); // Primeiro retorna como texto para debug
+    })
+    .then(texto => {
+        console.log("Resposta do servidor:", texto);
+        //essa parte vai fazer o código enviar uma resposta ajax para o servidor
+        try {
+            const data = JSON.parse(texto);
+
+            let resultado = "";
+            if (data && Array.isArray(data)) {
+                data.forEach((servico, index) => {
+                    if (!servico.error) {
+                        resultado += `
+                            <label style="display:block; cursor:pointer;">
+                                <div style='display:flex; flex-direction:row; gap:10px'>
+                                    <div> 
+                                        <input onclick='registrarVenda()' type="radio" style="margin-top:10px" name="frete" value='${JSON.stringify(servico)}'>  
+                                    </div>
+                                    <div>
+                                        <strong>${servico.name}</strong>
+                                        <br>
+                                        <div style='display:flex; flex-direction:row;'>
+                                            Prazo: <input type='number' oninput='registrarVenda()' style='width: 60px; height: 20px; margin-bottom: 0px;' value='${servico.delivery_time}' > &nbsp;dias 
+                                        </div>
+                                        Valor: R$ ${servico.price}
+                                    </div>
+                                </div>
+                            </label>
+                            <br><br>
+                        `;
+                    } else {
+                        resultado += `${servico.name}: ${servico.error}<br><br>`; 
+                    }
+                });
+
+                // Adiciona o botão de registrar venda
+                //resultado += `<button id="registrar-venda-btn">Registrar Venda</button>`;
+            } else {
+                resultado = "Erro ao calcular o frete.";
+            }
+
+            document.getElementById("resultado").innerHTML = resultado;
+
+            // Adiciona o evento ao botão "Registrar Venda"
+            //document.getElementById("registrar-venda-btn").addEventListener("click", registrarVenda);
+        } catch (e) {
+            console.error("Erro ao analisar a resposta como JSON:", e);
+            document.getElementById("resultado").innerHTML = "Erro ao calcular o frete.";
+        }
+    })
+    .catch(error => console.error("Erro:", error));
+}
+
+document.getElementById('cliente').addEventListener('change', enviarParametrosAjax);
+
+document.getElementById("calcular-frete-btn").addEventListener("click", function(event) {
+    // Captura os valores dos campos
+    enviarParametrosAjax();
+});
+
+// Função para capturar o serviço selecionado e enviá-lo ao backend
+function registrarVenda() {
+    let selecionado = document.querySelector("input[name='frete']:checked");
+
+    if (!selecionado) {
+        alert("Selecione um serviço de frete antes de registrar a venda.");
+        return;
+    }
+
+    let servicoSelecionado = JSON.parse(selecionado.value);
+
+    let prazoInput = selecionado.closest("label").querySelector("input[type='number']"); // Encontra o input mais próximo
+
+    let nomeFrete = document.getElementById('nome-frete');
+    let prazoFrete = document.getElementById('prazo-frete');
+    let valorFrete = document.getElementById('valor-frete');
+
+    nomeFrete.value = servicoSelecionado.name;
+    prazoFrete.value = prazoInput ? prazoInput.value : servicoSelecionado.delivery_time; // Usa o valor do input ou do JSON como fallback
+    valorFrete.value = servicoSelecionado.price;
+
+    atualizarDataEntrega();
+    formatarData();// changes made
+}
+
+
+function atualizarDataEntrega() {
+    let prazoInput = document.getElementById("prazo-frete");
+    let dataEntregaSpan = document.getElementById("data-entrega");
+
+    let prazo = parseInt(prazoInput.value, 10);
+    if (isNaN(prazo) || prazo < 0) {
+        dataEntregaSpan.textContent = "Data inválida";
+        return;
+    }
+
+    let hoje = new Date();
+    hoje.setDate(hoje.getDate() + prazo); // Soma o prazo em dias à data atual
+
+    let dataFormatada = hoje.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+
+    dataEntregaSpan.value = dataFormatada;
+}
+
+
+function formatarData() {
+    const dataTexto = document.getElementById('data-entrega').value;
+  
+    // Convertendo o formato 'segunda-feira, 26 de março de 2025' para '2025-03-26'
+    // Usamos uma função para mapear o nome dos meses para o formato correto
+    const meses = {
+      "janeiro": "01",
+      "fevereiro": "02",
+      "março": "03",
+      "abril": "04",
+      "maio": "05",
+      "junho": "06",
+      "julho": "07",
+      "agosto": "08",
+      "setembro": "09",
+      "outubro": "10",
+      "novembro": "11",
+      "dezembro": "12"
+    };
+  
+    // Remover o dia da semana (ex: "segunda-feira,")
+    const partes = dataTexto.split(", ");
+    const dataFormatada = partes[1].split(" de ");
+    const dia = dataFormatada[0].padStart(2, '0'); // Adiciona zero à esquerda, se necessário
+    const mes = meses[dataFormatada[1].toLowerCase()];
+    const ano = dataFormatada[2];
+  
+    // Formato final 'yyyy-mm-dd'
+    const dataParaBanco = `${ano}-${mes}-${dia}`;
+  
+    // Preencher o campo hidden
+    document.getElementById('dataFormatoBanco').value = dataParaBanco;
+  }
+
+  // Função para preencher o CEP quando o usuário mudar o cliente
+    function mudarCliente() {
+        let select_cliente = document.getElementById('cliente');
+
+        // Obtém a opção selecionada corretamente
+        let optionSelected = select_cliente.options[select_cliente.selectedIndex];
+
+        let cep = optionSelected.getAttribute('data-cep');
+
+        document.getElementById('cep_destino').value = cep;
+
+        // Exibe a opção no alerta (ou pode acessar o atributo data-cep se necessário)
+    }
+
+    // Vai calcular o peso dos insumos multiplicando o valor da data-peso da opção selecionada com a quantidade do campo de qntd mais próximo
+    function calcularPesoTotal() {
+        let selects = document.querySelectorAll('.produto-select');
+        
+        let peso = 0;
+        let qntd = 0;
+        selects.forEach(dataPeso => {
+            qntd = parseFloat(dataPeso.closest('tr').querySelector('.produto-qntd').value);
+            peso += parseFloat(dataPeso.options[dataPeso.selectedIndex].getAttribute('data-peso')) * qntd;
+        });
+        document.getElementById('peso').value = peso/1000;
+    }
+
+    //Isso aqui coloca o evento escutador input nos campos de texto com a classe 0f-changed-refresh-total
+    document.querySelectorAll('.if-changed-refresh-total').forEach(input => {
+        input.addEventListener('input', enviarParametrosAjax);
+    });

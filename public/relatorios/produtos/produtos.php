@@ -21,7 +21,6 @@
 
                 <!-- BARRA DE PROCURA -->
                 <input id='search' class='procura' type='search' autocomplete="off" style='width:50%' placeholder='pesquisar por nome' onchange='search(this.value,"catalogo-grid")'></input>
-
                 <div>
                     <button id="btn-list" class="btn-adicionar">Lista</button>
                     <button id="add-produto" onclick="fabricarProduto()" class="btn-adicionar">+ Adicionar Produto</button>
@@ -30,7 +29,7 @@
             <div class="catalogo-grid" id="catalogo-grid">
                 
                  <?php
-                 $conn = dbConnection();
+                    $conn = dbConnection();
                     $sql = "SELECT * FROM produto";
                     $stmt = $conn->prepare($sql);
 
@@ -47,10 +46,13 @@
                         $stmt_img->bind_result($imagem, $tipo_imagem);
                         $stmt_img->fetch();*/
 
+                        $produtoId = "";
+
                         while($row = $result->fetch_assoc()) {
 
                             $imagem = $row['imagem'];
                             $tipo_imagem = $row['tipo_imagem'];
+                            $produtoId = $row['produto_id'];
 
                             if(!empty($imagem)) {
                                 $imagem_base64 = base64_encode($imagem);
@@ -93,27 +95,36 @@
         <div id="relatorio-container" class="relatorio-container">
             <!-- Cabeçalho do Relatório -->
             <header class="relatorio-header">
+                    
                 <div class="header-title">
                     <h1>Produto: <span id="nome-produto"></span></h1>
                     <p><strong>Data de Cadastro:</strong> <span id="data-cadastro"></span></p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn-acao editar">✏️ Editar</button>
+                    <button class="btn-acao editar" id="btn-acao-editar-modal" onclick="alterarDados_enviarID(this.value)">✏️ Editar</button>
                     <button id="excluir-produto-modal" class="btn-acao excluir">🗑️ Excluir</button>
                     <button onclick="fecharModalDetalhes()" class="btn-acao voltar">🔙 Voltar ao Catálogo</button>
-                </div>
+                </div>    
+                
             </header>
-        
-            <!-- Resumo do Produto -->
-            <section class="resumo-produto">
-                <h2>Resumo</h2>
-                <div class="resumo-detalhes">
-                    <p><strong>Tipo de Venda:</strong> <span id="tipo-venda"></span></p>
-                    <p><strong>Descrição:</strong> <span id="descricao-produto"></span></p>
-                    <p><strong>Peso por Unidade:</strong> <span id="peso-unidade"></span></p>
-                </div>
-            </section>
-        
+            
+                <!-- Resumo do Produto -->
+                <section class="resumo-e-imagem">
+                    <div class="resumo-produto">
+                        <h2>Resumo</h2>
+                        <div class="resumo-detalhes">
+                            <p><strong>Tipo de Venda:</strong> <span id="tipo-venda"></span></p>
+                            <p><strong>Descrição:</strong> <span id="descricao-produto"></span></p>
+                            <p><strong>Peso por Unidade:</strong> <span id="peso-unidade"></span></p>
+                        </div>
+                    </div>
+                    <div id="imagem-editar" class="imagem-editar">
+                    </div>
+                </section>
+                
+          
+            
+                    
             <!-- Tabela de Insumos -->
             <section class="insumos-utilizados">
                 <h2>Insumos Utilizados</h2>
