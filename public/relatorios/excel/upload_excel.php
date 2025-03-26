@@ -8,6 +8,8 @@ include '../../../serverside/config/dbConnection.php';
 
 $conn = dbConnection();
 
+$repeated == 'NOTNOTNOTNOT';
+
 if (isset($_POST['submit'])) {
     // Check if file is uploaded
     if (isset($_FILES['excelFile']) && $_FILES['excelFile']['error'] == 0) {
@@ -30,10 +32,12 @@ if (isset($_POST['submit'])) {
                 // Convert the sheet into an array of rows
                 $rows = $sheet->toArray();
 
-                $space = FALSE;
-
                 // Loop through each row in the Excel file
                 foreach ($rows as $index => $row) {
+                    // Skip the first row (headers)
+                    if ($index == 0) {
+                        continue;
+                    }
                     // Assuming the Excel file has columns: valor, desc
                     // Modify this based on your actual columns
                     foreach ($row as $deep_index => $deep_row) {
@@ -44,26 +48,21 @@ if (isset($_POST['submit'])) {
                         }
                     }
 
-                    $valor = $row[$full];
-                    $desc = $row[$full + 1];
+                    $email = $row[$full + 1];
+                    $total = $row[$full + 10];
+                    $data = $row[$full + 2];
 
-                    if ($valor == NULL || $desc == NULL) {
+                    if ($email == NULL || $email == $repeated) {
                         continue;
                     };
 
-                    // Skip the first row (headers)
-                     
-                    if ($space == TRUE) {
-                    echo "Valor: $valor, Desc: $desc\n";
+                    $repeated = $email;
 
                         // Insert data into database
-                    $sql = "INSERT INTO entradas (valor, descricao) VALUES (?, ?)";
+                    $sql = "INSERT INTO vendas (cliente_id, total, data_venda) VALUES (?, ?, ?)";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ds", $valor, $desc); // Adjust the data types accordingly
+                    $stmt->bind_param("sds", $email, $total, date('Y-m-d',strtotime($data))); // Adjust the data types accordingly
                     $stmt->execute();
-                    }
-
-                    $space = TRUE;
                 }
                 echo "Data successfully inserted into the database.";
             } catch (Exception $e) {
