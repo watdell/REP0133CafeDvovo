@@ -34,6 +34,7 @@ if (isset($_POST['submit'])) {
 
                 // Loop through each row in the Excel file
                 foreach ($rows as $index => $row) {
+                    // Skip the first row (headers)
                     if ($index == 0) {
                         continue;
                     }
@@ -57,11 +58,8 @@ if (isset($_POST['submit'])) {
 
                     $repeated = $email;
 
-                    // Skip the first row (headers)
-                    echo "Valor: $data, Desc: $email\n";
-
                         // Insert data into database
-                    $sql = "INSERT INTO vendas (cliente_id, total, data_venda) VALUES (?, ?, ?)";
+                    $sql = "INSERT INTO entradas (descricao, valor, data) VALUES (?, ?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("sds", $email, $total, date('Y-m-d',strtotime($data))); // Adjust the data types accordingly
                     $stmt->execute();
