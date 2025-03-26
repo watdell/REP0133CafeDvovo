@@ -146,6 +146,7 @@ div.disponivel {
 
 div.disponivel > a {
     color: white;
+    font-size: 0.8em;
 }
 
 div.escasso {
@@ -158,6 +159,7 @@ div.escasso {
 
 div.escasso > a {
     color: white;
+    font-size: 0.8em;
 }
 
 div.indisponivel {
@@ -170,6 +172,7 @@ div.indisponivel {
 
 div.indisponivel > a {
     color: white;
+    font-size: 0.8em;
 }
 
 #estoque-title1 {

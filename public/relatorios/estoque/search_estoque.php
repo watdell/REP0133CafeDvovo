@@ -23,7 +23,8 @@ function VerificarEstoque($atual, $min) {
         '<div class="escasso">
             <a>Escasso</a>
         </div>';
-    } else {
+    } elseif ($atual == 0) {
+        $div = 
         '<div class="indisponivel">
             <a>Indisponível</a>
         </div>';

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/forms-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/tabs-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/modal-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/confirmar-style.css">
+    <link rel="stylesheet" href="../assets/css/main.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/forms-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/tabs-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/modal-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/confirmar-style.css?v=<?php echo time(); ?>">
     <title>Cadastro - Produto</title>
 </head>
 <body> 
@@ -76,7 +76,7 @@
             </section>
             
             <section id="insumos" class="tabcontent"> 
-                <fieldset class="fieldset">
+                <fieldset class="fieldset" style="min-width: 100%;">
                     <legend>Insumos do Produto</legend>
                     <div class="div-insumo-pesototal-subtotal">
                         <div>
@@ -88,14 +88,14 @@
                             <span id="span-subtotal-valor">R$ 0,00</span>
                         </div>
                     </div>
-                    <div id="div-insumos">
-                        <div class="insumo">
+                    <div id="div-insumos" style="max-width:100%;">
+                        <div class="insumo" style="display:flex;align-items:center;margin-bottom:10px;gap:5px">
                             <label id="label-insumo" for="insumo-1">Insumo:</label>
-                            <select style="width: 70%;" class="insumo-select" name="insumo[]" id="select-insumo-0">
+                            <select style="min-width: 69%;max-width:69%;margin-bottom: 0px;" class="insumo-select" name="insumo[]" id="select-insumo-0">
                                 <option>Saborizante de Caramelo - R$ 12/ml - disponível 1000/ml</option>                
                             </select>
                             <label for="quantidade-insumo-1">qtd:</label>
-                            <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;" step="1">
+                            <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;margin-bottom: 0px;" step="1">
                             <i id="0" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</i>
                         </div>
                     </div>
@@ -218,17 +218,17 @@
         </div>
     </div>
 
-    <script src="../assets/js/main.js"></script>    
-    <script src="../assets/js/cadastro-produtos/ajax.js"></script>   
-    <script src="../assets/js/cadastro-produtos/confirmar-cadastro.js"></script>   
-    <script src="../assets/js/cadastro-produtos/controle-abas.js"></script>   
-    <script src="../assets/js/cadastro-produtos/conversores-valor.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-envio-form.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-estoque.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-financeiro.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-insumos.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-modal.js"></script>
-    <script src="../assets/js/cadastro-produtos/sessao-produto.js"></script>      
-    <script src="../assets/js/cadastro-produtos/validadores.js"></script>   
+    <script src="../assets/js/main.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/ajax.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/confirmar-cadastro.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/controle-abas.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/conversores-valor.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-envio-form.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-estoque.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-financeiro.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-insumos.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-modal.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-produto.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/validadores.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
