@@ -235,6 +235,7 @@ button.register-btn:hover {
 
     #div-insumos {
         margin-top: 20px;
+        background-color: #333;
     }
     .check-estoque-possibilidade {
         left: 55%;

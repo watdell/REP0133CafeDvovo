@@ -89,13 +89,13 @@
                         </div>
                     </div>
                     <div id="div-insumos">
-                        <div class="insumo">
+                        <div class="insumo" style="display:flex;flex-direction:row;gap:5px;align-items:center;margin-bottom:10px;">
                             <label id="label-insumo" for="insumo-1">Insumo:</label>
-                            <select style="width: 70%;" class="insumo-select" name="insumo[]" id="select-insumo-0">
+                            <select style="width: 70%;margin:0px;" class="insumo-select" name="insumo[]" id="select-insumo-0">
                                 <option>Saborizante de Caramelo - R$ 12/ml - disponível 1000/ml</option>                
                             </select>
                             <label for="quantidade-insumo-1">qtd:</label>
-                            <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;" step="1">
+                            <input class="insumo-qntd" type="text" name="qntd-insumo[]" id="quantidade-insumo-0" style="width: 50px;margin:0px;" step="1">
                             <i id="0" onclick="deleteInsumoDiv(this)" class="icon-delete">🗑️</i>
                         </div>
                     </div>
