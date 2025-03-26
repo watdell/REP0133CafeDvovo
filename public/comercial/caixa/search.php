@@ -82,63 +82,92 @@
 
         echo '<hr style="height:4px;background-color:black">';
     
-        $sql = "
-        SELECT 
-            iv.venda_id, 
-            iv.produto, 
-            p.nome AS produto_nome, 
-            v.total, 
-            v.data_venda
-        FROM 
-            itens_venda iv
-        JOIN 
-            produto p ON p.produto_id = iv.produto
-        JOIN 
-            vendas v ON v.venda_id = iv.venda_id
-        WHERE
-            p.nome
-        LIKE
-            '%" . $q . "%'
-        ORDER BY
-            iv.venda_id DESC
-        LIMIT
-            30
-    ";
+        // Query for records where cliente_id is NOT an email (linked to itens_venda)
+$sql1 = "
+SELECT 
+    iv.venda_id, 
+    iv.produto, 
+    p.nome AS produto_nome, 
+    v.total, 
+    v.cliente_id, 
+    v.data_venda
+FROM 
+    itens_venda iv
+JOIN 
+    produto p ON p.produto_id = iv.produto
+JOIN 
+    vendas v ON v.venda_id = iv.venda_id
+WHERE
+    p.nome LIKE ? 
+    AND v.cliente_id NOT LIKE '%@%'
+ORDER BY
+    iv.venda_id DESC
+LIMIT 30
+";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$stmt1 = $conn->prepare($sql1);
+$searchQuery = "%$q%";
+$stmt1->bind_param("s", $searchQuery);
+$stmt1->execute();
+$result1 = $stmt1->get_result();
 
-    // Create an associative array to store venda_id groups
-    $vendas = [];
+// Group sales by venda_id
+$vendas = [];
 
-    // Fetch rows and group them by venda_id
-    while ($row = $result->fetch_assoc()) {
-        // If this venda_id is not already in the array, initialize it
-        if (!isset($vendas[$row['venda_id']])) {
-            $vendas[$row['venda_id']] = [
-                'venda_id' => $row['venda_id'],
-                'total' => $row['total'],
-                'data_venda' => $row['data_venda'],
-                'produtos' => []  // Initialize an empty array to store products for this venda_id
-            ];
-        }
-
-        // Add the product info to the venda_id group
-        $vendas[$row['venda_id']]['produtos'][] = $row['produto_nome'];
-    }
-
-    // Now iterate over the grouped data and display it
-    foreach ($vendas as $venda) {
-        echo "<div class='itens_shown'>
-            <a style='width:20%;overflow:hidden;'>" . $venda['venda_id'] . "</a>
-            <a style='width:20%;overflow:hidden;'>" . implode("<br>", $venda['produtos']) . "</a>
-            <a style='width:20%;overflow:hidden;'>" . $venda['total'] . "</a>
-            <a style='width:20%;overflow:hidden;'>" . $venda['data_venda'] . "</a>
-        </div><hr>";
-    }
+while ($row = $result1->fetch_assoc()) {
+if (!isset($vendas[$row['venda_id']])) {
+    $vendas[$row['venda_id']] = [
+        'venda_id' => $row['venda_id'],
+        'total' => $row['total'],
+        'data_venda' => $row['data_venda'],
+        'produtos' => []  
+    ];
+}
+$vendas[$row['venda_id']]['produtos'][] = $row['produto_nome'];
 }
 
+// Display grouped sales (where cliente_id is NOT an email)
+foreach ($vendas as $venda) {
+echo "<div class='itens_shown'>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($venda['venda_id']) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . implode("<br>", array_map('htmlspecialchars', $venda['produtos'])) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($venda['total']) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($venda['data_venda']) . "</a>
+</div><hr>";
+}
+
+// Query for records where cliente_id IS an email (from vendas only)
+$sql2 = "
+SELECT 
+    venda_id, 
+    cliente_id, 
+    total, 
+    data_venda
+FROM 
+    vendas
+WHERE 
+    cliente_id LIKE '%@%'
+AND
+    cliente_id LIKE '%". $q . "%'
+ORDER BY 
+    venda_id DESC
+LIMIT 30
+";
+
+$stmt2 = $conn->prepare($sql2);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+
+// Display sales where cliente_id is an email
+while ($row = $result2->fetch_assoc()) {
+echo "<div class='itens_shown'>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['venda_id']) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['cliente_id']) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['total']) . "</a>
+    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['data_venda']) . "</a>
+</div><hr>";
+}
+    }
     $stmt->close();
     $conn->close();
 

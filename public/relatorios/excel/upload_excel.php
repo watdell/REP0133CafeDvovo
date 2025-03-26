@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
                     $repeated = $email;
 
                         // Insert data into database
-                    $sql = "INSERT INTO entradas (descricao, valor, data) VALUES (?, ?, ?)";
+                    $sql = "INSERT INTO vendas (cliente_id, total, data_venda) VALUES (?, ?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("sds", $email, $total, date('Y-m-d',strtotime($data))); // Adjust the data types accordingly
                     $stmt->execute();
