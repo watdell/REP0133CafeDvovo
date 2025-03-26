@@ -102,7 +102,7 @@ WHERE
     AND v.cliente_id NOT LIKE '%@%'
 ORDER BY
     iv.venda_id DESC
-LIMIT 30
+LIMIT 80
 ";
 
 $stmt1 = $conn->prepare($sql1);
@@ -151,7 +151,7 @@ AND
     cliente_id LIKE '%". $q . "%'
 ORDER BY 
     venda_id DESC
-LIMIT 30
+LIMIT 80
 ";
 
 $stmt2 = $conn->prepare($sql2);
