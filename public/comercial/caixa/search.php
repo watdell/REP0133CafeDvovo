@@ -162,7 +162,7 @@ $result2 = $stmt2->get_result();
 while ($row = $result2->fetch_assoc()) {
 echo "<div class='itens_shown'>
     <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['venda_id']) . "</a>
-    <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['cliente_id']) . "</a>
+    <input style='width:20%;background-color:transparent;border-color:transparent;color:#9e6632;font-weight: bold;padding:0px' value='" . htmlspecialchars($row['cliente_id']) . "'></input>
     <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['total']) . "</a>
     <a style='width:20%;overflow:hidden;'>" . htmlspecialchars($row['data_venda']) . "</a>
 </div><hr>";
