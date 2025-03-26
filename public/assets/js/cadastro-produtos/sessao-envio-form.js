@@ -14,10 +14,6 @@ function validarFormSessaoEstoque() {
     }
     if (!qntdMinimaEstoque.value) {
         mensagem.push("Digite uma quantidade mínima para estoque!")
-    } else {
-        if (parseFloat(qntdMinimaEstoque.value) >= parseFloat(qntdParaEstoque.value)) {
-            mensagem.push("A quantidade mínima não pode ser maior ou igual que a de estoque!");
-        }
     }
     return mensagem;
 }

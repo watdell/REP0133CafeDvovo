@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/forms-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/tabs-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/modal-style.css">
-    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/confirmar-style.css">
+    <link rel="stylesheet" href="../assets/css/main.css?v=<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/forms-style.css?v=<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/tabs-style.css?v=<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/modal-style.css?v=<?php echo time(); ?>"></script>
+    <link rel="stylesheet" href="../assets/css/cadastrar-produtos/confirmar-style.css?v=<?php echo time(); ?>"></script>
     <title>Cadastro - Produto</title>
 </head>
 <body> 
@@ -218,17 +218,17 @@
         </div>
     </div>
 
-    <script src="../assets/js/main.js"></script>    
-    <script src="../assets/js/cadastro-produtos/ajax.js"></script>   
-    <script src="../assets/js/cadastro-produtos/confirmar-cadastro.js"></script>   
-    <script src="../assets/js/cadastro-produtos/controle-abas.js"></script>   
-    <script src="../assets/js/cadastro-produtos/conversores-valor.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-envio-form.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-estoque.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-financeiro.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-insumos.js"></script>   
-    <script src="../assets/js/cadastro-produtos/sessao-modal.js"></script>
-    <script src="../assets/js/cadastro-produtos/sessao-produto.js"></script>      
-    <script src="../assets/js/cadastro-produtos/validadores.js"></script>   
+    <script src="../assets/js/main.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/ajax.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/confirmar-cadastro.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/controle-abas.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/conversores-valor.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-envio-form.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-estoque.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-financeiro.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-insumos.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-modal.js?v=<?php echo time(); ?>"></script>
+    <script src="../assets/js/cadastro-produtos/sessao-produto.js?v=<?php echo time(); ?>"></script>    
+    <script src="../assets/js/cadastro-produtos/validadores.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
