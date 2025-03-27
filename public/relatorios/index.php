@@ -16,7 +16,7 @@
             <h1>O que deseja fazer?</h1>
             <br>
             <ul class="ul-selecione">
-                <li><a href="manual.docx" download="manual.docx">Manual</a></li>
+                <li><a href="Manual-Café-D'VOVO.docx" download="Manual-Café-D'VOVO.docx">Manual</a></li>
                 <li><a href="./pessoas/pessoas.php">Registro de pessoas</a></li>
                 <li><a href="../insumos/tela_insumos.php">Registro de insumos</a></li>
                 <li><a href="./estoque/estoque.php">Visualizar Estoque</a></li>
