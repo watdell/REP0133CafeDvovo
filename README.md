@@ -9,7 +9,6 @@ Este repositório contém o código-fonte do sistema de gestão integrado (ERP) 
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Pré-requisitos](#-pré-requisitos)
 - [Instalação e Configuração](#-instalação-e-configuração)
-- [Autores](#-autores)
 
 ## 🚀 Funcionalidades
 
@@ -40,7 +39,8 @@ O sistema está dividido em vários módulos independentes para facilitar a gest
 - **Backend:** PHP
 - **Base de Dados:** MySQL / MariaDB (Ficheiro `.sql` incluído)
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
-- **Gestão de Dependências:** - [Composer](https://getcomposer.org/) (PHP)
+- **Gestão de Dependências:**
+  - [Composer](https://getcomposer.org/) (PHP)
   - [NPM](https://www.npmjs.com/) (JavaScript)
 - **Bibliotecas Principais:**
   - `phpoffice/phpspreadsheet` (Manipulação de folhas de cálculo Excel/CSV)
@@ -69,3 +69,45 @@ A arquitetura do projeto segue uma divisão lógica entre os ficheiros expostos 
 ├── composer.json           # Dependências do backend (PHP)
 ├── package.json            # Dependências do frontend (JS)
 └── README.md               # Documentação do projeto
+```
+
+## ⚙️ Pré-requisitos
+
+Para correr este projeto localmente, necessita de ter instalado:
+
+- Um servidor Web (ex: Apache ou Nginx)
+- PHP (versão 7.4 ou superior recomendada)
+- MySQL ou MariaDB
+- Composer
+- Node.js e NPM (Para gerir dependências de frontend)
+
+## 🛠️ Instalação e Configuração
+
+Siga os passos abaixo para configurar o ambiente de desenvolvimento:
+
+1. **Clonar o repositório**
+   ```bash
+   git clone [https://github.com/seu-utilizador/rep0133cafedvovo.git](https://github.com/seu-utilizador/rep0133cafedvovo.git)
+   cd rep0133cafedvovo
+   ```
+
+2. **Instalar as dependências do PHP**
+   ```bash
+   composer install
+   ```
+
+3. **Instalar as dependências de Frontend**
+   ```bash
+   npm install
+   ```
+
+4. **Configurar a Base de Dados**
+   - Crie uma base de dados no seu servidor MySQL/MariaDB (ex: `cafedvovo_db`).
+   - Importe o ficheiro `cafedvovo.sql` para a base de dados recém-criada.
+   - Navegue até `serverside/config/dbConnection.php` e atualize as credenciais (host, utilizador, palavra-passe e nome da base de dados) de acordo com o seu ambiente local.
+
+5. **Configurar o Servidor Web**
+   - Aponte a raiz do seu servidor virtual (DocumentRoot) para a pasta onde o projeto foi clonado. Certifique-se de que os acessos estão configurados corretamente para a pasta `public/`.
+
+6. **Aceder ao sistema**
+   - Abra o navegador e aceda ao endereço local configurado (ex: `http://localhost/rep0133cafedvovo/public/`).
