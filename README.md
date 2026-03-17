@@ -1,143 +1,71 @@
----
-# REP0133CafeDvovo
-Projetos da turma 0133 de Técnico de Informática Senac CEP Conselheiro Lafaiete
+# Café D'Vovó - Sistema de Gestão (ERP)
 
-## Primeiros passos para começar a usar o git (assumindo que você já o tem baixado):
-### Configurar o username e o email
-- Execute o seguinte comando no git bash:
-```
-git config --global user.name "Seu Username"
-git config --global user.email seu@email.com
-```
+Este repositório contém o código-fonte do sistema de gestão integrado (ERP) desenvolvido para o **Café D'Vovó**. O sistema é uma aplicação web focada na administração de pessoas, produtos, vendas, logística e relatórios financeiros/operacionais.
 
-### Comandos para obter ajuda do git:
-```
-git help {comando}
-git {comando} --help
-man git- {comando}
-```
+## 📋 Índice
 
-### Inicializar um repositório local
-- Dentro do diretório da pasta do projeto, execute o seguinte comando:
-```
-git init
-```
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação e Configuração](#-instalação-e-configuração)
+- [Autores](#-autores)
 
-### Adicionar arquivos para commit:
-- Usando o seguinte comando, você irá adicionar quais arquivos deseja commitar:
-```
-git add nome_do_arquivo.txt
-```
-- dica: se você substituir o nome_do_arquivo.txt para apenas um ponto (.), você irá adicionar TODOS os arquivos de uma vez:
-```
-git add .
-```
-- Porém, há arquivos que você não vai querer commitar, como arquivos contendo dependências de projeto e até mesmo senhas e usuários de banco de dados, para ignorar esses arquivos, basta criar um arquivo chamado .gitignore e dentro dele escrever o nome dos arquivos que deseja ignorar ao commitar
+## 🚀 Funcionalidades
 
-### Commitando para o repositório local
-- Com o seguinte comando, você irá commitar todos os arquivos selecionados no git add:
-```
-git commit -m "mensagem do commit"
-```
-- Não se esqueça de deixar uma mensagem curta e objetiva do motivo do seu commit
-- Outra coisa, tenha em mente que este commit será direcionado para a branch que você estiver selecionado, mais em frente terá o comando para selecionar outra branch
+O sistema está dividido em vários módulos independentes para facilitar a gestão do negócio:
 
-### Obtendo os status do git
-- É possível obter alguns status do git para visualizar quais arquivos estão selecionados, quais sofreram mudanças, quais estão prontos para serem commitados, etc:
-```
-git status
-```
+- **👥 Cadastro de Pessoas:**
+  - Clientes (Pessoas Físicas e Jurídicas)
+  - Fornecedores
+  - Funcionários
+- **📦 Cadastro de Produtos e Insumos:**
+  - Gestão de stock e inventário
+  - Registo de insumos necessários para a produção
+- **💼 Módulo Comercial:**
+  - Ponto de Venda (PDV) e registo de vendas
+  - Controlo de Caixa (Abertura, fecho, entradas e despesas)
+  - Gestão de Orçamentos e Pagamentos
+  - Cálculo de Fretes e Pós-venda
+- **🚚 Expedição e Logística:**
+  - Controlo de destinos e rotas de entrega
+  - Integração com transportadoras (ex: Correios)
+- **📊 Relatórios:**
+  - Geração de relatórios de vendas, stock, produtos e pessoas
+  - Exportação e importação de dados via Excel (utilizando a biblioteca PhpSpreadsheet)
+  - Gráficos de análise e dashboards (utilizando Chart.js)
 
-### Resetando uma alteração
-- Em qualquer fase, você pode querer desfazer alguma coisa. Aqui, veremos algumas ferramentas básicas para desfazer modificações que você fez. Cuidado, porque você não pode desfazer algumas dessas mudanças. Essa é uma das poucas áreas no Git onde você pode perder algum trabalho se fizer errado.
-- Para voltar ao último commit:
-```
-git reset --hard HEAD~1
-```
-- Para voltar ao último commit e mantém os últimos arquivos no Stage:
-```
-git reset --soft HEAD~1
-```
-- Volta para o commit com a hash XXXXXXXXXXX:
-```
-git reset --hard XXXXXXXXXXX
-```
-> Recuperando commit apagado pelo git reset
-- Para visualizar os hashs:
-```
-git reflog
-```
-- E para aplicar:
-```
-git merge {hash}
-```
+## 💻 Tecnologias Utilizadas
 
-### Git Branch
-- Criando uma nova Branch:
-```
-git branch testing
-```
-- Para alterar a branch atual (importante):
-```
-git checkout testing
-```
+- **Backend:** PHP
+- **Base de Dados:** MySQL / MariaDB (Ficheiro `.sql` incluído)
+- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+- **Gestão de Dependências:** - [Composer](https://getcomposer.org/) (PHP)
+  - [NPM](https://www.npmjs.com/) (JavaScript)
+- **Bibliotecas Principais:**
+  - `phpoffice/phpspreadsheet` (Manipulação de folhas de cálculo Excel/CSV)
+  - `chart.js` (Renderização de gráficos)
+  - `ezyang/htmlpurifier` (Prevenção de XSS e limpeza de HTML)
 
-### Git Merge
-- Suponha que você decidiu que o trabalho na tarefa #53 está completo e pronto para ser feito o merge no branch master. Para fazer isso, você fará o merge do seu branch iss53, bem como o merge do branch hotfix de antes. Tudo que você tem a fazer é executar o checkout do branch para onde deseja fazer o merge e então rodar o comando git merge:
-```
-git checkout master
-git merge iss53
-```
+## 📁 Estrutura do Projeto
 
-### Resolvendo conflitos de merge
-- Se você quer usar uma ferramenta gráfica para resolver esses problemas, você pode executar o seguinte comando que abre uma ferramenta visual de merge adequada e percorre os conflitos:
-```
-git mergetool
-```
+A arquitetura do projeto segue uma divisão lógica entre os ficheiros expostos ao cliente e a lógica de servidor:
 
-### Histórico de Commits
-- Depois que você tiver criado vários commits, ou se clonou um repositório com um histórico de commits existente, você provavelmente vai querer ver o que aconteceu. A ferramenta mais básica e poderosa para fazer isso é o comando:
-```
-git log
-```
-
-### Clonando o repositório remoto
-- Para obter os arquivos que estão no repositório remoto, basta executar o comando:
-```
-git clone <repo>
-```
-- Para obter os arquivos do REPO133CafeDvovo:
-```
-git clone https://github.com/watdell/REP0133CafeDvovo.git
-```
-
-### Conexão com o repositório remoto (REPO133CafeDvovo)
-- Para criar uma conexão com o repositório remoto, basta executar o comando:
-```
-git remote add <name> <url>
-```
-- normalmente, costuma-se usar o name como origin:
-```
-git remote add origin https://github.com/watdell/REP0133CafeDvovo.git
-```
-- Pode ser que ele peça para você fazer login no github, mas isso só irá acontecer uma vez
-
-### Git fetch
-- Para pegar dados dos seus projetos remotos, você pode executar:
-```
-git fetch origin
-```
-- Esse comando vai até o projeto remoto e pega todos os dados que você ainda não tem. Depois de fazer isso, você deve ter referências para todos os branches desse remoto, onde você pode fazer o merge ou inspecionar a qualquer momento.
-
-### Git pull
-- Incorpora as alterações de um repositório remoto no branch atual. Em seu modo padrão, git pull é uma abreviação para git fetch seguido de git merge FETCH_HEAD. Por exemplo, se eu estiver em uma branch chamada develop e quiser atualizar caso haja atualizações remotamente:
-```
-git pull origin develop
-```
-- Uma boa prática é executar este comando a cada começo de dia de produção, para ter certeza de que o seu repositório local está atualizado
-
-### Git push
-- O git push é o comando em que você transfere commits a partir do seu repositório local para um repositório remoto. É a contrapartida do git fetch, que busca importações e comprometem as agências locais, utilizando o git push as exportações comprometem as filiais remotas. Para fazer isso, você executa git push [nome_do_repositório_remoto] [nome_da_sua_branch_local], que vai tentar fazer com que o [nome_do_repositório_remoto] receba a sua branch [nome_da_sua_branch_local] contendo todos seus commits com alterações. Por exemplo:
-```
-git push origin develop
-```
+```text
+├── public/                 # Ficheiros expostos ao servidor web (Páginas, CSS, JS, Imagens)
+│   ├── assets/             # Estilos (CSS), Scripts (JS) e Imagens estáticas
+│   ├── cadastro-pessoas/   # Interfaces de registo de entidades
+│   ├── cadastro-produtos/  # Interfaces de registo de produtos
+│   ├── comercial/          # Interfaces de vendas, caixa, orçamentos e despesas
+│   ├── expedicao/          # Interfaces de logística e transporte
+│   ├── insumos/            # Interfaces de gestão de matérias-primas
+│   ├── relatorios/         # Ecrãs de relatórios e exportação
+│   └── servicos/           # Interfaces de gestão de serviços e contratos
+├── serverside/             # Lógica de negócio e base de dados (Não exposto diretamente)
+│   ├── config/             # Ficheiros de configuração (ex: dbConnection.php)
+│   ├── controllers/        # Controladores (Processamento de formulários e regras de negócio)
+│   └── queries/            # Ficheiros com as consultas (SQL) à base de dados
+├── cafedvovo.sql           # Ficheiro de exportação da base de dados inicial
+├── composer.json           # Dependências do backend (PHP)
+├── package.json            # Dependências do frontend (JS)
+└── README.md               # Documentação do projeto
